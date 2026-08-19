@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 6.8
 Requires PHP: 8.3
-Stable tag: 0.4.0
+Stable tag: 0.5.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,11 @@ Kjeks assists with consent management. It does not, and cannot, guarantee legal 
 5. Review each site's inventory under **Settings → Cookie Consent**.
 
 == Changelog ==
+
+= 0.5.0 =
+* Add a network-admin toggle to show the consent banner until a visitor makes a choice (default on).
+* Hide the redundant "Cookie settings" trigger while the banner is visible.
+* Honor programmatically injected consent records whose policy version / blog id are numeric, fixing consent-state scanning by the discovery scanner.
 
 = 0.4.0 =
 * Move the discovery scanner into its own repository (soderlind/kjeks-scanner); it integrates over the unchanged REST scan-config / import contract. No plugin runtime change.
