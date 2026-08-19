@@ -1,6 +1,6 @@
 # Kjeks architecture
 
-Current-state map of the Kjeks cookie-consent plugin for WordPress Multisite.
+Current-state map of the Kjeks cookie-consent plugin for WordPress (single-site or Multisite).
 Paths are repository-relative; symbols are exact. Domain terms are defined in
 [CONTEXT.md](../CONTEXT.md); decisions and their rationale live in
 [docs/adr/](adr). This document describes **implemented** behavior only.
@@ -31,7 +31,7 @@ through the seams documented there.
 | Actor | Interacts via |
 | --- | --- |
 | Site visitor | Consent banner + declaration (frontend) |
-| Network administrator | Network Admin → Cookie Consent (aggregated review — the only consent UI) |
+| Administrator | Cookie Consent screen — the only consent UI (Network Admin + `manage_network` on multisite; the admin menu + `manage_options` on single-site) |
 | Integration developer | Public PHP API in [src/functions.php](../src/functions.php) + client events |
 | `kjeks-scanner` (separate repo) | REST `scan-config` / `import`; runs its own scheduled GitHub Action |
 | `kjeks-google` add-on (separate repo) | Public API + `window.kjeks` events |
@@ -103,7 +103,7 @@ integrations register through the public API.
 
 | Module | Responsibility |
 | --- | --- |
-| `NetworkAdmin` + `admin/network.js` | The only consent UI: aggregated review table (search, filter, bulk review), banner defaults, banner-visibility toggle |
+| `NetworkAdmin` + `admin/network.js` | The only consent UI: aggregated review table (search, filter, bulk review), banner defaults, banner-visibility toggle. Registers under Network Admin (multisite) or the admin menu (single-site) |
 
 ### REST — `src/Rest/`
 
@@ -112,6 +112,8 @@ integrations register through the public API.
 | `GET/POST /kjeks/v1/network-config` | `NetworkConfigController` | `manage_network` |
 | `POST /kjeks/v1/import` | `ImportController` | `manage_network` |
 | `GET /kjeks/v1/scan-config` | `ScanConfigController` | `manage_network` |
+
+On single-site installs these capabilities fall back to `manage_options` (each controller branches on `is_multisite()`).
 
 ### Discovery — `src/Scan/`, `src/Cli/` (+ external scanner)
 
@@ -181,7 +183,7 @@ The consent record is **client-owned**; the server only ever reads it
    `TrackerRegistry::merge_observations()`. Observations aggregate by
    `TrackerIdentity`; each records the `blog_id` in its `sites` list and stays
    **unreviewed**.
-3. Network admin classifies each once (`NetworkConfigController` bulk review).
+3. An administrator classifies each once (`NetworkConfigController` bulk review).
 4. `InventoryResolver::scoped_network_trackers()` exposes the site-scoped set;
    `reviewed()` filters to reviewed; `CookieDeclaration` and `banner.js` render
    only those.
@@ -192,7 +194,7 @@ The consent record is **client-owned**; the server only ever reads it
 | --- | --- | --- |
 | Nothing is auto-classified `necessary` | `Tracker::from_array` (falls back to `marketing`), `ScanValidator` (ignores incoming category) | tests/Unit/TrackerTest.php, tests/Unit/ScanTest.php |
 | Only reviewed trackers are public | `InventoryResolver::reviewed()` | tests/Unit/InventoryResolverTest.php |
-| Network review is the only review surface; sites have no consent UI | Only `NetworkConfigController` (`manage_network`) writes reviews; no per-site store or route | tests/Unit/InventoryResolverTest.php ("serves a reviewed network tracker as-is") |
+| One review surface, no separate per-site screen | Only `NetworkConfigController` writes reviews (`manage_network` on multisite, `manage_options` on single-site); no per-site store or route | tests/Unit/InventoryResolverTest.php ("serves a reviewed network tracker as-is") |
 | A cookie appears only where observed | `InventoryResolver::scoped_network_trackers()` | tests/Unit/InventoryResolverTest.php ("scopes … only the sites where observed") |
 | Same cookie aggregates once | `TrackerIdentity::for` + `TrackerRegistry::merge_observations` | tests/Unit/ScanTest.php ("collapses the same cookie") |
 | Non-essential code stays inert pre-consent | `ScriptGate`, `EmbedGate`; client activation | kjeks-scanner: tests/no-tracking-before-consent.spec.js |

@@ -16,7 +16,7 @@ accessible consent banner.
 ## Features
 
 - Network-wide tracker definitions with per-site assignments.
-- Per-site tracker inventories, reviewed and classified by network administrators.
+- Per-site tracker inventories, reviewed and classified by administrators.
 - Prior blocking of non-essential scripts, inline snippets, pixels, and embeds —
   nothing runs before consent (client-side gating, so full-page caching still
   works).
@@ -38,9 +38,9 @@ composer install --no-dev
 npm ci && npm run build
 ```
 
-Then **Network Admin → Plugins → Network Activate**. Configure network defaults
-under **Network Admin → Cookie Consent**; review each site under
-**Settings → Cookie Consent**.
+On multisite, **Network Admin → Plugins → Network Activate**, then manage everything
+under **Network Admin → Cookie Consent**. On a single site, activate normally and
+open **Cookie Consent** from the admin menu.
 
 ## Developer quick start
 

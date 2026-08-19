@@ -1,6 +1,6 @@
-# Kjeks — Cookie Consent for WordPress Multisite
+# Kjeks — Cookie Consent for WordPress
 
-Consent-management plugin for WordPress Multisite: per-site tracker inventories, prior blocking of non-essential technologies, and an accessible consent banner. Assists with consent management; it does not claim automatic legal compliance.
+Consent-management plugin for WordPress (single-site or Multisite): per-site tracker inventories, prior blocking of non-essential technologies, and an accessible consent banner. Assists with consent management; it does not claim automatic legal compliance.
 
 ## Language
 

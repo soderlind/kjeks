@@ -1,6 +1,6 @@
 # Kjeks documentation
 
-Cookie consent management for WordPress Multisite. Kjeks assists with consent
+Cookie consent management for WordPress, single-site or Multisite. Kjeks assists with consent
 management; it does **not** claim automatic legal compliance, and discovery is
 observational — it cannot prove the absence of tracking. Consider technologies
 beyond cookies (localStorage, pixels, embeds, and similar).
@@ -23,9 +23,10 @@ composer install --no-dev
 npm ci && npm run build
 ```
 
-Then **Network Admin → Plugins → Network Activate**. All configuration and review
-happen under **Network Admin → Cookie Consent**; there is no per-site consent
-screen.
+On multisite: **Network Admin → Plugins → Network Activate**, then manage everything
+under **Network Admin → Cookie Consent**. On a single site: activate normally and
+open **Cookie Consent** from the admin menu. Either way there is one consent screen
+and no separate per-site screen.
 
 New subsites inherit the network defaults automatically (inherit-at-read), so no
 per-site copy runs on site creation.
@@ -126,8 +127,9 @@ reference that loads unconditionally).
 Trackers are never auto-classified as necessary. Discovered cookies are
 **unreviewed** until classified.
 
-- **Network Admin → Cookie Consent** — the aggregated registry and the only
-  consent UI. Each cookie appears once, with a site count, search, status filter
+- **Cookie Consent** (Network Admin on multisite, the admin menu on single-site)
+  — the aggregated registry and the only consent UI. Each cookie appears once,
+  with a site count, search, status filter
   (pending / reviewed), and **bulk review** (set a category and mark reviewed
   for many at once). A network review applies to every site where the cookie was
   observed.

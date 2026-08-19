@@ -1,6 +1,6 @@
 # Administration is network-only
 
-Kjeks has a single consent-administration surface: **Network Admin → Cookie Consent**. There is no per-site consent screen, no per-site REST route, and no per-site store. A network review applies to every site where a cookie was observed; the network registry is the sole source of truth for classifications and banner content.
+Kjeks has a single consent-administration surface: **Network Admin → Cookie Consent** on multisite, or the standard admin menu (**Cookie Consent**, `manage_options`) on single-site. There is no per-site consent screen, no per-site REST route, and no per-site store. A network review applies to every site where a cookie was observed; the network registry is the sole source of truth for classifications and banner content.
 
 This follows the plugin's core stance that network review is authoritative — a per-site screen that could only ever show network cookies read-only added surface (a `SiteSettings` page, a `manage_options` REST controller, a `SiteStore`, and content-merge paths) without a matching per-site need in practice. Removing it centralises governance under `manage_network`, shrinks the attack and maintenance surface, and removes a second place classifications could appear to diverge.
 
