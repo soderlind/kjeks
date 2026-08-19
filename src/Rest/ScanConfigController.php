@@ -47,7 +47,13 @@ final class ScanConfigController {
 					'paths'   => array(
 						'type'        => 'string',
 						'required'    => false,
-						'description' => 'Comma-separated representative paths.',
+						'description' => 'Comma-separated representative paths. Omit to auto-select per site.',
+					),
+					'cap'     => array(
+						'type'        => 'integer',
+						'required'    => false,
+						'default'     => 10,
+						'description' => 'Max auto-selected paths per site (ignored when paths is set).',
 					),
 				),
 			)
@@ -62,9 +68,18 @@ final class ScanConfigController {
 
 	public function get_config( WP_REST_Request $request ): WP_REST_Response {
 		$include = $this->csv_ints( (string) $request->get_param( 'include' ) );
-		$paths   = $this->csv_strings( (string) $request->get_param( 'paths' ) );
 
-		$config = ( new ScanConfig() )->build( $include, array() === $paths ? array( '/' ) : $paths );
+		$paths_param = $request->get_param( 'paths' );
+		$paths       = ( null === $paths_param || '' === (string) $paths_param )
+			? null
+			: $this->csv_strings( (string) $paths_param );
+
+		$cap = (int) $request->get_param( 'cap' );
+		if ( $cap < 1 ) {
+			$cap = 10;
+		}
+
+		$config = ( new ScanConfig() )->build( $include, $paths, $cap );
 
 		return new WP_REST_Response( $config );
 	}

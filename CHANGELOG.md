@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.0 - 2026-08-20
+
+- Scanner config (`scan-config`) now auto-selects representative URLs per site via `WP_Query` — the home page, newest post and page, the posts archive, and pages whose content shows an embed / inline-script signal — deduped and capped (default 10). Omit `paths` to auto-select; explicit paths still override.
+- Add a `cap` REST parameter and `--cap` CLI option, plus `kjeks_scan_url_cap` and `kjeks_scan_paths` filters.
+
 ## 0.8.0 - 2026-08-19
 
 - Self-updates from GitHub releases via the `wordpress-github-updater` library (bundled `plugin-update-checker`). Define the optional `KJEKS_GITHUB_TOKEN` constant for private repositories or higher GitHub API rate limits.

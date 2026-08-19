@@ -51,3 +51,11 @@ it( 'defaults paths to root when none are given', function (): void {
 
 	expect( $config['sites'][0]['paths'] )->toBe( array( '/' ) );
 } );
+
+it( 'auto-selects paths per site when paths is null', function (): void {
+	$sampler = static fn ( int $cap ): array => array( '/', '/hello/' );
+
+	$config = ( new ScanConfig( $sampler ) )->build( array( 1 ), null, 5 );
+
+	expect( $config['sites'][0]['paths'] )->toBe( array( '/', '/hello/' ) );
+} );

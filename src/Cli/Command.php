@@ -110,7 +110,11 @@ final class Command {
 	 * ## OPTIONS
 	 *
 	 * [--paths=<paths>]
-	 * : Comma-separated representative paths for every site. Default: /
+	 * : Comma-separated representative paths for every site. Omit to auto-select
+	 *   representative URLs per site (home, newest post/page, embed-bearing pages).
+	 *
+	 * [--cap=<n>]
+	 * : Max auto-selected paths per site. Default: 10. Ignored when --paths is set.
 	 *
 	 * [--output=<file>]
 	 * : Write to this file instead of STDOUT.
@@ -123,7 +127,7 @@ final class Command {
 	 *
 	 *     wp kjeks scan-config > scanner/config.json
 	 *     wp kjeks scan-config --paths=/,/about,/contact --output=scanner/config.json
-	 *     wp kjeks scan-config --include=1,3
+	 *     wp kjeks scan-config --cap=15 --include=1,3
 	 *
 	 * @param array<int, string>    $args       Positional arguments.
 	 * @param array<string, string> $assoc_args Associative arguments.
@@ -131,13 +135,15 @@ final class Command {
 	public function scan_config( array $args, array $assoc_args ): void {
 		$paths = isset( $assoc_args['paths'] )
 			? array_values( array_filter( array_map( 'trim', explode( ',', (string) $assoc_args['paths'] ) ) ) )
-			: array( '/' );
+			: null;
+
+		$cap = isset( $assoc_args['cap'] ) ? max( 1, (int) $assoc_args['cap'] ) : 10;
 
 		$include = isset( $assoc_args['include'] )
 			? array_map( 'intval', array_filter( array_map( 'trim', explode( ',', (string) $assoc_args['include'] ) ) ) )
 			: array();
 
-		$config = ( new ScanConfig() )->build( $include, $paths );
+		$config = ( new ScanConfig() )->build( $include, $paths, $cap );
 
 		if ( array() === $config['sites'] ) {
 			WP_CLI::error( 'No matching sites found.' );
