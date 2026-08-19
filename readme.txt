@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 6.8
 Requires PHP: 8.3
-Stable tag: 0.5.0
+Stable tag: 0.6.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,11 @@ Kjeks assists with consent management. It does not, and cannot, guarantee legal 
 5. Review each site's inventory under **Settings → Cookie Consent**.
 
 == Changelog ==
+
+= 0.6.0 =
+* Breaking: remove the per-site consent admin screen and the /kjeks/v1/site-config REST route; all administration is now under Network Admin.
+* Default the banner privacy link to each site's core privacy page (get_privacy_policy_url()); add the kjeks_privacy_url filter.
+* Drop per-site local trackers and content overrides; legacy options are cleaned up on uninstall.
 
 = 0.5.0 =
 * Add a network-admin toggle to show the consent banner until a visitor makes a choice (default on).

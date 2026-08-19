@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0 - 2026-08-19
+
+- **Breaking:** remove the per-site consent admin screen and the `/kjeks/v1/site-config` REST route. All consent administration now happens under Network Admin (`manage_network`).
+- Default the banner's privacy policy link to each site's core privacy page (`get_privacy_policy_url()`); add the `kjeks_privacy_url` filter for per-site/per-locale overrides.
+- Drop per-site local trackers and content overrides. Legacy `kjeks_site_trackers` / `kjeks_site_content` / `kjeks_site_overrides` options are no longer read and are cleaned up on uninstall.
+
 ## 0.5.0 - 2026-08-19
 
 - Add a network-admin toggle to show the consent banner until a visitor makes a choice (default on).
