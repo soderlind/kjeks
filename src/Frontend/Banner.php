@@ -15,6 +15,7 @@ use Soderlind\Kjeks\Consent\PolicyVersion;
 use Soderlind\Kjeks\Inventory\InventoryResolver;
 use Soderlind\Kjeks\Inventory\NetworkStore;
 use Soderlind\Kjeks\Inventory\SiteStore;
+use Soderlind\Kjeks\Inventory\TrackerRegistry;
 
 /**
  * Wires the consent banner, preference dialog, and public shortcodes/blocks.
@@ -47,7 +48,7 @@ final class Banner {
 	private function config(): array {
 		$network   = new NetworkStore();
 		$site      = new SiteStore( get_current_blog_id() );
-		$inventory = new InventoryResolver( $network, $site );
+		$inventory = new InventoryResolver( new TrackerRegistry(), $site );
 		$content   = ( new ContentResolver( $network, $site ) )->resolve();
 
 		$categories = array();
@@ -90,7 +91,7 @@ final class Banner {
 
 	public function shortcode_declaration(): string {
 		$declaration = new CookieDeclaration(
-			new InventoryResolver( new NetworkStore(), new SiteStore( get_current_blog_id() ) )
+			new InventoryResolver( new TrackerRegistry(), new SiteStore( get_current_blog_id() ) )
 		);
 
 		return $declaration->render();

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Soderlind\Kjeks\Scan;
 
 use Soderlind\Kjeks\Inventory\Tracker;
+use Soderlind\Kjeks\Inventory\TrackerIdentity;
 
 /**
  * Validates and normalizes a scan-import payload into unreviewed trackers.
@@ -96,7 +97,7 @@ final class ScanValidator {
 		// Category is intentionally ignored on import; observations start unclassified.
 		return Tracker::from_array(
 			array(
-				'id'             => $observation['id'] ?? ( $name . '-' . $storage_type . '-' . ( $observation['domain'] ?? '' ) ),
+				'id'             => $observation['id'] ?? TrackerIdentity::for( $name, $storage_type, (string) ( $observation['domain'] ?? '' ) ),
 				'name'           => $name,
 				'provider'       => (string) ( $observation['provider'] ?? ( $observation['domain'] ?? '' ) ),
 				'party'          => $party,

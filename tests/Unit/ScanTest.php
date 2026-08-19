@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-use Soderlind\Kjeks\Inventory\NetworkStore;
+use Soderlind\Kjeks\Inventory\TrackerRegistry;
 use Soderlind\Kjeks\Scan\ScanImporter;
 use Soderlind\Kjeks\Scan\ScanValidator;
 
@@ -64,7 +64,7 @@ it( 'aggregates observations into the network registry, unreviewed', function ()
 	);
 	$imported = ( new ScanImporter() )->import( 5, $result['trackers'] );
 
-	$stored = ( new NetworkStore() )->trackers();
+	$stored = ( new TrackerRegistry() )->trackers();
 
 	expect( $imported )->toBe( 1 )
 		->and( $stored )->toHaveCount( 1 );
@@ -87,7 +87,7 @@ it( 'collapses the same cookie from multiple sites into one entry', function ():
 	( new ScanImporter() )->import( 1, $obs );
 	$added_again = ( new ScanImporter() )->import( 2, $obs );
 
-	$stored = ( new NetworkStore() )->trackers();
+	$stored = ( new TrackerRegistry() )->trackers();
 
 	expect( $stored )->toHaveCount( 1 )
 		->and( $added_again )->toBe( 0 );
@@ -116,7 +116,7 @@ it( 'preserves a network review when the cookie is re-observed', function (): vo
 
 	( new ScanImporter() )->import( 2, $obs );
 
-	$tracker = array_values( ( new NetworkStore() )->trackers() )[0];
+	$tracker = array_values( ( new TrackerRegistry() )->trackers() )[0];
 
 	expect( $tracker->reviewed )->toBeTrue()
 		->and( $tracker->category )->toBe( 'analytics' )

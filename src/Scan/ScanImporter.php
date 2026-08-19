@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Soderlind\Kjeks\Scan;
 
 use Soderlind\Kjeks\Inventory\InventoryResolver;
-use Soderlind\Kjeks\Inventory\NetworkStore;
 use Soderlind\Kjeks\Inventory\Tracker;
+use Soderlind\Kjeks\Inventory\TrackerRegistry;
 
 /**
  * Aggregates scan observations into the network-wide registry.
@@ -34,7 +34,7 @@ final class ScanImporter {
 			return 0;
 		}
 
-		$result = ( new NetworkStore() )->merge_observations( $blog_id, $trackers );
+		$result = ( new TrackerRegistry() )->merge_observations( $blog_id, $trackers );
 
 		InventoryResolver::flush_cache();
 

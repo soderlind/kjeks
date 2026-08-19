@@ -13,6 +13,7 @@ use Soderlind\Kjeks\Consent\Categories;
 use Soderlind\Kjeks\Inventory\InventoryResolver;
 use Soderlind\Kjeks\Inventory\NetworkStore;
 use Soderlind\Kjeks\Inventory\Tracker;
+use Soderlind\Kjeks\Inventory\TrackerRegistry;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -57,7 +58,7 @@ final class NetworkConfigController {
 
 	public function get_config(): WP_REST_Response {
 		$network  = new NetworkStore();
-		$trackers = $network->trackers();
+		$trackers = ( new TrackerRegistry() )->trackers();
 
 		$rows      = array();
 		$reviewed  = 0;
@@ -104,8 +105,9 @@ final class NetworkConfigController {
 	}
 
 	public function save_config( WP_REST_Request $request ): WP_REST_Response {
+		$registry = new TrackerRegistry();
 		$network  = new NetworkStore();
-		$trackers = $network->trackers();
+		$trackers = $registry->trackers();
 
 		// Per-tracker reviews (also used for bulk apply on the client).
 		foreach ( (array) $request->get_param( 'reviews' ) as $id => $review ) {
@@ -144,7 +146,7 @@ final class NetworkConfigController {
 			$trackers[ $tracker->id ] = $tracker;
 		}
 
-		$network->save_trackers( $trackers );
+		$registry->save_trackers( $trackers );
 
 		$content = $request->get_param( 'content' );
 		if ( is_array( $content ) ) {

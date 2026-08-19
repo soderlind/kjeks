@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 6.8
 Requires PHP: 8.3
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,11 @@ Kjeks assists with consent management. It does not, and cannot, guarantee legal 
 5. Review each site's inventory under **Settings → Cookie Consent**.
 
 == Changelog ==
+
+= 0.2.0 =
+* Split the network tracker registry into its own module, separate from network settings.
+* Resolve the effective inventory through a single module; remove the unused per-site override path.
+* Add a Tracker identity rule so the same cookie aggregates consistently across sites.
 
 = 0.1.0 =
 * Initial Phase 1 release: multisite runtime, blocking API, admin registry, adapters, tests, docs.

@@ -12,9 +12,9 @@ namespace Soderlind\Kjeks\Inventory;
 use Soderlind\Kjeks\Consent\PolicyVersion;
 
 /**
- * Merges network-wide definitions with a site's overrides and local trackers.
+ * Resolves the effective inventory for one site.
  *
- * Sites inherit network definitions at read-time (no per-site copy). The
+ * Merges the site-scoped network registry with the site's local trackers. The
  * resolved, reviewed inventory is the single source of truth for the consent
  * UI and the cookie declaration. Results are cached in a transient keyed by
  * the policy version so frontend requests stay cheap.
@@ -24,47 +24,50 @@ final class InventoryResolver {
 	private const CACHE_PREFIX = 'kjeks_inventory_';
 
 	public function __construct(
-		private readonly NetworkStore $network,
+		private readonly TrackerRegistry $registry,
 		private readonly SiteStore $site,
 	) {}
 
 	/**
 	 * The effective, merged inventory keyed by tracker id.
 	 *
-	 * Network trackers are scoped to the sites they were observed on (an empty
-	 * site list means network-wide). Reviewed network trackers are authoritative
-	 * and ignore per-site overrides.
+	 * Network trackers are scoped to the sites they apply to; site-local
+	 * trackers are added on top. The network registry is authoritative.
 	 *
 	 * @return array<string, Tracker>
 	 */
 	public function all(): array {
-		$overrides = $this->site->overrides();
-		$blog_id   = $this->site->blog_id();
-		$effective = array();
-
-		foreach ( $this->network->trackers() as $id => $tracker ) {
-			if ( array() !== $tracker->sites && ! in_array( $blog_id, $tracker->sites, true ) ) {
-				continue;
-			}
-
-			if ( $tracker->reviewed ) {
-				$effective[ $id ] = $tracker;
-				continue;
-			}
-
-			$override = $overrides[ $id ] ?? array();
-			if ( isset( $override['enabled'] ) && false === (bool) $override['enabled'] ) {
-				continue;
-			}
-
-			$effective[ $id ] = $this->apply_override( $tracker, $override );
-		}
+		$effective = $this->scoped_network_trackers();
 
 		foreach ( $this->site->local_trackers() as $id => $tracker ) {
 			$effective[ $id ] = $tracker;
 		}
 
 		return $effective;
+	}
+
+	/**
+	 * Network trackers that apply to this site.
+	 *
+	 * A tracker with an empty site list is network-wide; otherwise it applies
+	 * only to the sites where it was observed. This is the single home of the
+	 * site-scope rule.
+	 *
+	 * @return array<string, Tracker>
+	 */
+	public function scoped_network_trackers(): array {
+		$blog_id = $this->site->blog_id();
+		$out     = array();
+
+		foreach ( $this->registry->trackers() as $id => $tracker ) {
+			if ( array() !== $tracker->sites && ! in_array( $blog_id, $tracker->sites, true ) ) {
+				continue;
+			}
+
+			$out[ $id ] = $tracker;
+		}
+
+		return $out;
 	}
 
 	/**
@@ -121,18 +124,5 @@ final class InventoryResolver {
 		for ( $version = 1; $version <= $max; $version++ ) {
 			delete_transient( self::CACHE_PREFIX . $version );
 		}
-	}
-
-	/**
-	 * @param array<string, mixed> $override Override data for a network tracker.
-	 */
-	private function apply_override( Tracker $tracker, array $override ): Tracker {
-		if ( array() === $override ) {
-			return $tracker;
-		}
-
-		$data = array_merge( $tracker->to_array(), array_diff_key( $override, array( 'enabled' => true ) ) );
-
-		return Tracker::from_array( $data );
 	}
 }

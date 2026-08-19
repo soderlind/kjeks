@@ -10,44 +10,24 @@ declare(strict_types=1);
 namespace Soderlind\Kjeks\Inventory;
 
 /**
- * Reads and writes one site's tracker inventory and overrides.
+ * Reads and writes one site's local trackers and display content.
  *
- * A site stores three things:
- *  - overrides: per-network-tracker changes (disable / reclassify / metadata),
+ * A site stores two things:
  *  - local trackers: site-only definitions and imported observations,
  *  - content: display overrides for the banner.
+ *
+ * Network trackers are authoritative and owned by the network registry; a site
+ * does not override them.
  */
 final class SiteStore {
 
-	private const OVERRIDES = 'kjeks_site_overrides';
-	private const LOCAL     = 'kjeks_site_trackers';
-	private const CONTENT   = 'kjeks_site_content';
+	private const LOCAL   = 'kjeks_site_trackers';
+	private const CONTENT = 'kjeks_site_content';
 
 	public function __construct( private readonly int $blog_id ) {}
 
 	public function blog_id(): int {
 		return $this->blog_id;
-	}
-
-	/**
-	 * Per-network-tracker overrides, keyed by tracker id.
-	 *
-	 * Each override may contain: enabled (bool), category (string), and any
-	 * metadata fields the site wishes to change.
-	 *
-	 * @return array<string, array<string, mixed>>
-	 */
-	public function overrides(): array {
-		$raw = $this->get( self::OVERRIDES, array() );
-
-		return is_array( $raw ) ? $raw : array();
-	}
-
-	/**
-	 * @param array<string, array<string, mixed>> $overrides Overrides keyed by tracker id.
-	 */
-	public function save_overrides( array $overrides ): void {
-		$this->set( self::OVERRIDES, $overrides );
 	}
 
 	/**

@@ -16,16 +16,24 @@ _Avoid_: Type, group, purpose
 Code that activates a third-party technology, gated by a Category. Registered through the plugin's developer API.
 _Avoid_: Plugin, extension, connector
 
+**Registry**:
+The network-wide store of Tracker definitions and aggregated discoveries — one entry per cookie across the whole network, recording every site it appeared on. The source the per-site Inventory is resolved from.
+_Avoid_: Catalog, list
+
 **Inventory**:
-The reviewed set of Trackers for one site (`blog_id`). Authoritative for that site's consent UI and cookie declaration.
-_Avoid_: List, catalog, registry (registry = the admin screen, not the data)
+The effective set of Trackers resolved for one site (`blog_id`) — the site-scoped slice of the Registry plus the site's local Trackers. Authoritative for that site's consent UI and cookie declaration.
+_Avoid_: List, catalog
 
 **Observation**:
 A single item recorded by a discovery scan, before any admin review. Observational only — cannot prove the absence of tracking.
 _Avoid_: Finding, hit, result
 
+**Identity**:
+The rule for when two Observations are the same Tracker — derived from name, storage type, and domain. The Registry keys on it, so aggregation collapses duplicates.
+_Avoid_: Key, hash
+
 **Review**:
-The admin act of classifying an Observation into the Inventory (assigning Category, provider, purpose, etc.). Discoveries are never auto-classified as `necessary`.
+The admin act of classifying an Observation into the Registry (assigning Category, provider, purpose, etc.). Discoveries are never auto-classified as `necessary`.
 _Avoid_: Approve (approve = the import gate specifically), triage
 
 **Policy version**:

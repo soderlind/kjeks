@@ -15,6 +15,7 @@ use Soderlind\Kjeks\Inventory\InventoryResolver;
 use Soderlind\Kjeks\Inventory\NetworkStore;
 use Soderlind\Kjeks\Inventory\SiteStore;
 use Soderlind\Kjeks\Inventory\Tracker;
+use Soderlind\Kjeks\Inventory\TrackerRegistry;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -59,17 +60,12 @@ final class SettingsController {
 	public function get_config(): WP_REST_Response {
 		$site      = new SiteStore( get_current_blog_id() );
 		$network   = new NetworkStore();
-		$inventory = new InventoryResolver( $network, $site );
-		$blog_id   = get_current_blog_id();
+		$inventory = new InventoryResolver( new TrackerRegistry(), $site );
 
 		$trackers = array();
 
 		// Network trackers are read-only here; the network admin owns them.
-		foreach ( $network->trackers() as $tracker ) {
-			if ( array() !== $tracker->sites && ! in_array( $blog_id, $tracker->sites, true ) ) {
-				continue;
-			}
-
+		foreach ( $inventory->scoped_network_trackers() as $tracker ) {
 			$data            = $tracker->to_array();
 			$data['source']  = 'network';
 			$data['locked']  = true;
