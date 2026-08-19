@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 6.8
 Requires PHP: 8.3
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,10 @@ Kjeks assists with consent management. It does not, and cannot, guarantee legal 
 5. Review each site's inventory under **Settings → Cookie Consent**.
 
 == Changelog ==
+
+= 0.3.0 =
+* Add a network-admin tab extension seam so add-ons can contribute their own tabs to the Kjeks network screen via the kjeks.networkAdminTabs JavaScript filter.
+* Fix the KJEKS_VERSION constant, which was left at 0.1.0.
 
 = 0.2.0 =
 * Split the network tracker registry into its own module, separate from network settings.
