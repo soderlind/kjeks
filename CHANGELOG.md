@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0 - 2026-08-19
+
+- Move the discovery scanner into its own repository, [soderlind/kjeks-scanner](https://github.com/soderlind/kjeks-scanner); it integrates over the unchanged REST `scan-config` / `import` contract. No plugin runtime change.
+- Document the plugin family: add an ecosystem overview (kjeks, kjeks-google, kjeks-ai-reviewer, kjeks-scanner) with integration seams to `docs/architecture.md`.
+
 ## 0.3.0 - 2026-08-19
 
 - Add a network-admin tab extension seam so add-ons can contribute their own tabs to the Kjeks network screen via the `kjeks.networkAdminTabs` JavaScript filter.

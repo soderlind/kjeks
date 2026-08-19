@@ -21,6 +21,11 @@ from the reviewed set.
 - The discovery scanner is observational; it cannot prove the absence of
   tracking.
 
+Kjeks is the **core** of a small family of plugins. Its satellites
+(`kjeks-google`, `kjeks-ai-reviewer`) and the standalone `kjeks-scanner` are
+mapped in [§9 Ecosystem](#9-ecosystem-the-kjeks-family); each integrates only
+through the seams documented there.
+
 ## 2. Actors and external systems
 
 | Actor | Interacts via |
@@ -29,8 +34,9 @@ from the reviewed set.
 | Site administrator | Settings → Cookie Consent (per-site review, read-only for network cookies) |
 | Network administrator | Network Admin → Cookie Consent (aggregated review) |
 | Integration developer | Public PHP API in [src/functions.php](../src/functions.php) + client events |
-| CI (GitHub Action) | Scanner + REST `scan-config` / `import` |
-| `kjeks-google` add-on | Public API + `window.kjeks` events (separate plugin) |
+| `kjeks-scanner` (separate repo) | REST `scan-config` / `import`; runs its own scheduled GitHub Action |
+| `kjeks-google` add-on (separate repo) | Public API + `window.kjeks` events |
+| `kjeks-ai-reviewer` add-on (separate repo) | `TrackerRegistry` + `kjeks.networkAdminTabs` filter + core AI client |
 
 ## 3. Bootstrap and wiring
 
@@ -213,14 +219,55 @@ the scanner must not be loaded by the WordPress runtime.
 | Change what the scanner collects | [kjeks-scanner](https://github.com/soderlind/kjeks-scanner): src/collect.js, src/scan.js |
 | Add a WP-CLI subcommand | `src/Cli/Command.php` + registration in `src/Plugin.php` |
 
-## 9. Related plugin: kjeks-google
+## 9. Ecosystem (the kjeks family)
 
-`kjeks-google` (separate repo) is an **adapter over the public API** — no direct
-dependency on Kjeks internals. It sets Google Consent Mode v2 signals to denied,
-registers the GTM/GA container as an inert integration via
-`kjeks_register_integration`, and updates signals on the `kjeks:granted` /
-`kjeks:withdrawn` client events. Resolution logic lives in its own
-`GoogleTagConfig` module.
+Kjeks is the **core**; two add-on plugins and a standalone scanner extend it,
+each in its own repository. Every satellite depends on Kjeks; **Kjeks depends on
+none of them**. Integration happens only through the stable seams below — never
+through private internals.
+
+| Repository | Role | Integrates via | Requires Kjeks |
+| --- | --- | --- | --- |
+| [kjeks](https://github.com/soderlind/kjeks) | Core: consent runtime, registry, review, declaration | — | — |
+| [kjeks-google](https://github.com/soderlind/kjeks-google) | Google Consent Mode v2 + GTM/GA container gating | Public PHP API + `window.kjeks` events | Yes (`Requires Plugins: kjeks`) |
+| [kjeks-ai-reviewer](https://github.com/soderlind/kjeks-ai-reviewer) | AI-assisted, advisory classification of unreviewed trackers | `TrackerRegistry` (guarded) + `kjeks.networkAdminTabs` filter + core AI client | Yes (`Requires Plugins: kjeks`) |
+| [kjeks-scanner](https://github.com/soderlind/kjeks-scanner) | Standalone Playwright discovery scanner | REST only (`scan-config` + `import`) | No — HTTP client, not a WP plugin |
+
+```mermaid
+flowchart LR
+  google[kjeks-google] -->|PHP API + events| core[(kjeks core)]
+  ai[kjeks-ai-reviewer] -->|registry + JS filter| core
+  scanner[kjeks-scanner] -. REST scan-config / import .-> core
+```
+
+### Integration seams (the only supported contracts)
+
+| Seam | Kind | Producer (kjeks) | Consumer |
+| --- | --- | --- | --- |
+| Public PHP API | functions | [src/functions.php](../src/functions.php) (`kjeks_register_integration`, `kjeks_is_granted`, …) | kjeks-google |
+| Client events | JS `CustomEvent` | `assets/src/banner.js` (`kjeks:granted`, `kjeks:withdrawn`) | kjeks-google |
+| Network-admin tabs | JS filter | `assets/src/admin/network.js` (`applyFilters( 'kjeks.networkAdminTabs' )`) | kjeks-ai-reviewer |
+| Tracker registry | PHP class (guarded) | [src/Inventory/TrackerRegistry.php](../src/Inventory/TrackerRegistry.php), `Tracker::with_review` | kjeks-ai-reviewer |
+| Consent record | wire schema | [src/Consent/ConsentSchema.php](../src/Consent/ConsentSchema.php) (`{v,t,b,c}`) | banner.js, scanner |
+| Scan config / import | REST | [src/Rest/ScanConfigController.php](../src/Rest/ScanConfigController.php), [src/Rest/ImportController.php](../src/Rest/ImportController.php) | kjeks-scanner |
+
+**Rules the satellites follow:**
+
+- Each guards every cross-plugin call (`function_exists` / `class_exists`) so it
+  degrades to inert when Kjeks is inactive — `kjeks-google/includes/Dependency.php`,
+  `kjeks-ai-reviewer/src/Dependency.php`.
+- `kjeks-google` is an **adapter over the public API** — no direct dependency on
+  Kjeks internals. It sets Consent Mode v2 signals to denied, registers the
+  GTM/GA container as an inert integration via `kjeks_register_integration`, and
+  updates signals on the `kjeks:granted` / `kjeks:withdrawn` events; resolution
+  lives in its own `GoogleTagConfig`.
+- `kjeks-ai-reviewer` **never writes classifications directly**. It stores
+  advisory suggestions separately (`kjeks_ai_suggestions`) and applies one only
+  through `Tracker::with_review` when an admin accepts it. Its own map is in
+  [kjeks-ai-reviewer/docs/architecture.md](https://github.com/soderlind/kjeks-ai-reviewer/blob/main/docs/architecture.md).
+- `kjeks-scanner` is **never loaded by WordPress**. It speaks REST only and
+  imports observations as **unreviewed** (see
+  [ADR-0005](adr/0005-scanner-uses-real-chromium.md)).
 
 ## 10. Open questions / unknowns
 
