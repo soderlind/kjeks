@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0 - 2026-08-19
+
+- Add single-site support: the consent admin registers under the normal admin menu with `manage_options` on non-multisite installs (network admin with `manage_network_options` on multisite). The review UI drops the "network" wording and hides the Sites column on single-site.
+
 ## 0.6.0 - 2026-08-19
 
 - **Breaking:** remove the per-site consent admin screen and the `/kjeks/v1/site-config` REST route. All consent administration now happens under Network Admin (`manage_network`).
