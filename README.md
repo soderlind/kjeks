@@ -87,7 +87,15 @@ glossary in [`CONTEXT.md`](CONTEXT.md).
 - **Phase 2 (done):** Playwright discovery scanner, authenticated REST/WP-CLI
   import, browser tests confirming no optional storage before consent, and a
   scheduled GitHub Action.
-- **Later:** Google Tag Manager / Analytics add-on using Consent Mode v2.
+- **Network-aggregated review (done):** discovered cookies aggregate to a
+  network registry, reviewed once with bulk actions; network review is
+  authoritative and read-only per site.
+- **Google Tag Manager / Analytics (done):** shipped as the separate
+  [`kjeks-google`](https://github.com/soderlind/kjeks-google) add-on using
+  Consent Mode v2.
+- **Next:** integration tests against a real multisite; Public Suffix List for
+  first/third-party classification; an admin nudge when a site has unreviewed
+  observations.
 
 ## License
 
