@@ -3,7 +3,7 @@
  * Plugin Name:       Kjeks
  * Plugin URI:        https://github.com/soderlind/kjeks
  * Description:       Cookie consent management for WordPress (single site or Multisite): per-site tracker inventories, prior blocking of non-essential technologies, and an accessible consent banner. Assists with consent management; does not claim automatic legal compliance.
- * Version:           0.7.0
+ * Version:           0.8.0
  * Requires at least: 6.8
  * Requires PHP:      8.3
  * Author:            Per Søderlind
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KJEKS_VERSION', '0.7.0' );
+define( 'KJEKS_VERSION', '0.8.0' );
 define( 'KJEKS_FILE', __FILE__ );
 define( 'KJEKS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'KJEKS_URL', plugin_dir_url( __FILE__ ) );
@@ -34,6 +34,19 @@ define( 'KJEKS_BASENAME', plugin_basename( __FILE__ ) );
 $kjeks_autoload = KJEKS_DIR . 'vendor/autoload.php';
 if ( is_readable( $kjeks_autoload ) ) {
 	require $kjeks_autoload;
+}
+
+// Self-updates from GitHub releases. Private repos need a KJEKS_GITHUB_TOKEN constant.
+if ( class_exists( \Soderlind\WordPress\GitHubUpdater::class ) ) {
+	\Soderlind\WordPress\GitHubUpdater::init(
+		github_url:   'https://github.com/soderlind/kjeks',
+		plugin_file:  __FILE__,
+		plugin_slug:  'kjeks',
+		name_regex:   '/kjeks\.zip/',
+		branch:       'main',
+		check_period: 6,
+		auth_token:   defined( 'KJEKS_GITHUB_TOKEN' ) ? KJEKS_GITHUB_TOKEN : '',
+	);
 }
 
 register_activation_hook( __FILE__, array( Lifecycle\Activation::class, 'activate' ) );

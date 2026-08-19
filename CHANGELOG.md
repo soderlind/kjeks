@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0 - 2026-08-19
+
+- Self-updates from GitHub releases via the `wordpress-github-updater` library (bundled `plugin-update-checker`). Define the optional `KJEKS_GITHUB_TOKEN` constant for private repositories or higher GitHub API rate limits.
+- Add GitHub Actions workflows to build and attach the release ZIP on published releases and on manual dispatch.
+
 ## 0.7.0 - 2026-08-19
 
 - Add single-site support: the consent admin registers under the normal admin menu with `manage_options` on non-multisite installs (network admin with `manage_network_options` on multisite). The review UI drops the "network" wording and hides the Sites column on single-site.

@@ -2,9 +2,9 @@
 Contributors: soderlind
 Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
-Tested up to: 6.8
+Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 0.7.0
+Stable tag: 0.8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,10 @@ Kjeks assists with consent management. It does not, and cannot, guarantee legal 
 5. Review each site's inventory under **Settings → Cookie Consent**.
 
 == Changelog ==
+
+= 0.8.0 =
+* Self-updates from GitHub releases via the wordpress-github-updater library (bundled plugin-update-checker). Define the optional KJEKS_GITHUB_TOKEN constant for private repositories or higher GitHub API rate limits.
+* Add GitHub Actions workflows to build and attach the release ZIP on published releases and on manual dispatch.
 
 = 0.7.0 =
 * Add single-site support: the consent admin registers under the normal admin menu (manage_options) on non-multisite installs; the review UI drops the "network" wording and hides the Sites column.
