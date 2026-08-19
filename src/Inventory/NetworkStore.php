@@ -66,4 +66,30 @@ final class NetworkStore {
 		$settings['delete_on_uninstall'] = $enabled;
 		update_site_option( self::SETTINGS, $settings );
 	}
+
+	/**
+	 * Whether the consent banner is shown by default until a visitor decides
+	 * (network setting, default on). When off, the banner is not auto-shown and
+	 * visitors open it from a preferences link; optional categories stay denied
+	 * until a choice is made.
+	 */
+	public function banner_default_visible(): bool {
+		$settings = get_site_option( self::SETTINGS, array() );
+		if ( is_array( $settings ) && array_key_exists( 'banner_default_visible', $settings ) ) {
+			return (bool) $settings['banner_default_visible'];
+		}
+
+		return true;
+	}
+
+	/**
+	 * Sets whether the banner is shown by default until a visitor decides.
+	 */
+	public function set_banner_default_visible( bool $visible ): void {
+		$settings = get_site_option( self::SETTINGS, array() );
+		$settings = is_array( $settings ) ? $settings : array();
+
+		$settings['banner_default_visible'] = $visible;
+		update_site_option( self::SETTINGS, $settings );
+	}
 }

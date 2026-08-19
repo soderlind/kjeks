@@ -155,6 +155,7 @@ function App() {
 				add: add.name.trim() ? add : undefined,
 				content: config.content,
 				deleteOnUninstall: config.deleteOnUninstall,
+				bannerDefaultVisible: config.bannerDefaultVisible,
 			},
 		} )
 			.then( ( data ) => {
@@ -276,6 +277,13 @@ function App() {
 			h(
 				PanelBody,
 				{ title: __( 'Banner defaults', 'kjeks' ), initialOpen: false },
+				h( ToggleControl, {
+					label: __( 'Show the consent banner until a visitor makes a choice', 'kjeks' ),
+					help: __( 'On by default. When off, the banner is not shown automatically; visitors open it from a “Cookie settings” link, and optional categories stay denied until a choice is made.', 'kjeks' ),
+					checked: config.bannerDefaultVisible !== false,
+					onChange: ( v ) => setConfig( { ...config, bannerDefaultVisible: v } ),
+					__nextHasNoMarginBottom: true,
+				} ),
 				h( TextControl, {
 					label: __( 'Heading', 'kjeks' ),
 					value: config.content.heading || '',
@@ -454,6 +462,7 @@ function normalize( data ) {
 		siteNames: data.siteNames || {},
 		content: data.content || {},
 		deleteOnUninstall: !! data.deleteOnUninstall,
+		bannerDefaultVisible: data.bannerDefaultVisible !== false,
 	};
 }
 

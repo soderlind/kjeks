@@ -34,7 +34,13 @@ function readRecord() {
 	} catch ( e ) {
 		return null;
 	}
-	if ( ! data || data.v !== config.policyVersion || data.b !== config.blogId ) {
+	// Compare loosely: kjeksConfig values are stringified by wp_localize_script,
+	// while an injected record (e.g. from the scanner) may carry numbers.
+	if (
+		! data ||
+		String( data.v ) !== String( config.policyVersion ) ||
+		String( data.b ) !== String( config.blogId )
+	) {
 		return null;
 	}
 	return data;
@@ -670,8 +676,14 @@ function boot() {
 		return;
 	}
 
-	showBanner();
-	ensureTrigger();
+	// Show the banner until a choice is made, unless the network disabled it.
+	// While the banner is visible the "Cookie settings" trigger is redundant, so
+	// it is only added when the banner is not shown.
+	if ( config.bannerDefaultVisible !== false ) {
+		showBanner();
+	} else {
+		ensureTrigger();
+	}
 }
 
 function objFromSet( set ) {

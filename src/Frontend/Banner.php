@@ -62,16 +62,17 @@ final class Banner {
 		}
 
 		return array(
-			'cookieName'    => ConsentSchema::COOKIE_NAME,
-			'storageKey'    => ConsentSchema::STORAGE_KEY,
-			'cookieMonths'  => ConsentSchema::COOKIE_MONTHS,
-			'policyVersion' => PolicyVersion::current(),
-			'blogId'        => get_current_blog_id(),
-			'secure'        => is_ssl(),
-			'honorGpc'      => (bool) apply_filters( 'kjeks_honor_gpc', true ),
-			'categories'    => $categories,
-			'content'       => $content,
-			'declaration'   => $inventory->cached_declaration(),
+			'cookieName'           => ConsentSchema::COOKIE_NAME,
+			'storageKey'           => ConsentSchema::STORAGE_KEY,
+			'cookieMonths'         => ConsentSchema::COOKIE_MONTHS,
+			'policyVersion'        => PolicyVersion::current(),
+			'blogId'               => get_current_blog_id(),
+			'secure'               => is_ssl(),
+			'honorGpc'             => (bool) apply_filters( 'kjeks_honor_gpc', true ),
+			'bannerDefaultVisible' => $network->banner_default_visible(),
+			'categories'           => $categories,
+			'content'              => $content,
+			'declaration'          => $inventory->cached_declaration(),
 		);
 	}
 
