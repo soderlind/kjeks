@@ -1,10 +1,6 @@
 /vendor/
 /node_modules/
 /build/
-/scanner/node_modules/
-/scanner/test-results/
-/scanner/playwright-report/
-/scanner/config.json
 *.log
 .DS_Store
 .phpunit.result.cache
