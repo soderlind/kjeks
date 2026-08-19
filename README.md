@@ -82,17 +82,22 @@ glossary in [`CONTEXT.md`](CONTEXT.md).
 
 ## Roadmap
 
-- **Phase 1 (done):** multisite runtime, blocking API, admin registry, adapters,
-  tests, docs.
-- **Phase 2 (done):** Playwright discovery scanner, authenticated REST/WP-CLI
-  import, browser tests confirming no optional storage before consent, and a
-  scheduled GitHub Action.
-- **Network-aggregated review (done):** discovered cookies aggregate to a
-  network registry, reviewed once with bulk actions; network review is
-  authoritative and read-only per site.
-- **Google Tag Manager / Analytics (done):** shipped as the separate
-  [`kjeks-google`](https://github.com/soderlind/kjeks-google) add-on using
-  Consent Mode v2.
+- **Phase 1 (done):** runtime, blocking API, admin registry, adapters, tests,
+  docs.
+- **Phase 2 (done):** Playwright discovery scanner — now its own repo,
+  [`kjeks-scanner`](https://github.com/soderlind/kjeks-scanner) — with
+  authenticated REST/WP-CLI import, browser tests confirming no optional storage
+  before consent, and a scheduled GitHub Action.
+- **Network-aggregated review (done):** discovered cookies aggregate to a single
+  network registry, reviewed once with bulk actions.
+- **One admin surface (done):** consent is administered from a single screen —
+  Network Admin on multisite, the standard admin menu on single-site; the
+  separate per-site screen was removed.
+- **Single-site support (done):** runs on both single site and Multisite.
+- **Add-ons (done):** [`kjeks-google`](https://github.com/soderlind/kjeks-google)
+  (Google Consent Mode v2) and
+  [`kjeks-ai-reviewer`](https://github.com/soderlind/kjeks-ai-reviewer)
+  (AI-assisted classification of unreviewed cookies).
 - **Next:** integration tests against a real multisite; Public Suffix List for
   first/third-party classification; an admin nudge when a site has unreviewed
   observations.
