@@ -1,0 +1,9 @@
+parameters:
+	level: 8
+	paths:
+		- src
+	bootstrapFiles:
+		- kjeks.php
+	scanDirectories:
+		- src
+	treatPhpDocTypesAsCertain: false

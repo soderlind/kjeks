@@ -1,0 +1,24 @@
+{
+	"name": "kjeks-scanner",
+	"version": "0.1.0",
+	"description": "Standalone Playwright discovery scanner for the Kjeks cookie-consent plugin. Runs separately from the WordPress runtime.",
+	"license": "GPL-2.0-or-later",
+	"private": true,
+	"type": "module",
+	"bin": {
+		"kjeks-scan": "src/cli.js"
+	},
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"scripts": {
+		"scan": "node src/cli.js",
+		"test": "playwright test"
+	},
+	"dependencies": {
+		"playwright": "^1.48.0"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.48.0"
+	}
+}

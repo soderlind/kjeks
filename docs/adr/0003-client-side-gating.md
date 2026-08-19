@@ -1,0 +1,3 @@
+# Gating happens client-side to stay page-cache safe
+
+Non-essential scripts, inline snippets, pixels, and embeds are always emitted in an inert form (`<script type="text/plain" data-kjeks-category>`, placeholder iframes) and activated on the client once consent is granted. We rejected server-side cookie-aware enqueuing because it produces per-visitor HTML that breaks full-page caching (Batcache, Redis, Cloudflare, Varnish) across a network. One HTML variant is served to everyone; the runtime decides what executes. Server-side conditional enqueue remains available as an opt-in filter for sites without full-page caching.

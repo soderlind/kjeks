@@ -1,0 +1,163 @@
+/**
+ * Kjeks admin styles (network review + site admin).
+ */
+
+.kjeks-network__summary {
+	font-size: 0.95rem;
+	color: #50575e;
+}
+
+.kjeks-network__toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 0.75rem;
+}
+
+.kjeks-network__filters {
+	display: flex;
+	gap: 0.25rem;
+}
+
+.kjeks-network__bulk {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 0.75rem;
+	margin-bottom: 0.75rem;
+	background: #f0f6fc;
+	border: 1px solid #c3ddfd;
+	border-radius: 4px;
+}
+
+.kjeks-network__table td,
+.kjeks-network__table th {
+	vertical-align: middle;
+}
+
+.kjeks-network__provider,
+.kjeks-network__domain {
+	font-size: 0.8rem;
+	color: #646970;
+}
+
+.kjeks-network__empty,
+.kjeks-admin__hint {
+	color: #646970;
+}
+
+.kjeks-admin__tracker {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+	width: 100%;
+}
+
+.kjeks-admin__tracker--locked {
+	opacity: 0.95;
+}
+
+.kjeks-admin__category {
+	font-size: 0.85rem;
+	color: #1d2327;
+}
+
+.kjeks-admin__badge {
+	font-size: 0.75rem;
+	font-weight: 600;
+	padding: 0.1rem 0.5rem;
+	border-radius: 999px;
+}
+
+.kjeks-admin__badge.is-reviewed {
+	background: #edfaef;
+	color: #007017;
+}
+
+.kjeks-admin__badge.is-pending {
+	background: #fcf9e8;
+	color: #996800;
+}
+
+.kjeks-admin__lock {
+	margin-inline-start: auto;
+}
+
+/* Restore vertical rhythm between stacked, top-level controls (we opt out of
+   the components' default margin, so add it back only where fields stack). */
+.kjeks-network .components-panel__body > .components-base-control,
+.kjeks-admin .components-panel__body > .components-base-control {
+	margin-bottom: 1.25rem;
+}
+
+.kjeks-network .components-panel__body > h3,
+.kjeks-admin .components-panel__body > h3 {
+	margin: 1.5rem 0 0.75rem;
+}
+
+.kjeks-network__summary {
+	margin: 0.5rem 0 1rem;
+}
+
+/* Keep in-table controls tight and aligned (they must not inherit the spacing
+   added above). */
+.kjeks-network__table .components-base-control {
+	margin-bottom: 0;
+}
+
+.kjeks-network__table td,
+.kjeks-network__table th {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.kjeks-network__table thead th {
+	white-space: nowrap;
+}
+
+.kjeks-network__table .check-column {
+	width: 2.5rem;
+	text-align: center;
+}
+
+/* Center both header and row checkboxes identically in the check column. */
+.kjeks-network__table .check-column .components-base-control__field,
+.kjeks-network__table .check-column .components-checkbox-control,
+.kjeks-network__table .check-column .components-flex {
+	margin: 0;
+	justify-content: center;
+}
+
+.kjeks-network__table td.check-column {
+	vertical-align: middle;
+	padding: 0.5rem 0;
+}
+
+.kjeks-network__count {
+	display: inline-block;
+	min-width: 1.25rem;
+	margin-inline-start: 0.4rem;
+	padding: 0 0.35rem;
+	font-size: 0.75rem;
+	line-height: 1.4;
+	border-radius: 999px;
+	background: rgba( 0, 0, 0, 0.12 );
+}
+
+.kjeks-network__filters .is-primary .kjeks-network__count {
+	background: rgba( 255, 255, 255, 0.25 );
+}
+
+.kjeks-network__bulk .components-base-control {
+	margin-bottom: 0;
+}
+
+/* Give the save button breathing room from the panel above it. */
+.kjeks-network > .components-button.is-primary,
+.kjeks-admin > .components-button.is-primary {
+	margin-top: 1.25rem;
+}

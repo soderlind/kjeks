@@ -1,0 +1,21 @@
+{
+	"sites": [
+		{
+			"blog_id": 1,
+			"paths": [ "/", "/about", "/contact" ],
+			"scenarios": [
+				{
+					"name": "open a gated video",
+					"steps": [
+						{ "action": "click", "selector": ".kjeks-embed__load" },
+						{ "action": "wait", "ms": 1000 }
+					]
+				}
+			]
+		},
+		{
+			"blog_id": 2,
+			"paths": [ "/", "/produkter" ]
+		}
+	]
+}
