@@ -7,6 +7,7 @@
 import './admin.css';
 import { render, useState, useEffect, useMemo, createElement as h } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
+import { applyFilters } from '@wordpress/hooks';
 import { __, sprintf, _n } from '@wordpress/i18n';
 import {
 	Panel,
@@ -20,6 +21,7 @@ import {
 	Button,
 	Notice,
 	Spinner,
+	TabPanel,
 	Tooltip,
 } from '@wordpress/components';
 
@@ -196,6 +198,7 @@ function App() {
 		notice &&
 			h( Notice, { status: notice.type, onRemove: () => setNotice( null ) }, notice.text ),
 
+		renderTabs( h( 'div', { className: 'kjeks-network__cookies' },
 		h(
 			Panel,
 			{},
@@ -331,6 +334,32 @@ function App() {
 			{ variant: 'primary', isBusy: saving, disabled: saving, onClick: save },
 			__( 'Save changes', 'kjeks' )
 		)
+		) )
+	);
+}
+
+/**
+ * Wraps the review body in a tabbed layout when add-ons register extra tabs
+ * via the `kjeks.networkAdminTabs` filter. With no add-on, renders as before.
+ *
+ * Each extra tab is `{ name, title, render: () => ReactNode }`.
+ */
+function renderTabs( cookiesBody ) {
+	const extraTabs = applyFilters( 'kjeks.networkAdminTabs', [] );
+	if ( ! extraTabs.length ) {
+		return cookiesBody;
+	}
+	const tabs = [
+		{ name: 'cookies', title: __( 'Cookies', 'kjeks' ) },
+		...extraTabs.map( ( t ) => ( { name: t.name, title: t.title } ) ),
+	];
+	return h(
+		TabPanel,
+		{ className: 'kjeks-network__tabs', tabs },
+		( tab ) =>
+			tab.name === 'cookies'
+				? cookiesBody
+				: ( ( extraTabs.find( ( t ) => t.name === tab.name ) || {} ).render || ( () => null ) )()
 	);
 }
 
