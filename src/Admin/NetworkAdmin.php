@@ -20,15 +20,22 @@ final class NetworkAdmin {
 	public const SLUG = 'kjeks-network';
 
 	public function hooks(): void {
-		add_action( 'network_admin_menu', array( $this, 'menu' ) );
+		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
+	}
+
+	/**
+	 * Capability to administer consent: network-wide on multisite, site admin on single-site.
+	 */
+	public function capability(): string {
+		return is_multisite() ? 'manage_network_options' : 'manage_options';
 	}
 
 	public function menu(): void {
 		add_menu_page(
 			__( 'Kjeks Cookie Consent', 'kjeks' ),
 			__( 'Cookie Consent', 'kjeks' ),
-			'manage_network_options',
+			$this->capability(),
 			self::SLUG,
 			array( $this, 'render' ),
 			'dashicons-privacy'
@@ -36,7 +43,7 @@ final class NetworkAdmin {
 	}
 
 	public function render(): void {
-		if ( ! current_user_can( 'manage_network_options' ) ) {
+		if ( ! current_user_can( $this->capability() ) ) {
 			wp_die( esc_html__( 'You do not have permission to access this page.', 'kjeks' ) );
 		}
 
@@ -73,8 +80,9 @@ final class NetworkAdmin {
 			'kjeks-network',
 			'kjeksNetwork',
 			array(
-				'restUrl' => esc_url_raw( rest_url( 'kjeks/v1/network-config' ) ),
-				'nonce'   => wp_create_nonce( 'wp_rest' ),
+				'restUrl'     => esc_url_raw( rest_url( 'kjeks/v1/network-config' ) ),
+				'nonce'       => wp_create_nonce( 'wp_rest' ),
+				'isMultisite' => is_multisite(),
 			)
 		);
 	}

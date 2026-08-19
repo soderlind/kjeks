@@ -1,8 +1,8 @@
 # Kjeks
 
-Cookie consent management for **WordPress Multisite**: per-site tracker
-inventories, prior blocking of non-essential technologies, and an accessible
-consent banner.
+Cookie consent management for **WordPress** (single site or Multisite): per-site
+tracker inventories, prior blocking of non-essential technologies, and an
+accessible consent banner.
 
 > Kjeks assists with consent management. It does **not** claim automatic legal
 > compliance, and discovery is observational — it cannot prove the absence of

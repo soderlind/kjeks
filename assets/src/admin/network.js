@@ -185,7 +185,7 @@ function App() {
 	return h(
 		'div',
 		{ className: 'kjeks-network' },
-		h( 'h1', {}, __( 'Cookie Consent — network review', 'kjeks' ) ),
+		h( 'h1', {}, settings.isMultisite === false ? __( 'Cookie Consent review', 'kjeks' ) : __( 'Cookie Consent — network review', 'kjeks' ) ),
 		h(
 			'p',
 			{ className: 'kjeks-network__summary' },
@@ -396,7 +396,7 @@ function TrackerTable( { rows, categoryOptions, selected, siteNames, onToggleSel
 				h( 'th', {}, __( 'Cookie', 'kjeks' ) ),
 				h( 'th', {}, __( 'Type', 'kjeks' ) ),
 				h( 'th', {}, __( 'Party', 'kjeks' ) ),
-				h( 'th', {}, __( 'Sites', 'kjeks' ) ),
+				settings.isMultisite !== false && h( 'th', {}, __( 'Sites', 'kjeks' ) ),
 				h( 'th', {}, __( 'Category', 'kjeks' ) ),
 				h( 'th', {}, __( 'Reviewed', 'kjeks' ) ),
 				h( 'th', {}, __( 'Remove', 'kjeks' ) )
@@ -424,7 +424,7 @@ function TrackerTable( { rows, categoryOptions, selected, siteNames, onToggleSel
 					),
 					h( 'td', {}, t.storage_type ),
 					h( 'td', {}, t.party === 'first' ? __( 'First', 'kjeks' ) : __( 'Third', 'kjeks' ) ),
-					h( 'td', {}, h( SitesCell, { sites: t.sites || [], siteNames } ) ),
+					settings.isMultisite !== false && h( 'td', {}, h( SitesCell, { sites: t.sites || [], siteNames } ) ),
 					h( 'td', {}, h( SelectControl, {
 						value: t.category,
 						options: categoryOptions,
