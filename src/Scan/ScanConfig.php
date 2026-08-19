@@ -19,17 +19,30 @@ use Soderlind\Kjeks\Consent\PolicyVersion;
  */
 final class ScanConfig {
 
+	/** @var callable(int): array<int, string> */
+	private $sampler;
+
+	/**
+	 * @param null|callable(int): array<int, string> $sampler Per-site path selector (testing seam).
+	 */
+	public function __construct( ?callable $sampler = null ) {
+		$this->sampler = $sampler ?? static fn ( int $cap ): array => ( new PageSampler( $cap ) )->paths();
+	}
+
 	/**
 	 * Builds the site list.
 	 *
-	 * @param array<int, int>    $include_ids Blog ids to include (empty = all public).
-	 * @param array<int, string> $paths       Representative paths for every site.
+	 * When $paths is null the paths are auto-selected per site (representative
+	 * URLs via WP_Query). Passing an array overrides that with explicit paths
+	 * for every site; an empty array falls back to root.
+	 *
+	 * @param array<int, int>         $include_ids Blog ids to include (empty = all public).
+	 * @param null|array<int, string> $paths       Explicit paths, or null to auto-select.
+	 * @param int                     $cap         Max auto-selected paths per site.
 	 * @return array{sites: array<int, array{url: string, blog_id: int, policy_version: int, paths: array<int, string>}>}
 	 */
-	public function build( array $include_ids = array(), array $paths = array( '/' ) ): array {
-		if ( array() === $paths ) {
-			$paths = array( '/' );
-		}
+	public function build( array $include_ids = array(), ?array $paths = null, int $cap = 10 ): array {
+		$cap = (int) apply_filters( 'kjeks_scan_url_cap', $cap );
 
 		$sites = array();
 		foreach ( $this->site_ids() as $blog_id ) {
@@ -38,11 +51,26 @@ final class ScanConfig {
 			}
 
 			switch_to_blog( $blog_id );
+
+			if ( null === $paths ) {
+				$site_paths = ( $this->sampler )( $cap );
+			} else {
+				$site_paths = array() === $paths ? array( '/' ) : array_values( $paths );
+			}
+
+			/**
+			 * Filters the representative paths for a site before scanning.
+			 *
+			 * @param array<int, string> $site_paths Selected paths.
+			 * @param int                $blog_id    Blog id.
+			 */
+			$site_paths = (array) apply_filters( 'kjeks_scan_paths', $site_paths, $blog_id );
+
 			$sites[] = array(
 				'url'            => home_url( '/' ),
 				'blog_id'        => $blog_id,
 				'policy_version' => PolicyVersion::current(),
-				'paths'          => array_values( $paths ),
+				'paths'          => array_values( $site_paths ),
 			);
 			restore_current_blog();
 		}

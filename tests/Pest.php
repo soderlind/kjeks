@@ -32,6 +32,9 @@ function kjeks_stub_wp_functions(): void {
 	Functions\when( 'esc_url_raw' )->returnArg( 1 );
 	Functions\when( 'esc_url' )->returnArg( 1 );
 	Functions\when( 'wp_unslash' )->returnArg( 1 );
+	Functions\when( 'wp_parse_url' )->alias(
+		static fn ( string $url, int $component = -1 ) => parse_url( $url, $component )
+	);
 	Functions\when( 'sanitize_text_field' )->returnArg( 1 );
 	Functions\when( 'sanitize_textarea_field' )->returnArg( 1 );
 	Functions\when( 'sanitize_key' )->alias(

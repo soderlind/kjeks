@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 0.8.0
+Stable tag: 0.9.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,10 @@ Kjeks assists with consent management. It does not, and cannot, guarantee legal 
 5. Review each site's inventory under **Settings → Cookie Consent**.
 
 == Changelog ==
+
+= 0.9.0 =
+* Scanner config now auto-selects representative URLs per site (home, newest post and page, the posts archive, and pages whose content shows an embed or inline-script signal), capped and filterable. Omit paths to auto-select; explicit paths still override.
+* Add a cap REST parameter and --cap CLI option, plus kjeks_scan_url_cap and kjeks_scan_paths filters.
 
 = 0.8.0 =
 * Self-updates from GitHub releases via the wordpress-github-updater library (bundled plugin-update-checker). Define the optional KJEKS_GITHUB_TOKEN constant for private repositories or higher GitHub API rate limits.
