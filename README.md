@@ -31,16 +31,24 @@ accessible consent banner.
 `necessary` (always on), `preferences`, `analytics`, `marketing`. Optional
 categories default to disabled. Add more via the `kjeks_categories` filter.
 
-## Install
+## Installation
 
-```bash
-composer install --no-dev
-npm ci && npm run build
-```
+1. Download the latest [`kjeks.zip`](https://github.com/soderlind/kjeks/releases/latest/download/kjeks.zip).
+2. In WordPress, go to **Plugins → Add New → Upload Plugin** and upload the zip.
+3. Activate the plugin. On multisite, **Network Activate** it and configure network defaults under **Network Admin → Cookie Consent**; on a single site, open **Cookie Consent** from the admin menu.
 
-On multisite, **Network Admin → Plugins → Network Activate**, then manage everything
-under **Network Admin → Cookie Consent**. On a single site, activate normally and
-open **Cookie Consent** from the admin menu.
+The plugin updates itself automatically via GitHub releases using [plugin-update-checker](https://github.com/YahnisElsts/plugin-update-checker).
+
+## Usage
+
+1. Open **Cookie Consent** (Network Admin on multisite, the admin menu on a single site) and set the banner heading, body text, privacy-policy URL, and accent colour.
+2. Declare the trackers your site runs so Kjeks blocks them until consent is given — register them in code with `kjeks_register_integration()` (see [Developer quick start](#developer-quick-start)).
+3. Optionally let visitors reopen or read their choices anywhere:
+   - Reopen the banner — block `kjeks/preferences` or shortcode `[kjeks_preferences]`.
+   - Cookie declaration table — block `kjeks/cookie-declaration` or shortcode `[kjeks_cookie_declaration]`.
+4. Publish. Visitors choose **Accept all**, **Reject all**, or **Customize**; Kjeks enforces the choice and loads only what was granted.
+
+To discover what actually loads and review it, pair Kjeks with the [scanner](https://github.com/soderlind/kjeks-scanner) and the [AI Reviewer](https://github.com/soderlind/kjeks-ai-reviewer) add-on.
 
 ## Developer quick start
 
