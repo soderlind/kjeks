@@ -14,7 +14,6 @@ use Soderlind\Kjeks\Consent\ConsentSchema;
 use Soderlind\Kjeks\Consent\PolicyVersion;
 use Soderlind\Kjeks\Inventory\InventoryResolver;
 use Soderlind\Kjeks\Inventory\NetworkStore;
-use Soderlind\Kjeks\Inventory\SiteStore;
 use Soderlind\Kjeks\Inventory\TrackerRegistry;
 
 /**
@@ -47,9 +46,8 @@ final class Banner {
 	 */
 	private function config(): array {
 		$network   = new NetworkStore();
-		$site      = new SiteStore( get_current_blog_id() );
-		$inventory = new InventoryResolver( new TrackerRegistry(), $site );
-		$content   = ( new ContentResolver( $network, $site ) )->resolve();
+		$inventory = new InventoryResolver( new TrackerRegistry(), get_current_blog_id() );
+		$content   = ( new ContentResolver( $network ) )->resolve();
 
 		$categories = array();
 		foreach ( Categories::all() as $slug => $meta ) {
@@ -92,7 +90,7 @@ final class Banner {
 
 	public function shortcode_declaration(): string {
 		$declaration = new CookieDeclaration(
-			new InventoryResolver( new TrackerRegistry(), new SiteStore( get_current_blog_id() ) )
+			new InventoryResolver( new TrackerRegistry(), get_current_blog_id() )
 		);
 
 		return $declaration->render();

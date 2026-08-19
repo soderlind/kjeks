@@ -14,10 +14,10 @@ use Soderlind\Kjeks\Consent\PolicyVersion;
 /**
  * Resolves the effective inventory for one site.
  *
- * Merges the site-scoped network registry with the site's local trackers. The
- * resolved, reviewed inventory is the single source of truth for the consent
- * UI and the cookie declaration. Results are cached in a transient keyed by
- * the policy version so frontend requests stay cheap.
+ * Scopes the network registry to the sites each tracker applies to. The
+ * network registry is the single source of truth for the consent UI and the
+ * cookie declaration; results are cached in a transient keyed by the policy
+ * version so frontend requests stay cheap.
  */
 final class InventoryResolver {
 
@@ -25,25 +25,16 @@ final class InventoryResolver {
 
 	public function __construct(
 		private readonly TrackerRegistry $registry,
-		private readonly SiteStore $site,
+		private readonly int $blog_id,
 	) {}
 
 	/**
-	 * The effective, merged inventory keyed by tracker id.
-	 *
-	 * Network trackers are scoped to the sites they apply to; site-local
-	 * trackers are added on top. The network registry is authoritative.
+	 * The effective inventory for this site, keyed by tracker id.
 	 *
 	 * @return array<string, Tracker>
 	 */
 	public function all(): array {
-		$effective = $this->scoped_network_trackers();
-
-		foreach ( $this->site->local_trackers() as $id => $tracker ) {
-			$effective[ $id ] = $tracker;
-		}
-
-		return $effective;
+		return $this->scoped_network_trackers();
 	}
 
 	/**
@@ -56,7 +47,7 @@ final class InventoryResolver {
 	 * @return array<string, Tracker>
 	 */
 	public function scoped_network_trackers(): array {
-		$blog_id = $this->site->blog_id();
+		$blog_id = $this->blog_id;
 		$out     = array();
 
 		foreach ( $this->registry->trackers() as $id => $tracker ) {

@@ -21,7 +21,7 @@ The network-wide store of Tracker definitions and aggregated discoveries — one
 _Avoid_: Catalog, list
 
 **Inventory**:
-The effective set of Trackers resolved for one site (`blog_id`) — the site-scoped slice of the Registry plus the site's local Trackers. Authoritative for that site's consent UI and cookie declaration.
+The effective set of Trackers resolved for one site (`blog_id`) — the site-scoped slice of the Registry. Authoritative for that site's consent UI and cookie declaration.
 _Avoid_: List, catalog
 
 **Observation**:

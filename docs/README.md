@@ -23,9 +23,9 @@ composer install --no-dev
 npm ci && npm run build
 ```
 
-Then **Network Admin → Plugins → Network Activate**. Configure network defaults
-under **Network Admin → Cookie Consent**; review each site under
-**Settings → Cookie Consent**.
+Then **Network Admin → Plugins → Network Activate**. All configuration and review
+happen under **Network Admin → Cookie Consent**; there is no per-site consent
+screen.
 
 New subsites inherit the network defaults automatically (inherit-at-read), so no
 per-site copy runs on site creation.
@@ -36,9 +36,7 @@ per-site copy runs on site creation.
 | --- | --- | --- |
 | Network tracker registry (definitions + aggregated discoveries) | `get_site_option('kjeks_network_trackers')` | Network |
 | Default banner content | `get_site_option('kjeks_network_content')` | Network |
-| Uninstall opt-in | `get_site_option('kjeks_network_settings')` | Network |
-| Site-local trackers | `get_option('kjeks_site_trackers')` | Blog |
-| Content overrides | `get_option('kjeks_site_content')` | Blog |
+| Settings (banner visibility, uninstall opt-in) | `get_site_option('kjeks_network_settings')` | Network |
 | Policy version | `get_option('kjeks_policy_version')` | Blog |
 
 Discovered cookies **aggregate to the network registry**: the same cookie seen
@@ -128,14 +126,11 @@ reference that loads unconditionally).
 Trackers are never auto-classified as necessary. Discovered cookies are
 **unreviewed** until classified.
 
-- **Network Admin → Cookie Consent** — the aggregated registry. Each cookie
-  appears once, with a site count, search, status filter (pending / reviewed),
-  and **bulk review** (set a category and mark reviewed for many at once). A
-  network review is authoritative for every site.
-- **Settings → Cookie Consent** (per site) — network cookies are shown
-  **read-only** (a network review overrides the site); reviewed ones appear in
-  that site's declaration, pending ones are marked awaiting review. Site admins
-  still fully manage their own **site-local** trackers.
+- **Network Admin → Cookie Consent** — the aggregated registry and the only
+  consent UI. Each cookie appears once, with a site count, search, status filter
+  (pending / reviewed), and **bulk review** (set a category and mark reviewed
+  for many at once). A network review applies to every site where the cookie was
+  observed.
 
 Only reviewed trackers appear in the consent UI and the generated cookie
 declaration (`[kjeks_cookie_declaration]`).

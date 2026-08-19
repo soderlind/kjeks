@@ -15,8 +15,8 @@ consent banner.
 
 ## Features
 
-- Network-wide tracker definitions with per-site assignments and overrides.
-- Per-site tracker inventories, reviewed and classified by administrators.
+- Network-wide tracker definitions with per-site assignments.
+- Per-site tracker inventories, reviewed and classified by network administrators.
 - Prior blocking of non-essential scripts, inline snippets, pixels, and embeds —
   nothing runs before consent (client-side gating, so full-page caching still
   works).

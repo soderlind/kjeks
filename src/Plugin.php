@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Soderlind\Kjeks;
 
 use Soderlind\Kjeks\Admin\NetworkAdmin;
-use Soderlind\Kjeks\Admin\SiteSettings;
 use Soderlind\Kjeks\Blocking\ScriptGate;
 use Soderlind\Kjeks\Cli\Command;
 use Soderlind\Kjeks\Frontend\Banner;
@@ -18,7 +17,6 @@ use Soderlind\Kjeks\Lifecycle\SiteInitializer;
 use Soderlind\Kjeks\Rest\ImportController;
 use Soderlind\Kjeks\Rest\NetworkConfigController;
 use Soderlind\Kjeks\Rest\ScanConfigController;
-use Soderlind\Kjeks\Rest\SettingsController;
 
 /**
  * Wires the plugin's subsystems.
@@ -44,7 +42,6 @@ final class Plugin {
 		$this->booted = true;
 
 		( new SiteInitializer() )->hooks();
-		( new SettingsController() )->hooks();
 		( new ImportController() )->hooks();
 		( new ScanConfigController() )->hooks();
 		( new NetworkConfigController() )->hooks();
@@ -52,7 +49,6 @@ final class Plugin {
 		( new Banner() )->hooks();
 
 		if ( is_admin() ) {
-			( new SiteSettings() )->hooks();
 			( new NetworkAdmin() )->hooks();
 		}
 

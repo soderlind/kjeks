@@ -31,8 +31,7 @@ through the seams documented there.
 | Actor | Interacts via |
 | --- | --- |
 | Site visitor | Consent banner + declaration (frontend) |
-| Site administrator | Settings → Cookie Consent (per-site review, read-only for network cookies) |
-| Network administrator | Network Admin → Cookie Consent (aggregated review) |
+| Network administrator | Network Admin → Cookie Consent (aggregated review — the only consent UI) |
 | Integration developer | Public PHP API in [src/functions.php](../src/functions.php) + client events |
 | `kjeks-scanner` (separate repo) | REST `scan-config` / `import`; runs its own scheduled GitHub Action |
 | `kjeks-google` add-on (separate repo) | Public API + `window.kjeks` events |
@@ -50,13 +49,12 @@ autoloader, registers activation/deactivation to
 | Wired | Path | Context |
 | --- | --- | --- |
 | `SiteInitializer` | src/Lifecycle/SiteInitializer.php | always |
-| `SettingsController` | src/Rest/SettingsController.php | always (REST) |
 | `ImportController` | src/Rest/ImportController.php | always (REST) |
 | `ScanConfigController` | src/Rest/ScanConfigController.php | always (REST) |
 | `NetworkConfigController` | src/Rest/NetworkConfigController.php | always (REST) |
 | `ScriptGate` | src/Blocking/ScriptGate.php | always |
 | `Banner` | src/Frontend/Banner.php | always |
-| `SiteSettings`, `NetworkAdmin` | src/Admin/ | `is_admin()` |
+| `NetworkAdmin` | src/Admin/NetworkAdmin.php | `is_admin()` |
 | `Command` | src/Cli/Command.php | `WP_CLI` — `kjeks import`, `kjeks scan-config` |
 
 `boot()` fires `do_action( 'kjeks_register_integrations' )` on `init` so
@@ -80,9 +78,8 @@ integrations register through the public API.
 | `Tracker` | Immutable tracker value object (name, category, party, `sites`, `reviewed`, …) |
 | `TrackerIdentity` | The single rule for "same cookie" (name + storage type + domain) |
 | `TrackerRegistry` | Network-wide **Registry**: definitions + aggregated discoveries (`kjeks_network_trackers`) |
-| `NetworkStore` | Network banner content + uninstall setting (not trackers) |
-| `SiteStore` | One site's local trackers + content overrides |
-| `InventoryResolver` | Resolves the effective per-site **Inventory** = site-scoped registry + local trackers |
+| `NetworkStore` | Network banner content + settings (banner visibility, uninstall opt-in) |
+| `InventoryResolver` | Resolves the effective per-site **Inventory** = the site-scoped slice of the network registry |
 
 ### Blocking — `src/Blocking/` and `src/functions.php`
 
@@ -98,7 +95,7 @@ integrations register through the public API.
 | Module | Responsibility |
 | --- | --- |
 | `Banner` | Localizes `kjeksConfig`, renders `#kjeks-root`, registers shortcodes/blocks |
-| `ContentResolver` | Merges network + site banner content |
+| `ContentResolver` | Resolves network banner content; falls back the privacy link to core `get_privacy_policy_url()`; `kjeks_privacy_url` / `kjeks_banner_content` filters |
 | `CookieDeclaration` | Renders the declaration table from the reviewed Inventory |
 | `assets/src/banner.js` | Client runtime: consent record, banner + tabbed dialog, gating activation |
 
@@ -106,14 +103,12 @@ integrations register through the public API.
 
 | Module | Responsibility |
 | --- | --- |
-| `SiteSettings` + `admin/index.js` | Per-site review (network cookies read-only, local editable) |
-| `NetworkAdmin` + `admin/network.js` | Aggregated review table: search, filter, bulk review |
+| `NetworkAdmin` + `admin/network.js` | The only consent UI: aggregated review table (search, filter, bulk review), banner defaults, banner-visibility toggle |
 
 ### REST — `src/Rest/`
 
 | Route | Controller | Capability |
 | --- | --- | --- |
-| `GET/POST /kjeks/v1/site-config` | `SettingsController` | `manage_options` |
 | `GET/POST /kjeks/v1/network-config` | `NetworkConfigController` | `manage_network` |
 | `POST /kjeks/v1/import` | `ImportController` | `manage_network` |
 | `GET /kjeks/v1/scan-config` | `ScanConfigController` | `manage_network` |
@@ -197,7 +192,7 @@ The consent record is **client-owned**; the server only ever reads it
 | --- | --- | --- |
 | Nothing is auto-classified `necessary` | `Tracker::from_array` (falls back to `marketing`), `ScanValidator` (ignores incoming category) | tests/Unit/TrackerTest.php, tests/Unit/ScanTest.php |
 | Only reviewed trackers are public | `InventoryResolver::reviewed()` | tests/Unit/InventoryResolverTest.php |
-| Network review is authoritative; site cannot override | `SettingsController::get_config` marks `locked`; resolver has no override path | tests/Unit/InventoryResolverTest.php ("serves a reviewed network tracker as-is") |
+| Network review is the only review surface; sites have no consent UI | Only `NetworkConfigController` (`manage_network`) writes reviews; no per-site store or route | tests/Unit/InventoryResolverTest.php ("serves a reviewed network tracker as-is") |
 | A cookie appears only where observed | `InventoryResolver::scoped_network_trackers()` | tests/Unit/InventoryResolverTest.php ("scopes … only the sites where observed") |
 | Same cookie aggregates once | `TrackerIdentity::for` + `TrackerRegistry::merge_observations` | tests/Unit/ScanTest.php ("collapses the same cookie") |
 | Non-essential code stays inert pre-consent | `ScriptGate`, `EmbedGate`; client activation | kjeks-scanner: tests/no-tracking-before-consent.spec.js |
@@ -214,7 +209,7 @@ the scanner must not be loaded by the WordPress runtime.
 | Add an optional category | `kjeks_categories` filter (consumes `Categories::all()`) |
 | Register a gated integration | `kjeks_register_integration()` in a `kjeks_register_integrations` handler; see [examples/](../examples) |
 | Change banner/dialog UI | assets/src/banner.js, assets/src/banner.css → `npm run build` |
-| Change review UI | assets/src/admin/network.js or index.js → `npm run build` |
+| Change review UI | assets/src/admin/network.js → `npm run build` |
 | Add a REST field | the relevant `src/Rest/*Controller.php` |
 | Change what the scanner collects | [kjeks-scanner](https://github.com/soderlind/kjeks-scanner): src/collect.js, src/scan.js |
 | Add a WP-CLI subcommand | `src/Cli/Command.php` + registration in `src/Plugin.php` |
@@ -273,5 +268,6 @@ flowchart LR
 
 - No integration tests run against a real multisite; unit tests mock WordPress
   via Brain Monkey. Behavior is verified manually against a Local site.
-- `kjeks_site_overrides` may remain in old installs; it is listed for cleanup in
-  `Lifecycle/Uninstall` but is no longer read.
+- The legacy per-site options `kjeks_site_overrides`, `kjeks_site_trackers`, and
+  `kjeks_site_content` may remain in old installs; nothing reads them and they
+  are cleaned up (on opt-in) by `Lifecycle/Uninstall`.
