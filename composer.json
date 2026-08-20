@@ -1,7 +1,21 @@
 {
 	"name": "soderlind/kjeks",
-	"description": "Cookie consent management for WordPress Multisite.",
+	"description": "Prior-blocking cookie consent for WordPress single-site and multisite: blocks trackers until the visitor consents, with tracker discovery and add-ons.",
 	"type": "wordpress-plugin",
+	"keywords": [
+		"wordpress",
+		"wordpress-plugin",
+		"cookie-consent",
+		"consent",
+		"consent-management",
+		"cmp",
+		"gdpr",
+		"privacy",
+		"cookies",
+		"tracking",
+		"gpc",
+		"multisite"
+	],
 	"license": "GPL-2.0-or-later",
 	"require": {
 		"php": ">=8.3",
