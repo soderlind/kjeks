@@ -5,20 +5,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kjeks 0.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/kjeks\n"
+"POT-Creation-Date: 2026-08-20T14:20:50+00:00\n"
+"PO-Revision-Date: 2026-08-20 14:30+0000\n"
 "Last-Translator: Per Søderlind <per@soderlind.no>\n"
 "Language-Team: Norsk Bokmål\n"
 "Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2026-08-20 14:30+0000\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: kjeks\n"
-
-#. Description of the plugin
-#: kjeks.php
-msgid "Cookie consent management for WordPress (single site or Multisite): per-site tracker inventories, prior blocking of non-essential technologies, and an accessible consent banner. Assists with consent management; does not claim automatic legal compliance."
-msgstr "Administrasjon av samtykke til informasjonskapsler for WordPress (enkeltnettsted eller Multisite): sporingsoversikter per nettsted, forhåndsblokkering av ikke-nødvendige teknologier og et tilgjengelig samtykkebanner. Bistår med samtykkehåndtering; gir ingen garanti om automatisk juridisk samsvar."
 
 #. Plugin Name of the plugin
 #: kjeks.php
@@ -29,6 +25,20 @@ msgstr "Kjeks"
 #: kjeks.php
 msgid "https://github.com/soderlind/kjeks"
 msgstr "https://github.com/soderlind/kjeks"
+
+#. Description of the plugin
+#: kjeks.php
+msgid ""
+"Cookie consent management for WordPress (single site or Multisite): per-site "
+"tracker inventories, prior blocking of non-essential technologies, and an "
+"accessible consent banner. Assists with consent management; does not claim "
+"automatic legal compliance."
+msgstr ""
+"Administrasjon av samtykke til informasjonskapsler for WordPress "
+"(enkeltnettsted eller Multisite): sporingsoversikter per nettsted, "
+"forhåndsblokkering av ikke-nødvendige teknologier og et tilgjengelig "
+"samtykkebanner. Bistår med samtykkehåndtering; gir ingen garanti om "
+"automatisk juridisk samsvar."
 
 #. Author of the plugin
 #: kjeks.php
@@ -68,19 +78,21 @@ msgstr "Innebygd innhold"
 #: src/Blocking/EmbedGate.php:42
 #, php-format
 msgid "This %s content is blocked until you accept the matching cookies."
-msgstr "Dette %s-innholdet er blokkert til du godtar de tilhørende informasjonskapslene."
+msgstr ""
+"Dette %s-innholdet er blokkert til du godtar de tilhørende "
+"informasjonskapslene."
 
 #: src/Blocking/EmbedGate.php:43
 msgid "This content is blocked until you accept the matching cookies."
-msgstr "Dette innholdet er blokkert til du godtar de tilhørende informasjonskapslene."
+msgstr ""
+"Dette innholdet er blokkert til du godtar de tilhørende informasjonskapslene."
 
 #: src/Blocking/EmbedGate.php:58
 msgid "Load content"
 msgstr "Last inn innhold"
 
-#: src/Blocking/EmbedGate.php:59
-#: src/Frontend/Banner.php:83
-#: src/functions.php:108
+#: src/Blocking/EmbedGate.php:59 src/Frontend/Banner.php:83
+#: src/functions.php:108 assets/src/banner.js:619 assets/src/banner.js:620
 msgid "Cookie settings"
 msgstr "Innstillinger for informasjonskapsler"
 
@@ -116,39 +128,43 @@ msgstr "Markedsføring"
 msgid "Used to deliver and measure advertising."
 msgstr "Brukes til å levere og måle annonsering."
 
-#: src/Frontend/CookieDeclaration.php:28
+#: src/Frontend/CookieDeclaration.php:28 assets/src/banner.js:429
 msgid "No trackers have been documented yet."
 msgstr "Ingen sporere er dokumentert ennå."
 
-#: src/Frontend/CookieDeclaration.php:43
+#: src/Frontend/CookieDeclaration.php:43 assets/src/admin/network.js:319
+#: assets/src/banner.js:400
 msgid "Name"
 msgstr "Navn"
 
-#: src/Frontend/CookieDeclaration.php:44
+#: src/Frontend/CookieDeclaration.php:44 assets/src/admin/network.js:325
+#: assets/src/banner.js:401
 msgid "Provider"
 msgstr "Leverandør"
 
-#: src/Frontend/CookieDeclaration.php:45
+#: src/Frontend/CookieDeclaration.php:45 assets/src/banner.js:402
 msgid "Purpose"
 msgstr "Formål"
 
-#: src/Frontend/CookieDeclaration.php:46
+#: src/Frontend/CookieDeclaration.php:46 assets/src/admin/network.js:397
+#: assets/src/banner.js:403
 msgid "Type"
 msgstr "Type"
 
-#: src/Frontend/CookieDeclaration.php:47
+#: src/Frontend/CookieDeclaration.php:47 assets/src/admin/network.js:398
+#: assets/src/banner.js:404
 msgid "Party"
 msgstr "Part"
 
-#: src/Frontend/CookieDeclaration.php:48
+#: src/Frontend/CookieDeclaration.php:48 assets/src/banner.js:405
 msgid "Retention"
 msgstr "Lagringstid"
 
-#: src/Frontend/CookieDeclaration.php:53
+#: src/Frontend/CookieDeclaration.php:53 assets/src/banner.js:414
 msgid "First-party"
 msgstr "Førstepart"
 
-#: src/Frontend/CookieDeclaration.php:54
+#: src/Frontend/CookieDeclaration.php:54 assets/src/banner.js:414
 msgid "Third-party"
 msgstr "Tredjepart"
 
@@ -157,8 +173,12 @@ msgid "We value your privacy"
 msgstr "Vi verdsetter personvernet ditt"
 
 #: src/Inventory/NetworkStore.php:31
-msgid "We use cookies and similar technologies. Choose which categories to allow. Necessary items are always active."
-msgstr "Vi bruker informasjonskapsler og lignende teknologier. Velg hvilke kategorier du vil tillate. Nødvendige elementer er alltid aktive."
+msgid ""
+"We use cookies and similar technologies. Choose which categories to allow. "
+"Necessary items are always active."
+msgstr ""
+"Vi bruker informasjonskapsler og lignende teknologier. Velg hvilke "
+"kategorier du vil tillate. Nødvendige elementer er alltid aktive."
 
 #: src/Rest/ImportController.php:77
 msgid "The scan payload could not be validated."
@@ -167,3 +187,195 @@ msgstr "Skannedataene kunne ikke valideres."
 #: src/Rest/ImportController.php:88
 msgid "Unknown site."
 msgstr "Ukjent nettsted."
+
+#: assets/src/admin/network.js:50
+msgid "Failed to load configuration."
+msgstr "Kunne ikke laste inn konfigurasjonen."
+
+#: assets/src/admin/network.js:165
+msgid "Saved."
+msgstr "Lagret."
+
+#: assets/src/admin/network.js:169
+msgid "Save failed."
+msgstr "Lagring mislyktes."
+
+#: assets/src/admin/network.js:188
+msgid "Cookie Consent review"
+msgstr "Gjennomgang av samtykke til informasjonskapsler"
+
+#: assets/src/admin/network.js:188
+msgid "Cookie Consent — network review"
+msgstr "Samtykke til informasjonskapsler — nettverksgjennomgang"
+
+#. translators: 1: reviewed count, 2: pending count.
+#: assets/src/admin/network.js:194
+msgid "%1$d reviewed · %2$d pending"
+msgstr "%1$d gjennomgått · %2$d venter"
+
+#: assets/src/admin/network.js:208
+msgid "Discovered cookies"
+msgstr "Oppdagede informasjonskapsler"
+
+#: assets/src/admin/network.js:215
+msgid "Search name or provider…"
+msgstr "Søk navn eller leverandør…"
+
+#: assets/src/admin/network.js:221 assets/src/admin/network.js:452
+msgid "All"
+msgstr "Alle"
+
+#: assets/src/admin/network.js:222
+msgid "Pending"
+msgstr "Venter"
+
+#: assets/src/admin/network.js:223 assets/src/admin/network.js:401
+msgid "Reviewed"
+msgstr "Gjennomgått"
+
+#. translators: %d: number of selected cookies.
+#: assets/src/admin/network.js:236
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d valgt"
+msgstr[1] "%d valgt"
+
+#: assets/src/admin/network.js:241 assets/src/admin/network.js:331
+#: assets/src/admin/network.js:400
+msgid "Category"
+msgstr "Kategori"
+
+#: assets/src/admin/network.js:251
+msgid "Set category & mark reviewed"
+msgstr "Angi kategori og merk som gjennomgått"
+
+#: assets/src/admin/network.js:256
+msgid "Set category only"
+msgstr "Angi bare kategori"
+
+#: assets/src/admin/network.js:261
+msgid "Clear"
+msgstr "Tøm"
+
+#: assets/src/admin/network.js:279
+msgid "Banner defaults"
+msgstr "Standardverdier for banner"
+
+#: assets/src/admin/network.js:281
+msgid "Show the consent banner until a visitor makes a choice"
+msgstr "Vis samtykkebanneret til en besøkende gjør et valg"
+
+#: assets/src/admin/network.js:282
+msgid ""
+"On by default. When off, the banner is not shown automatically; visitors "
+"open it from a “Cookie settings” link, and optional categories stay denied "
+"until a choice is made."
+msgstr "På som standard. Når den er av, vises ikke banneret automatisk; besøkende åpner det fra en «Innstillinger for informasjonskapsler»-lenke, og valgfrie kategorier forblir avslått til et valg er gjort."
+
+#: assets/src/admin/network.js:288
+msgid "Heading"
+msgstr "Overskrift"
+
+#: assets/src/admin/network.js:294
+msgid "Body"
+msgstr "Brødtekst"
+
+#: assets/src/admin/network.js:300
+msgid "Privacy policy URL"
+msgstr "URL til personvernerklæring"
+
+#: assets/src/admin/network.js:310
+msgid "Advanced"
+msgstr "Avansert"
+
+#: assets/src/admin/network.js:312
+msgid "Delete all Kjeks data on uninstall"
+msgstr "Slett alle Kjeks-data ved avinstallering"
+
+#: assets/src/admin/network.js:317
+msgid "Add a network-wide cookie"
+msgstr "Legg til en informasjonskapsel for hele nettverket"
+
+#: assets/src/admin/network.js:343
+msgid "Save changes"
+msgstr "Lagre endringer"
+
+#: assets/src/admin/network.js:361
+msgid "Cookies"
+msgstr "Informasjonskapsler"
+
+#: assets/src/admin/network.js:376
+msgid "No cookies match. Run the scanner and import to populate this list."
+msgstr "Ingen informasjonskapsler samsvarer. Kjør skanneren og importer for å fylle denne listen."
+
+#: assets/src/admin/network.js:393
+msgid "Select all"
+msgstr "Velg alle"
+
+#: assets/src/admin/network.js:396
+msgid "Cookie"
+msgstr "Informasjonskapsel"
+
+#: assets/src/admin/network.js:399
+msgid "Sites"
+msgstr "Nettsteder"
+
+#: assets/src/admin/network.js:402 assets/src/admin/network.js:443
+msgid "Remove"
+msgstr "Fjern"
+
+#: assets/src/admin/network.js:426
+msgid "First"
+msgstr "Førstepart"
+
+#: assets/src/admin/network.js:426
+msgid "Third"
+msgstr "Tredjepart"
+
+#: assets/src/admin/network.js:452
+msgid "Applies to all sites"
+msgstr "Gjelder alle nettsteder"
+
+#: assets/src/banner.js:213
+msgid "Cookie consent"
+msgstr "Samtykke til informasjonskapsler"
+
+#: assets/src/banner.js:227
+msgid "Privacy policy"
+msgstr "Personvernerklæring"
+
+#: assets/src/banner.js:237 assets/src/banner.js:348
+msgid "Reject all"
+msgstr "Avvis alle"
+
+#: assets/src/banner.js:242
+msgid "Customize"
+msgstr "Tilpass"
+
+#: assets/src/banner.js:247 assets/src/banner.js:353
+msgid "Accept all"
+msgstr "Godta alle"
+
+#: assets/src/banner.js:268 assets/src/banner.js:273
+msgid "Cookie preferences"
+msgstr "Innstillinger for informasjonskapsler"
+
+#: assets/src/banner.js:277
+msgid "Your choices"
+msgstr "Dine valg"
+
+#: assets/src/banner.js:278
+msgid "Cookie declaration"
+msgstr "Erklæring om informasjonskapsler"
+
+#: assets/src/banner.js:319
+msgid "View trackers"
+msgstr "Vis sporere"
+
+#: assets/src/banner.js:343
+msgid "Save choices"
+msgstr "Lagre valg"
+
+#: assets/src/banner.js:446
+msgid "Cookie preferences sections"
+msgstr "Seksjoner for innstillinger for informasjonskapsler"

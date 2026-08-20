@@ -36,7 +36,7 @@ final class Banner {
 		wp_enqueue_script( 'kjeks-banner', KJEKS_URL . 'build/banner.js', array(), $asset['version'], true );
 
 		wp_localize_script( 'kjeks-banner', 'kjeksConfig', $this->config() );
-		wp_set_script_translations( 'kjeks-banner', 'kjeks' );
+		wp_set_script_translations( 'kjeks-banner', 'kjeks', KJEKS_DIR . 'languages' );
 	}
 
 	/**

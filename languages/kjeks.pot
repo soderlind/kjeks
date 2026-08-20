@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-20T14:07:31+00:00\n"
+"POT-Creation-Date: 2026-08-20T14:20:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: kjeks\n"
@@ -80,6 +80,8 @@ msgstr ""
 #: src/Blocking/EmbedGate.php:59
 #: src/Frontend/Banner.php:83
 #: src/functions.php:108
+#: assets/src/banner.js:619
+#: assets/src/banner.js:620
 msgid "Cookie settings"
 msgstr ""
 
@@ -116,38 +118,51 @@ msgid "Used to deliver and measure advertising."
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:28
+#: assets/src/banner.js:429
 msgid "No trackers have been documented yet."
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:43
+#: assets/src/admin/network.js:319
+#: assets/src/banner.js:400
 msgid "Name"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:44
+#: assets/src/admin/network.js:325
+#: assets/src/banner.js:401
 msgid "Provider"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:45
+#: assets/src/banner.js:402
 msgid "Purpose"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:46
+#: assets/src/admin/network.js:397
+#: assets/src/banner.js:403
 msgid "Type"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:47
+#: assets/src/admin/network.js:398
+#: assets/src/banner.js:404
 msgid "Party"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:48
+#: assets/src/banner.js:405
 msgid "Retention"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:53
+#: assets/src/banner.js:414
 msgid "First-party"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:54
+#: assets/src/banner.js:414
 msgid "Third-party"
 msgstr ""
 
@@ -165,4 +180,202 @@ msgstr ""
 
 #: src/Rest/ImportController.php:88
 msgid "Unknown site."
+msgstr ""
+
+#: assets/src/admin/network.js:50
+msgid "Failed to load configuration."
+msgstr ""
+
+#: assets/src/admin/network.js:165
+msgid "Saved."
+msgstr ""
+
+#: assets/src/admin/network.js:169
+msgid "Save failed."
+msgstr ""
+
+#: assets/src/admin/network.js:188
+msgid "Cookie Consent review"
+msgstr ""
+
+#: assets/src/admin/network.js:188
+msgid "Cookie Consent — network review"
+msgstr ""
+
+#. translators: 1: reviewed count, 2: pending count.
+#: assets/src/admin/network.js:194
+#, js-format
+msgid "%1$d reviewed · %2$d pending"
+msgstr ""
+
+#: assets/src/admin/network.js:208
+msgid "Discovered cookies"
+msgstr ""
+
+#: assets/src/admin/network.js:215
+msgid "Search name or provider…"
+msgstr ""
+
+#: assets/src/admin/network.js:221
+#: assets/src/admin/network.js:452
+msgid "All"
+msgstr ""
+
+#: assets/src/admin/network.js:222
+msgid "Pending"
+msgstr ""
+
+#: assets/src/admin/network.js:223
+#: assets/src/admin/network.js:401
+msgid "Reviewed"
+msgstr ""
+
+#. translators: %d: number of selected cookies.
+#: assets/src/admin/network.js:236
+#, js-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/src/admin/network.js:241
+#: assets/src/admin/network.js:331
+#: assets/src/admin/network.js:400
+msgid "Category"
+msgstr ""
+
+#: assets/src/admin/network.js:251
+msgid "Set category & mark reviewed"
+msgstr ""
+
+#: assets/src/admin/network.js:256
+msgid "Set category only"
+msgstr ""
+
+#: assets/src/admin/network.js:261
+msgid "Clear"
+msgstr ""
+
+#: assets/src/admin/network.js:279
+msgid "Banner defaults"
+msgstr ""
+
+#: assets/src/admin/network.js:281
+msgid "Show the consent banner until a visitor makes a choice"
+msgstr ""
+
+#: assets/src/admin/network.js:282
+msgid "On by default. When off, the banner is not shown automatically; visitors open it from a “Cookie settings” link, and optional categories stay denied until a choice is made."
+msgstr ""
+
+#: assets/src/admin/network.js:288
+msgid "Heading"
+msgstr ""
+
+#: assets/src/admin/network.js:294
+msgid "Body"
+msgstr ""
+
+#: assets/src/admin/network.js:300
+msgid "Privacy policy URL"
+msgstr ""
+
+#: assets/src/admin/network.js:310
+msgid "Advanced"
+msgstr ""
+
+#: assets/src/admin/network.js:312
+msgid "Delete all Kjeks data on uninstall"
+msgstr ""
+
+#: assets/src/admin/network.js:317
+msgid "Add a network-wide cookie"
+msgstr ""
+
+#: assets/src/admin/network.js:343
+msgid "Save changes"
+msgstr ""
+
+#: assets/src/admin/network.js:361
+msgid "Cookies"
+msgstr ""
+
+#: assets/src/admin/network.js:376
+msgid "No cookies match. Run the scanner and import to populate this list."
+msgstr ""
+
+#: assets/src/admin/network.js:393
+msgid "Select all"
+msgstr ""
+
+#: assets/src/admin/network.js:396
+msgid "Cookie"
+msgstr ""
+
+#: assets/src/admin/network.js:399
+msgid "Sites"
+msgstr ""
+
+#: assets/src/admin/network.js:402
+#: assets/src/admin/network.js:443
+msgid "Remove"
+msgstr ""
+
+#: assets/src/admin/network.js:426
+msgid "First"
+msgstr ""
+
+#: assets/src/admin/network.js:426
+msgid "Third"
+msgstr ""
+
+#: assets/src/admin/network.js:452
+msgid "Applies to all sites"
+msgstr ""
+
+#: assets/src/banner.js:213
+msgid "Cookie consent"
+msgstr ""
+
+#: assets/src/banner.js:227
+msgid "Privacy policy"
+msgstr ""
+
+#: assets/src/banner.js:237
+#: assets/src/banner.js:348
+msgid "Reject all"
+msgstr ""
+
+#: assets/src/banner.js:242
+msgid "Customize"
+msgstr ""
+
+#: assets/src/banner.js:247
+#: assets/src/banner.js:353
+msgid "Accept all"
+msgstr ""
+
+#: assets/src/banner.js:268
+#: assets/src/banner.js:273
+msgid "Cookie preferences"
+msgstr ""
+
+#: assets/src/banner.js:277
+msgid "Your choices"
+msgstr ""
+
+#: assets/src/banner.js:278
+msgid "Cookie declaration"
+msgstr ""
+
+#: assets/src/banner.js:319
+msgid "View trackers"
+msgstr ""
+
+#: assets/src/banner.js:343
+msgid "Save choices"
+msgstr ""
+
+#: assets/src/banner.js:446
+msgid "Cookie preferences sections"
 msgstr ""

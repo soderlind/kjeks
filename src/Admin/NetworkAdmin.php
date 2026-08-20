@@ -74,7 +74,7 @@ final class NetworkAdmin {
 		if ( is_readable( KJEKS_DIR . 'build/network.css' ) ) {
 			wp_enqueue_style( 'kjeks-network', KJEKS_URL . 'build/network.css', array( 'wp-components' ), $asset['version'] );
 		}
-		wp_set_script_translations( 'kjeks-network', 'kjeks' );
+		wp_set_script_translations( 'kjeks-network', 'kjeks', KJEKS_DIR . 'languages' );
 
 		wp_localize_script(
 			'kjeks-network',

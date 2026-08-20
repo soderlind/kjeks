@@ -1,0 +1,4 @@
+{
+	"assets/src/banner.js": "build/banner.js",
+	"assets/src/admin/network.js": "build/network.js"
+}
