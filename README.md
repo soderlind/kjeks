@@ -71,6 +71,16 @@ window.kjeks.openPreferences();
 Example adapters live in [`examples/`](examples): generic script, generic pixel,
 YouTube/Vimeo embeds, and Plausible (a cookieless, no-consent-needed reference).
 
+## Banner not showing?
+
+Usually expected behaviour, not a bug. Kjeks skips the banner when:
+
+- **A choice is already stored.** Consent lasts ~6 months (the `kjeks_consent` cookie + `localStorage`). Returning visitors see the small **Cookie settings** trigger instead — clear site data or use a private window to see the banner again.
+- **The browser sends Global Privacy Control (GPC).** **Brave sends GPC by default** (as do DuckDuckGo, Firefox's “Tell websites not to sell or share my data”, and some extensions). Kjeks honours GPC by default, so it auto-applies *reject non-essential* and shows only the trigger. Opt out with the `kjeks_honor_gpc` filter.
+- **A browser or extension hides cookie notices.** Brave Shields’ *block cookie consent notices*, uBlock Origin’s cookie-notice lists (EasyList Cookie), and similar remove banners client-side — Kjeks can’t override that.
+- **The network default banner is off** (`bannerDefaultVisible`) — only the trigger shows.
+- **The banner script or storage is blocked** — it needs its script plus cookies/`localStorage`.
+
 ## Development
 
 ```bash
