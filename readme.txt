@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,10 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.0.3 =
+* Network review: replace the truncated site-count tooltip with a scrollable, numerically sorted popover that closes on Escape or click outside, so all sites are reachable.
+* Network review: allow assigning the Necessary category when reviewing cookies.
 
 = 1.0.2 =
 * Add suggested cookie and consent text to the WordPress Privacy Policy Guide (Settings → Privacy).

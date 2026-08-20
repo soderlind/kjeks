@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Kjeks 1.0.2\n"
+"Project-Id-Version: Kjeks 1.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/kjeks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-20T21:05:23+00:00\n"
+"POT-Creation-Date: 2026-08-20T21:33:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: kjeks\n"
@@ -123,13 +123,13 @@ msgid "No trackers have been documented yet."
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:43
-#: assets/src/admin/network.js:354
+#: assets/src/admin/network.js:356
 #: assets/src/banner.js:400
 msgid "Name"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:44
-#: assets/src/admin/network.js:360
+#: assets/src/admin/network.js:362
 #: assets/src/banner.js:401
 msgid "Provider"
 msgstr ""
@@ -140,13 +140,13 @@ msgid "Purpose"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:46
-#: assets/src/admin/network.js:430
+#: assets/src/admin/network.js:432
 #: assets/src/banner.js:403
 msgid "Type"
 msgstr ""
 
 #: src/Frontend/CookieDeclaration.php:47
-#: assets/src/admin/network.js:431
+#: assets/src/admin/network.js:433
 #: assets/src/banner.js:404
 msgid "Party"
 msgstr ""
@@ -198,168 +198,176 @@ msgstr ""
 msgid "Failed to load configuration."
 msgstr ""
 
-#: assets/src/admin/network.js:166
+#: assets/src/admin/network.js:168
 msgid "Saved."
 msgstr ""
 
-#: assets/src/admin/network.js:170
+#: assets/src/admin/network.js:172
 msgid "Save failed."
 msgstr ""
 
-#: assets/src/admin/network.js:189
+#: assets/src/admin/network.js:191
 msgid "Save changes"
 msgstr ""
 
-#: assets/src/admin/network.js:195
+#: assets/src/admin/network.js:197
 msgid "Cookie Consent review"
 msgstr ""
 
-#: assets/src/admin/network.js:195
+#: assets/src/admin/network.js:197
 msgid "Cookie Consent — network review"
 msgstr ""
 
 #. translators: 1: reviewed count, 2: pending count.
-#: assets/src/admin/network.js:201
+#: assets/src/admin/network.js:203
 #, js-format
 msgid "%1$d reviewed · %2$d pending"
 msgstr ""
 
-#: assets/src/admin/network.js:218
+#: assets/src/admin/network.js:220
 msgid "Discovered cookies"
 msgstr ""
 
-#: assets/src/admin/network.js:225
+#: assets/src/admin/network.js:227
 msgid "Search name or provider…"
 msgstr ""
 
-#: assets/src/admin/network.js:231
-#: assets/src/admin/network.js:485
+#: assets/src/admin/network.js:233
+#: assets/src/admin/network.js:487
 msgid "All"
 msgstr ""
 
-#: assets/src/admin/network.js:232
+#: assets/src/admin/network.js:234
 msgid "Pending"
 msgstr ""
 
-#: assets/src/admin/network.js:233
-#: assets/src/admin/network.js:434
+#: assets/src/admin/network.js:235
+#: assets/src/admin/network.js:436
 msgid "Reviewed"
 msgstr ""
 
 #. translators: %d: number of selected cookies.
-#: assets/src/admin/network.js:246
+#: assets/src/admin/network.js:248
 #, js-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: assets/src/admin/network.js:251
-#: assets/src/admin/network.js:366
-#: assets/src/admin/network.js:433
+#: assets/src/admin/network.js:253
+#: assets/src/admin/network.js:368
+#: assets/src/admin/network.js:435
 msgid "Category"
 msgstr ""
 
-#: assets/src/admin/network.js:261
+#: assets/src/admin/network.js:263
 msgid "Set category & mark reviewed"
 msgstr ""
 
-#: assets/src/admin/network.js:266
+#: assets/src/admin/network.js:268
 msgid "Set category only"
 msgstr ""
 
-#: assets/src/admin/network.js:271
+#: assets/src/admin/network.js:273
 msgid "Clear"
 msgstr ""
 
-#: assets/src/admin/network.js:298
+#: assets/src/admin/network.js:300
 msgid "Banner defaults"
 msgstr ""
 
-#: assets/src/admin/network.js:300
+#: assets/src/admin/network.js:302
 msgid "Show the consent banner until a visitor makes a choice"
 msgstr ""
 
-#: assets/src/admin/network.js:301
+#: assets/src/admin/network.js:303
 msgid "On by default. When off, the banner is not shown automatically; visitors open it from a “Cookie settings” link, and optional categories stay denied until a choice is made."
 msgstr ""
 
-#: assets/src/admin/network.js:307
+#: assets/src/admin/network.js:309
 msgid "Heading"
 msgstr ""
 
-#: assets/src/admin/network.js:313
+#: assets/src/admin/network.js:315
 msgid "Body"
 msgstr ""
 
-#: assets/src/admin/network.js:319
+#: assets/src/admin/network.js:321
 msgid "Privacy policy URL"
 msgstr ""
 
-#: assets/src/admin/network.js:338
+#: assets/src/admin/network.js:340
 msgid "Advanced"
 msgstr ""
 
-#: assets/src/admin/network.js:340
+#: assets/src/admin/network.js:342
 msgid "Delete all Kjeks data on uninstall"
 msgstr ""
 
-#: assets/src/admin/network.js:346
+#: assets/src/admin/network.js:348
 msgid "Show the cookie declaration on the privacy policy page"
 msgstr ""
 
-#: assets/src/admin/network.js:347
+#: assets/src/admin/network.js:349
 msgid "Appends the live cookie table to the site’s privacy policy page, unless the Cookie declaration block or [kjeks_cookie_declaration] shortcode is already used there."
 msgstr ""
 
-#: assets/src/admin/network.js:352
+#: assets/src/admin/network.js:354
 msgid "Add a network-wide cookie"
 msgstr ""
 
-#: assets/src/admin/network.js:390
+#: assets/src/admin/network.js:392
 msgid "Cookies"
 msgstr ""
 
-#: assets/src/admin/network.js:391
+#: assets/src/admin/network.js:393
 msgid "Banner"
 msgstr ""
 
-#: assets/src/admin/network.js:392
+#: assets/src/admin/network.js:394
 msgid "Settings"
 msgstr ""
 
-#: assets/src/admin/network.js:409
+#: assets/src/admin/network.js:411
 msgid "No cookies match. Run the scanner and import to populate this list."
 msgstr ""
 
-#: assets/src/admin/network.js:426
+#: assets/src/admin/network.js:428
 msgid "Select all"
 msgstr ""
 
-#: assets/src/admin/network.js:429
+#: assets/src/admin/network.js:431
 msgid "Cookie"
 msgstr ""
 
-#: assets/src/admin/network.js:432
+#: assets/src/admin/network.js:434
 msgid "Sites"
 msgstr ""
 
-#: assets/src/admin/network.js:435
-#: assets/src/admin/network.js:476
+#: assets/src/admin/network.js:437
+#: assets/src/admin/network.js:478
 msgid "Remove"
 msgstr ""
 
-#: assets/src/admin/network.js:459
+#: assets/src/admin/network.js:461
 msgid "First"
 msgstr ""
 
-#: assets/src/admin/network.js:459
+#: assets/src/admin/network.js:461
 msgid "Third"
 msgstr ""
 
-#: assets/src/admin/network.js:485
+#: assets/src/admin/network.js:487
 msgid "Applies to all sites"
 msgstr ""
+
+#. translators: %d: number of sites.
+#: assets/src/admin/network.js:503
+#, js-format
+msgid "Show %d site"
+msgid_plural "Show %d sites"
+msgstr[0] ""
+msgstr[1] ""
 
 #: assets/src/banner.js:213
 msgid "Cookie consent"

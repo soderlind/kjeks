@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3 - 2026-08-20
+
+- Network review: replace the truncated site-count tooltip with a scrollable, numerically sorted popover that closes on Escape or click outside, so all sites are reachable.
+- Network review: allow assigning the Necessary category when reviewing cookies.
+
 ## 1.0.2 - 2026-08-20
 
 - Add suggested cookie and consent text to the WordPress Privacy Policy Guide (Settings → Privacy).

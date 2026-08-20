@@ -38,6 +38,27 @@
 	vertical-align: middle;
 }
 
+.kjeks-sites-cell .components-button {
+	min-width: 0;
+	padding: 0;
+	height: auto;
+}
+
+.kjeks-sites-popover .kjeks-sites-list {
+	margin: 0;
+	padding: 0.5rem 0.75rem;
+	max-width: 16rem;
+	max-height: 15rem;
+	overflow-y: auto;
+	list-style: none;
+}
+
+.kjeks-sites-popover .kjeks-sites-list li {
+	padding: 0.1rem 0;
+	font-size: 0.85rem;
+	white-space: nowrap;
+}
+
 .kjeks-network__provider,
 .kjeks-network__domain {
 	font-size: 0.8rem;

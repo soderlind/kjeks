@@ -22,7 +22,7 @@ import {
 	Notice,
 	Spinner,
 	TabPanel,
-	Tooltip,
+	Dropdown,
 } from '@wordpress/components';
 
 const settings = window.kjeksNetwork || {};
@@ -52,11 +52,13 @@ function App() {
 			} );
 	}, [] );
 
-	const optionalCategories = useMemo(
-		() => ( config ? config.categories.filter( ( c ) => ! c.required ) : [] ),
+	const categoryOptions = useMemo(
+		() =>
+			config
+				? config.categories.map( ( c ) => ( { label: c.label, value: c.slug } ) )
+				: [],
 		[ config ]
 	);
-	const categoryOptions = optionalCategories.map( ( c ) => ( { label: c.label, value: c.slug } ) );
 
 	const visible = useMemo( () => {
 		if ( ! config ) {
@@ -484,8 +486,33 @@ function SitesCell( { sites, siteNames } ) {
 	if ( ! sites.length ) {
 		return h( 'span', { title: __( 'Applies to all sites', 'kjeks' ) }, __( 'All', 'kjeks' ) );
 	}
-	const names = sites.map( ( id ) => siteNames[ id ] || '#' + id ).join( ', ' );
-	return h( Tooltip, { text: names }, h( 'span', {}, String( sites.length ) ) );
+	const sorted = [ ...sites ].sort( ( a, b ) => Number( a ) - Number( b ) );
+	return h( Dropdown, {
+		className: 'kjeks-sites-cell',
+		contentClassName: 'kjeks-sites-popover',
+		popoverProps: { placement: 'bottom-start', focusOnMount: 'container' },
+		renderToggle: ( { isOpen, onToggle } ) =>
+			h(
+				Button,
+				{
+					variant: 'link',
+					onClick: onToggle,
+					'aria-expanded': isOpen,
+					'aria-label': sprintf(
+						/* translators: %d: number of sites. */
+						_n( 'Show %d site', 'Show %d sites', sites.length, 'kjeks' ),
+						sites.length
+					),
+				},
+				String( sites.length )
+			),
+		renderContent: () =>
+			h(
+				'ul',
+				{ className: 'kjeks-sites-list' },
+				sorted.map( ( id ) => h( 'li', { key: id }, siteNames[ id ] || '#' + id ) )
+			),
+	} );
 }
 
 function normalize( data ) {
