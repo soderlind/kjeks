@@ -85,7 +85,7 @@ final class NetworkConfigController {
 
 		return new WP_REST_Response(
 			array(
-				'categories'           => array_map(
+				'categories'             => array_map(
 					static fn ( string $slug, array $meta ): array => array(
 						'slug'     => $slug,
 						'label'    => $meta['label'],
@@ -94,13 +94,14 @@ final class NetworkConfigController {
 					array_keys( Categories::all() ),
 					array_values( Categories::all() )
 				),
-				'trackers'             => array_values( $rows ),
-				'siteNames'            => $site_name,
-				'content'              => $network->content(),
-				'deleteOnUninstall'    => $network->delete_on_uninstall(),
-				'bannerDefaultVisible' => $network->banner_default_visible(),
-				'reviewedCount'        => $reviewed,
-				'pendingCount'         => $pending,
+				'trackers'               => array_values( $rows ),
+				'siteNames'              => $site_name,
+				'content'                => $network->content(),
+				'deleteOnUninstall'      => $network->delete_on_uninstall(),
+				'bannerDefaultVisible'   => $network->banner_default_visible(),
+				'privacyPageDeclaration' => $network->privacy_page_declaration(),
+				'reviewedCount'          => $reviewed,
+				'pendingCount'           => $pending,
 			)
 		);
 	}
@@ -167,6 +168,10 @@ final class NetworkConfigController {
 
 		if ( null !== $request->get_param( 'bannerDefaultVisible' ) ) {
 			$network->set_banner_default_visible( (bool) $request->get_param( 'bannerDefaultVisible' ) );
+		}
+
+		if ( null !== $request->get_param( 'privacyPageDeclaration' ) ) {
+			$network->set_privacy_page_declaration( (bool) $request->get_param( 'privacyPageDeclaration' ) );
 		}
 
 		InventoryResolver::flush_cache();

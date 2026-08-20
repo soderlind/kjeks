@@ -33,3 +33,13 @@ it( 'treats banner visibility and uninstall opt-in as independent settings', fun
 	expect( $store->delete_on_uninstall() )->toBeTrue()
 		->and( $store->banner_default_visible() )->toBeFalse();
 } );
+
+it( 'defaults the privacy-page declaration opt-in to off', function (): void {
+	expect( ( new NetworkStore() )->privacy_page_declaration() )->toBeFalse();
+} );
+
+it( 'persists the privacy-page declaration opt-in and reads it back', function (): void {
+	( new NetworkStore() )->set_privacy_page_declaration( true );
+
+	expect( ( new NetworkStore() )->privacy_page_declaration() )->toBeTrue();
+} );

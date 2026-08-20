@@ -122,13 +122,13 @@ msgid "No trackers have been documented yet."
 msgstr "Ingen sporere er dokumentert ennå."
 
 #: src/Frontend/CookieDeclaration.php:43
-#: assets/src/admin/network.js:346
+#: assets/src/admin/network.js:354
 #: assets/src/banner.js:400
 msgid "Name"
 msgstr "Navn"
 
 #: src/Frontend/CookieDeclaration.php:44
-#: assets/src/admin/network.js:352
+#: assets/src/admin/network.js:360
 #: assets/src/banner.js:401
 msgid "Provider"
 msgstr "Leverandør"
@@ -139,13 +139,13 @@ msgid "Purpose"
 msgstr "Formål"
 
 #: src/Frontend/CookieDeclaration.php:46
-#: assets/src/admin/network.js:422
+#: assets/src/admin/network.js:430
 #: assets/src/banner.js:403
 msgid "Type"
 msgstr "Type"
 
 #: src/Frontend/CookieDeclaration.php:47
-#: assets/src/admin/network.js:423
+#: assets/src/admin/network.js:431
 #: assets/src/banner.js:404
 msgid "Party"
 msgstr "Part"
@@ -185,150 +185,150 @@ msgstr "Ukjent nettsted."
 msgid "Failed to load configuration."
 msgstr "Kunne ikke laste inn konfigurasjonen."
 
-#: assets/src/admin/network.js:165
+#: assets/src/admin/network.js:166
 msgid "Saved."
 msgstr "Lagret."
 
-#: assets/src/admin/network.js:169
+#: assets/src/admin/network.js:170
 msgid "Save failed."
 msgstr "Lagring mislyktes."
 
-#: assets/src/admin/network.js:194
+#: assets/src/admin/network.js:195
 msgid "Cookie Consent review"
 msgstr "Gjennomgang av samtykke til informasjonskapsler"
 
-#: assets/src/admin/network.js:194
+#: assets/src/admin/network.js:195
 msgid "Cookie Consent — network review"
 msgstr "Samtykke til informasjonskapsler — nettverksgjennomgang"
 
 #. translators: 1: reviewed count, 2: pending count.
-#: assets/src/admin/network.js:200
+#: assets/src/admin/network.js:201
 #, js-format
 msgid "%1$d reviewed · %2$d pending"
 msgstr "%1$d gjennomgått · %2$d venter"
 
-#: assets/src/admin/network.js:217
+#: assets/src/admin/network.js:218
 msgid "Discovered cookies"
 msgstr "Oppdagede informasjonskapsler"
 
-#: assets/src/admin/network.js:224
+#: assets/src/admin/network.js:225
 msgid "Search name or provider…"
 msgstr "Søk navn eller leverandør…"
 
-#: assets/src/admin/network.js:230
-#: assets/src/admin/network.js:477
+#: assets/src/admin/network.js:231
+#: assets/src/admin/network.js:485
 msgid "All"
 msgstr "Alle"
 
-#: assets/src/admin/network.js:231
+#: assets/src/admin/network.js:232
 msgid "Pending"
 msgstr "Venter"
 
-#: assets/src/admin/network.js:232
-#: assets/src/admin/network.js:426
+#: assets/src/admin/network.js:233
+#: assets/src/admin/network.js:434
 msgid "Reviewed"
 msgstr "Gjennomgått"
 
 #. translators: %d: number of selected cookies.
-#: assets/src/admin/network.js:245
+#: assets/src/admin/network.js:246
 #, js-format
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d valgt"
 msgstr[1] "%d valgt"
 
-#: assets/src/admin/network.js:250
-#: assets/src/admin/network.js:358
-#: assets/src/admin/network.js:425
+#: assets/src/admin/network.js:251
+#: assets/src/admin/network.js:366
+#: assets/src/admin/network.js:433
 msgid "Category"
 msgstr "Kategori"
 
-#: assets/src/admin/network.js:260
+#: assets/src/admin/network.js:261
 msgid "Set category & mark reviewed"
 msgstr "Angi kategori og merk som gjennomgått"
 
-#: assets/src/admin/network.js:265
+#: assets/src/admin/network.js:266
 msgid "Set category only"
 msgstr "Angi bare kategori"
 
-#: assets/src/admin/network.js:270
+#: assets/src/admin/network.js:271
 msgid "Clear"
 msgstr "Tøm"
 
-#: assets/src/admin/network.js:297
+#: assets/src/admin/network.js:298
 msgid "Banner defaults"
 msgstr "Standardverdier for banner"
 
-#: assets/src/admin/network.js:299
+#: assets/src/admin/network.js:300
 msgid "Show the consent banner until a visitor makes a choice"
 msgstr "Vis samtykkebanneret til en besøkende gjør et valg"
 
-#: assets/src/admin/network.js:300
+#: assets/src/admin/network.js:301
 msgid "On by default. When off, the banner is not shown automatically; visitors open it from a “Cookie settings” link, and optional categories stay denied until a choice is made."
 msgstr "På som standard. Når den er av, vises ikke banneret automatisk; besøkende åpner det fra en «Innstillinger for informasjonskapsler»-lenke, og valgfrie kategorier forblir avslått til et valg er gjort."
 
-#: assets/src/admin/network.js:306
+#: assets/src/admin/network.js:307
 msgid "Heading"
 msgstr "Overskrift"
 
-#: assets/src/admin/network.js:312
+#: assets/src/admin/network.js:313
 msgid "Body"
 msgstr "Brødtekst"
 
-#: assets/src/admin/network.js:318
+#: assets/src/admin/network.js:319
 msgid "Privacy policy URL"
 msgstr "URL til personvernerklæring"
 
-#: assets/src/admin/network.js:337
+#: assets/src/admin/network.js:338
 msgid "Advanced"
 msgstr "Avansert"
 
-#: assets/src/admin/network.js:339
+#: assets/src/admin/network.js:340
 msgid "Delete all Kjeks data on uninstall"
 msgstr "Slett alle Kjeks-data ved avinstallering"
 
-#: assets/src/admin/network.js:344
+#: assets/src/admin/network.js:352
 msgid "Add a network-wide cookie"
 msgstr "Legg til en informasjonskapsel for hele nettverket"
 
-#: assets/src/admin/network.js:188
+#: assets/src/admin/network.js:189
 msgid "Save changes"
 msgstr "Lagre endringer"
 
-#: assets/src/admin/network.js:382
+#: assets/src/admin/network.js:390
 msgid "Cookies"
 msgstr "Informasjonskapsler"
 
-#: assets/src/admin/network.js:401
+#: assets/src/admin/network.js:409
 msgid "No cookies match. Run the scanner and import to populate this list."
 msgstr "Ingen informasjonskapsler samsvarer. Kjør skanneren og importer for å fylle denne listen."
 
-#: assets/src/admin/network.js:418
+#: assets/src/admin/network.js:426
 msgid "Select all"
 msgstr "Velg alle"
 
-#: assets/src/admin/network.js:421
+#: assets/src/admin/network.js:429
 msgid "Cookie"
 msgstr "Informasjonskapsel"
 
-#: assets/src/admin/network.js:424
+#: assets/src/admin/network.js:432
 msgid "Sites"
 msgstr "Nettsteder"
 
-#: assets/src/admin/network.js:427
-#: assets/src/admin/network.js:468
+#: assets/src/admin/network.js:435
+#: assets/src/admin/network.js:476
 msgid "Remove"
 msgstr "Fjern"
 
-#: assets/src/admin/network.js:451
+#: assets/src/admin/network.js:459
 msgid "First"
 msgstr "Førstepart"
 
-#: assets/src/admin/network.js:451
+#: assets/src/admin/network.js:459
 msgid "Third"
 msgstr "Tredjepart"
 
-#: assets/src/admin/network.js:477
+#: assets/src/admin/network.js:485
 msgid "Applies to all sites"
 msgstr "Gjelder alle nettsteder"
 
@@ -435,10 +435,30 @@ msgctxt "block keyword"
 msgid "privacy"
 msgstr "personvern"
 
-#: assets/src/admin/network.js:383
+#: assets/src/admin/network.js:391
 msgid "Banner"
 msgstr ""
 
-#: assets/src/admin/network.js:384
+#: assets/src/admin/network.js:392
 msgid "Settings"
+msgstr ""
+
+#: src/Privacy/PolicyContent.php:37
+msgid "Cookies and similar technologies"
+msgstr ""
+
+#: src/Privacy/PolicyContent.php:38
+msgid "This site asks for consent before setting non-essential cookies. Necessary items are always active; every other category stays off until you allow it. You can change your choice at any time via the cookie settings."
+msgstr ""
+
+#: src/Privacy/PolicyContent.php:39
+msgid "The categories below describe what each group of cookies is used for. The current list of individual cookies and trackers is shown on this page."
+msgstr ""
+
+#: assets/src/admin/network.js:346
+msgid "Show the cookie declaration on the privacy policy page"
+msgstr ""
+
+#: assets/src/admin/network.js:347
+msgid "Appends the live cookie table to the site’s privacy policy page, unless the Cookie declaration block or [kjeks_cookie_declaration] shortcode is already used there."
 msgstr ""

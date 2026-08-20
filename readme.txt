@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,11 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.0.2 =
+* Add suggested cookie and consent text to the WordPress Privacy Policy Guide (Settings → Privacy).
+* Optionally append the live cookie declaration to the site's privacy policy page — a network opt-in (off by default) with a dedup guard so it isn't duplicated when the Cookie declaration block or [kjeks_cookie_declaration] shortcode is already on the page.
+* Add a "Show the cookie declaration on the privacy policy page" toggle to the network admin Settings tab.
 
 = 1.0.1 =
 * Register two block-editor blocks via block.json metadata: "Cookie settings" (kjeks/preferences) and "Cookie declaration" (kjeks/cookie-declaration), and add an editor script so both appear in the inserter.

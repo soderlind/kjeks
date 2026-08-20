@@ -156,6 +156,7 @@ function App() {
 				content: config.content,
 				deleteOnUninstall: config.deleteOnUninstall,
 				bannerDefaultVisible: config.bannerDefaultVisible,
+				privacyPageDeclaration: config.privacyPageDeclaration,
 			},
 		} )
 			.then( ( data ) => {
@@ -341,6 +342,13 @@ function App() {
 							onChange: ( v ) => setConfig( { ...config, deleteOnUninstall: v } ),
 							__nextHasNoMarginBottom: true,
 						} ),
+						h( ToggleControl, {
+							label: __( 'Show the cookie declaration on the privacy policy page', 'kjeks' ),
+							help: __( 'Appends the live cookie table to the site\u2019s privacy policy page, unless the Cookie declaration block or [kjeks_cookie_declaration] shortcode is already used there.', 'kjeks' ),
+							checked: !! config.privacyPageDeclaration,
+							onChange: ( v ) => setConfig( { ...config, privacyPageDeclaration: v } ),
+							__nextHasNoMarginBottom: true,
+						} ),
 						h( 'h3', {}, __( 'Add a network-wide cookie', 'kjeks' ) ),
 						h( TextControl, {
 							label: __( 'Name', 'kjeks' ),
@@ -488,6 +496,7 @@ function normalize( data ) {
 		content: data.content || {},
 		deleteOnUninstall: !! data.deleteOnUninstall,
 		bannerDefaultVisible: data.bannerDefaultVisible !== false,
+		privacyPageDeclaration: !! data.privacyPageDeclaration,
 	};
 }
 

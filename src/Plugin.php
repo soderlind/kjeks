@@ -13,7 +13,10 @@ use Soderlind\Kjeks\Admin\NetworkAdmin;
 use Soderlind\Kjeks\Blocking\ScriptGate;
 use Soderlind\Kjeks\Cli\Command;
 use Soderlind\Kjeks\Frontend\Banner;
+use Soderlind\Kjeks\Inventory\NetworkStore;
 use Soderlind\Kjeks\Lifecycle\SiteInitializer;
+use Soderlind\Kjeks\Privacy\PolicyContent;
+use Soderlind\Kjeks\Privacy\PrivacyPageDeclaration;
 use Soderlind\Kjeks\Rest\ImportController;
 use Soderlind\Kjeks\Rest\NetworkConfigController;
 use Soderlind\Kjeks\Rest\ScanConfigController;
@@ -47,9 +50,11 @@ final class Plugin {
 		( new NetworkConfigController() )->hooks();
 		( new ScriptGate() )->hooks();
 		( new Banner() )->hooks();
+		( new PrivacyPageDeclaration( new NetworkStore() ) )->hooks();
 
 		if ( is_admin() ) {
 			( new NetworkAdmin() )->hooks();
+			( new PolicyContent() )->hooks();
 		}
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {

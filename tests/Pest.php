@@ -29,6 +29,9 @@ uses()
  */
 function kjeks_stub_wp_functions(): void {
 	Functions\when( '__' )->returnArg( 1 );
+	Functions\when( 'esc_html' )->returnArg( 1 );
+	Functions\when( 'esc_html__' )->returnArg( 1 );
+	Functions\when( 'esc_attr' )->returnArg( 1 );
 	Functions\when( 'esc_url_raw' )->returnArg( 1 );
 	Functions\when( 'esc_url' )->returnArg( 1 );
 	Functions\when( 'wp_unslash' )->returnArg( 1 );

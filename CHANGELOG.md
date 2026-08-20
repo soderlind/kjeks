@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2 - 2026-08-20
+
+- Add suggested cookie and consent text to the WordPress Privacy Policy Guide (Settings → Privacy).
+- Optionally append the live cookie declaration to the site's privacy policy page — a network opt-in (off by default) with a dedup guard so it isn't duplicated when the Cookie declaration block or `[kjeks_cookie_declaration]` shortcode is already on the page.
+- Add a "Show the cookie declaration on the privacy policy page" toggle to the network admin Settings tab.
+
 ## 1.0.1 - 2026-08-20
 
 - Register two block-editor blocks via `block.json` metadata: "Cookie settings" (`kjeks/preferences`) and "Cookie declaration" (`kjeks/cookie-declaration`), and add an editor script so both appear in the inserter.

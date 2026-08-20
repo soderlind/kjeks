@@ -92,4 +92,25 @@ final class NetworkStore {
 		$settings['banner_default_visible'] = $visible;
 		update_site_option( self::SETTINGS, $settings );
 	}
+
+	/**
+	 * Whether the cookie declaration is auto-appended to the site's privacy
+	 * policy page (network setting, opt-in, default off).
+	 */
+	public function privacy_page_declaration(): bool {
+		$settings = get_site_option( self::SETTINGS, array() );
+
+		return is_array( $settings ) && ! empty( $settings['privacy_page_declaration'] );
+	}
+
+	/**
+	 * Sets whether the cookie declaration is auto-appended to the privacy page.
+	 */
+	public function set_privacy_page_declaration( bool $enabled ): void {
+		$settings = get_site_option( self::SETTINGS, array() );
+		$settings = is_array( $settings ) ? $settings : array();
+
+		$settings['privacy_page_declaration'] = $enabled;
+		update_site_option( self::SETTINGS, $settings );
+	}
 }
