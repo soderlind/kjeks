@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.1 - 2026-08-20
+
+- Register two block-editor blocks via `block.json` metadata: "Cookie settings" (`kjeks/preferences`) and "Cookie declaration" (`kjeks/cookie-declaration`), and add an editor script so both appear in the inserter.
+- Register a shared `kjeks-banner` stylesheet so the blocks' `style` handle resolves on the front end and in the editor's ServerSideRender preview.
+- Reorganize the network admin into Cookies, Banner, and Settings tabs.
+- Add JavaScript translations for the block editor.
+
+## 1.0.0 - 2026-08-20
+
+- First stable release.
+- Add a Norwegian Bokmål (`nb_NO`) translation and refresh the translation template (`.pot`).
+- Add JavaScript (admin UI) translations via `wp i18n make-json`, wired with `wp_set_script_translations` and an `i18n-map.json`.
+- Document why the consent banner may not appear (Global Privacy Control, a prior choice, or browser blockers).
+
 ## 0.9.0 - 2026-08-20
 
 - Scanner config (`scan-config`) now auto-selects representative URLs per site via `WP_Query` — the home page, newest post and page, the posts archive, and pages whose content shows an embed / inline-script signal — deduped and capped (default 10). Omit `paths` to auto-select; explicit paths still override.

@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kjeks/preferences",
+	"title": "Cookie settings (Kjeks)",
+	"category": "widgets",
+	"icon": "shield-alt",
+	"description": "A link that opens the Kjeks cookie-preferences dialog so visitors can change their consent.",
+	"keywords": [ "cookie", "consent", "privacy", "kjeks" ],
+	"textdomain": "kjeks",
+	"style": "kjeks-banner",
+	"supports": {
+		"html": false
+	},
+	"example": {}
+}

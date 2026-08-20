@@ -27,6 +27,7 @@ final class Banner {
 		add_shortcode( 'kjeks_preferences', array( $this, 'shortcode_preferences' ) );
 		add_shortcode( 'kjeks_cookie_declaration', array( $this, 'shortcode_declaration' ) );
 		add_action( 'init', array( $this, 'register_blocks' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor' ) );
 	}
 
 	public function enqueue(): void {
@@ -97,18 +98,43 @@ final class Banner {
 	}
 
 	public function register_blocks(): void {
-		if ( ! function_exists( 'register_block_type' ) ) {
+		if ( ! function_exists( 'register_block_type_from_metadata' ) ) {
 			return;
 		}
 
-		register_block_type(
-			'kjeks/preferences',
+		// Register the shared stylesheet so both blocks' `style` handle resolves on the
+		// front end and inside the block editor (styling the ServerSideRender preview).
+		wp_register_style( 'kjeks-banner', KJEKS_URL . 'build/banner.css', array(), $this->asset( 'banner' )['version'] );
+
+		register_block_type_from_metadata(
+			KJEKS_DIR . 'blocks/preferences',
 			array( 'render_callback' => array( $this, 'shortcode_preferences' ) )
 		);
-		register_block_type(
-			'kjeks/cookie-declaration',
+		register_block_type_from_metadata(
+			KJEKS_DIR . 'blocks/cookie-declaration',
 			array( 'render_callback' => array( $this, 'shortcode_declaration' ) )
 		);
+	}
+
+	/**
+	 * Enqueues the block editor script so both dynamic blocks appear in the inserter.
+	 */
+	public function enqueue_block_editor(): void {
+		$asset_file = KJEKS_DIR . 'build/blocks.asset.php';
+		if ( ! is_readable( $asset_file ) ) {
+			return;
+		}
+
+		$asset = include $asset_file;
+
+		wp_enqueue_script(
+			'kjeks-blocks',
+			KJEKS_URL . 'build/blocks.js',
+			isset( $asset['dependencies'] ) ? (array) $asset['dependencies'] : array(),
+			isset( $asset['version'] ) ? (string) $asset['version'] : KJEKS_VERSION,
+			true
+		);
+		wp_set_script_translations( 'kjeks-blocks', 'kjeks', KJEKS_DIR . 'languages' );
 	}
 
 	/**

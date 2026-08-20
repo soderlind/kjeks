@@ -1,4 +1,5 @@
 {
 	"assets/src/banner.js": "build/banner.js",
-	"assets/src/admin/network.js": "build/network.js"
+	"assets/src/admin/network.js": "build/network.js",
+	"assets/src/blocks/index.js": "build/blocks.js"
 }

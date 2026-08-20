@@ -182,6 +182,12 @@ function App() {
 			h( 'span', { className: 'kjeks-network__count' }, String( counts[ value ] ) )
 		);
 
+	const saveButton = h(
+		Button,
+		{ variant: 'primary', isBusy: saving, disabled: saving, onClick: save },
+		__( 'Save changes', 'kjeks' )
+	);
+
 	return h(
 		'div',
 		{ className: 'kjeks-network' },
@@ -199,175 +205,194 @@ function App() {
 		notice &&
 			h( Notice, { status: notice.type, onRemove: () => setNotice( null ) }, notice.text ),
 
-		renderTabs( h( 'div', { className: 'kjeks-network__cookies' },
-		h(
-			Panel,
-			{},
-			h(
-				PanelBody,
-				{ title: __( 'Discovered cookies', 'kjeks' ), initialOpen: true },
+		renderTabs( {
+			cookies: h(
+				'div',
+				{ className: 'kjeks-network__cookies' },
 				h(
-					'div',
-					{ className: 'kjeks-network__toolbar' },
-					h( SearchControl, {
-						value: search,
-						onChange: setSearch,
-						placeholder: __( 'Search name or provider…', 'kjeks' ),
-						__nextHasNoMarginBottom: true,
-					} ),
+					Panel,
+					{},
 					h(
-						'div',
-						{ className: 'kjeks-network__filters' },
-						filterButton( 'all', __( 'All', 'kjeks' ) ),
-						filterButton( 'pending', __( 'Pending', 'kjeks' ) ),
-						filterButton( 'reviewed', __( 'Reviewed', 'kjeks' ) )
-					)
-				),
-
-				selected.size > 0 &&
-					h(
-						'div',
-						{ className: 'kjeks-network__bulk' },
+						PanelBody,
+						{ title: __( 'Discovered cookies', 'kjeks' ), initialOpen: true },
 						h(
-							'span',
-							{},
-							sprintf(
-								/* translators: %d: number of selected cookies. */
-								_n( '%d selected', '%d selected', selected.size, 'kjeks' ),
-								selected.size
+							'div',
+							{ className: 'kjeks-network__toolbar' },
+							h( SearchControl, {
+								value: search,
+								onChange: setSearch,
+								placeholder: __( 'Search name or provider…', 'kjeks' ),
+								__nextHasNoMarginBottom: true,
+							} ),
+							h(
+								'div',
+								{ className: 'kjeks-network__filters' },
+								filterButton( 'all', __( 'All', 'kjeks' ) ),
+								filterButton( 'pending', __( 'Pending', 'kjeks' ) ),
+								filterButton( 'reviewed', __( 'Reviewed', 'kjeks' ) )
 							)
 						),
-						h( SelectControl, {
-							label: __( 'Category', 'kjeks' ),
-							hideLabelFromVision: true,
-							value: bulkCategory,
-							options: categoryOptions,
-							onChange: setBulkCategory,
+
+						selected.size > 0 &&
+							h(
+								'div',
+								{ className: 'kjeks-network__bulk' },
+								h(
+									'span',
+									{},
+									sprintf(
+										/* translators: %d: number of selected cookies. */
+									_n( '%d selected', '%d selected', selected.size, 'kjeks' ),
+									selected.size
+								)
+							),
+							h( SelectControl, {
+								label: __( 'Category', 'kjeks' ),
+								hideLabelFromVision: true,
+								value: bulkCategory,
+								options: categoryOptions,
+								onChange: setBulkCategory,
+								__nextHasNoMarginBottom: true,
+							} ),
+							h(
+								Button,
+								{ variant: 'primary', onClick: () => applyBulk( true ) },
+								__( 'Set category & mark reviewed', 'kjeks' )
+							),
+							h(
+								Button,
+								{ variant: 'secondary', onClick: () => applyBulk( false ) },
+								__( 'Set category only', 'kjeks' )
+							),
+							h(
+								Button,
+								{ variant: 'tertiary', onClick: () => setSelected( new Set() ) },
+								__( 'Clear', 'kjeks' )
+							)
+						),
+
+					h( TrackerTable, {
+						rows: visible,
+						categoryOptions,
+						selected,
+						siteNames: config.siteNames,
+						onToggleSelect: toggleSelected,
+						onSelectAll: selectAllVisible,
+						onChange: updateTracker,
+						onRemove: removeTracker,
+					} )
+				)
+			),
+			saveButton
+			),
+
+			banner: h(
+				'div',
+				{ className: 'kjeks-network__banner' },
+				h(
+					Panel,
+					{},
+					h(
+						PanelBody,
+						{ title: __( 'Banner defaults', 'kjeks' ), initialOpen: true },
+						h( ToggleControl, {
+							label: __( 'Show the consent banner until a visitor makes a choice', 'kjeks' ),
+							help: __( 'On by default. When off, the banner is not shown automatically; visitors open it from a “Cookie settings” link, and optional categories stay denied until a choice is made.', 'kjeks' ),
+							checked: config.bannerDefaultVisible !== false,
+							onChange: ( v ) => setConfig( { ...config, bannerDefaultVisible: v } ),
 							__nextHasNoMarginBottom: true,
 						} ),
-						h(
-							Button,
-							{ variant: 'primary', onClick: () => applyBulk( true ) },
-							__( 'Set category & mark reviewed', 'kjeks' )
-						),
-						h(
-							Button,
-							{ variant: 'secondary', onClick: () => applyBulk( false ) },
-							__( 'Set category only', 'kjeks' )
-						),
-						h(
-							Button,
-							{ variant: 'tertiary', onClick: () => setSelected( new Set() ) },
-							__( 'Clear', 'kjeks' )
-						)
-					),
-
-				h( TrackerTable, {
-					rows: visible,
-					categoryOptions,
-					selected,
-					siteNames: config.siteNames,
-					onToggleSelect: toggleSelected,
-					onSelectAll: selectAllVisible,
-					onChange: updateTracker,
-					onRemove: removeTracker,
-				} )
+						h( TextControl, {
+							label: __( 'Heading', 'kjeks' ),
+							value: config.content.heading || '',
+							onChange: ( v ) => setConfig( { ...config, content: { ...config.content, heading: v } } ),
+							__nextHasNoMarginBottom: true,
+						} ),
+						h( TextareaControl, {
+							label: __( 'Body', 'kjeks' ),
+							value: config.content.body || '',
+							onChange: ( v ) => setConfig( { ...config, content: { ...config.content, body: v } } ),
+							__nextHasNoMarginBottom: true,
+						} ),
+						h( TextControl, {
+							label: __( 'Privacy policy URL', 'kjeks' ),
+							type: 'url',
+							value: config.content.privacy_url || '',
+							onChange: ( v ) => setConfig( { ...config, content: { ...config.content, privacy_url: v } } ),
+							__nextHasNoMarginBottom: true,
+						} )
+					)
+				),
+				saveButton
 			),
 
-			h(
-				PanelBody,
-				{ title: __( 'Banner defaults', 'kjeks' ), initialOpen: false },
-				h( ToggleControl, {
-					label: __( 'Show the consent banner until a visitor makes a choice', 'kjeks' ),
-					help: __( 'On by default. When off, the banner is not shown automatically; visitors open it from a “Cookie settings” link, and optional categories stay denied until a choice is made.', 'kjeks' ),
-					checked: config.bannerDefaultVisible !== false,
-					onChange: ( v ) => setConfig( { ...config, bannerDefaultVisible: v } ),
-					__nextHasNoMarginBottom: true,
-				} ),
-				h( TextControl, {
-					label: __( 'Heading', 'kjeks' ),
-					value: config.content.heading || '',
-					onChange: ( v ) => setConfig( { ...config, content: { ...config.content, heading: v } } ),
-					__nextHasNoMarginBottom: true,
-				} ),
-				h( TextareaControl, {
-					label: __( 'Body', 'kjeks' ),
-					value: config.content.body || '',
-					onChange: ( v ) => setConfig( { ...config, content: { ...config.content, body: v } } ),
-					__nextHasNoMarginBottom: true,
-				} ),
-				h( TextControl, {
-					label: __( 'Privacy policy URL', 'kjeks' ),
-					type: 'url',
-					value: config.content.privacy_url || '',
-					onChange: ( v ) => setConfig( { ...config, content: { ...config.content, privacy_url: v } } ),
-					__nextHasNoMarginBottom: true,
-				} )
+			settings: h(
+				'div',
+				{ className: 'kjeks-network__settings' },
+				h(
+					Panel,
+					{},
+					h(
+						PanelBody,
+						{ title: __( 'Advanced', 'kjeks' ), initialOpen: true },
+						h( ToggleControl, {
+							label: __( 'Delete all Kjeks data on uninstall', 'kjeks' ),
+							checked: !! config.deleteOnUninstall,
+							onChange: ( v ) => setConfig( { ...config, deleteOnUninstall: v } ),
+							__nextHasNoMarginBottom: true,
+						} ),
+						h( 'h3', {}, __( 'Add a network-wide cookie', 'kjeks' ) ),
+						h( TextControl, {
+							label: __( 'Name', 'kjeks' ),
+							value: add.name,
+							onChange: ( v ) => setAdd( { ...add, name: v } ),
+							__nextHasNoMarginBottom: true,
+						} ),
+						h( TextControl, {
+							label: __( 'Provider', 'kjeks' ),
+							value: add.provider,
+							onChange: ( v ) => setAdd( { ...add, provider: v } ),
+							__nextHasNoMarginBottom: true,
+						} ),
+						h( SelectControl, {
+							label: __( 'Category', 'kjeks' ),
+							value: add.category,
+							options: categoryOptions,
+							onChange: ( v ) => setAdd( { ...add, category: v } ),
+							__nextHasNoMarginBottom: true,
+						} )
+					)
+				),
+				saveButton
 			),
-
-			h(
-				PanelBody,
-				{ title: __( 'Advanced', 'kjeks' ), initialOpen: false },
-				h( ToggleControl, {
-					label: __( 'Delete all Kjeks data on uninstall', 'kjeks' ),
-					checked: !! config.deleteOnUninstall,
-					onChange: ( v ) => setConfig( { ...config, deleteOnUninstall: v } ),
-					__nextHasNoMarginBottom: true,
-				} ),
-				h( 'h3', {}, __( 'Add a network-wide cookie', 'kjeks' ) ),
-				h( TextControl, {
-					label: __( 'Name', 'kjeks' ),
-					value: add.name,
-					onChange: ( v ) => setAdd( { ...add, name: v } ),
-					__nextHasNoMarginBottom: true,
-				} ),
-				h( TextControl, {
-					label: __( 'Provider', 'kjeks' ),
-					value: add.provider,
-					onChange: ( v ) => setAdd( { ...add, provider: v } ),
-					__nextHasNoMarginBottom: true,
-				} ),
-				h( SelectControl, {
-					label: __( 'Category', 'kjeks' ),
-					value: add.category,
-					options: categoryOptions,
-					onChange: ( v ) => setAdd( { ...add, category: v } ),
-					__nextHasNoMarginBottom: true,
-				} )
-			)
-		),
-
-		h(
-			Button,
-			{ variant: 'primary', isBusy: saving, disabled: saving, onClick: save },
-			__( 'Save changes', 'kjeks' )
-		)
-		) )
+		} )
 	);
 }
 
 /**
- * Wraps the review body in a tabbed layout when add-ons register extra tabs
- * via the `kjeks.networkAdminTabs` filter. With no add-on, renders as before.
+ * Renders the network admin as tabs: the built-in Cookies, Banner, and Settings
+ * bodies plus any tabs add-ons register via the `kjeks.networkAdminTabs` filter.
  *
- * Each extra tab is `{ name, title, render: () => ReactNode }`.
+ * `bodies` maps a built-in tab name to its ReactNode. Each extra tab is
+ * `{ name, title, render: () => ReactNode }`.
  */
-function renderTabs( cookiesBody ) {
+function renderTabs( bodies ) {
 	const extraTabs = applyFilters( 'kjeks.networkAdminTabs', [] );
-	if ( ! extraTabs.length ) {
-		return cookiesBody;
-	}
 	const tabs = [
 		{ name: 'cookies', title: __( 'Cookies', 'kjeks' ) },
+		{ name: 'banner', title: __( 'Banner', 'kjeks' ) },
+		{ name: 'settings', title: __( 'Settings', 'kjeks' ) },
 		...extraTabs.map( ( t ) => ( { name: t.name, title: t.title } ) ),
 	];
 	return h(
 		TabPanel,
 		{ className: 'kjeks-network__tabs', tabs },
-		( tab ) =>
-			tab.name === 'cookies'
-				? cookiesBody
-				: ( ( extraTabs.find( ( t ) => t.name === tab.name ) || {} ).render || ( () => null ) )()
+		( tab ) => {
+			if ( bodies[ tab.name ] ) {
+				return bodies[ tab.name ];
+			}
+			return ( ( extraTabs.find( ( t ) => t.name === tab.name ) || {} ).render || ( () => null ) )();
+		}
 	);
 }
 

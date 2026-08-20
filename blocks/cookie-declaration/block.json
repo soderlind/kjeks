@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "kjeks/cookie-declaration",
+	"title": "Cookie declaration (Kjeks)",
+	"category": "widgets",
+	"icon": "list-view",
+	"description": "A table of the cookies and trackers documented for this site.",
+	"keywords": [ "cookie", "consent", "declaration", "kjeks" ],
+	"textdomain": "kjeks",
+	"style": "kjeks-banner",
+	"supports": {
+		"html": false
+	},
+	"example": {}
+}

@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 0.9.0
+Stable tag: 1.0.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,18 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.0.1 =
+* Register two block-editor blocks via block.json metadata: "Cookie settings" (kjeks/preferences) and "Cookie declaration" (kjeks/cookie-declaration), and add an editor script so both appear in the inserter.
+* Register a shared kjeks-banner stylesheet so the blocks' style handle resolves on the front end and in the editor's ServerSideRender preview.
+* Reorganize the network admin into Cookies, Banner, and Settings tabs.
+* Add JavaScript translations for the block editor.
+
+= 1.0.0 =
+* First stable release.
+* Add a Norwegian Bokmål (nb_NO) translation and refresh the translation template (.pot).
+* Add JavaScript (admin UI) translations via wp i18n make-json, wired with wp_set_script_translations and an i18n-map.json.
+* Document why the consent banner may not appear (Global Privacy Control, a prior choice, or browser blockers).
 
 = 0.9.0 =
 * Scanner config now auto-selects representative URLs per site (home, newest post and page, the posts archive, and pages whose content shows an embed or inline-script signal), capped and filterable. Omit paths to auto-select; explicit paths still override.
