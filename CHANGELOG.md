@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 - 2026-08-21
+
+- Track the compiled `build/` assets in version control so Composer source installs (e.g. `~1.0.3` from a VCS/registry) ship the admin and banner scripts, fixing a 404 on `build/network.js` after activation.
+
 ## 1.0.3 - 2026-08-20
 
 - Network review: replace the truncated site-count tooltip with a scrollable, numerically sorted popover that closes on Escape or click outside, so all sites are reachable.

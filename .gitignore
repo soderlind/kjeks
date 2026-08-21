@@ -1,6 +1,5 @@
 /vendor/
 /node_modules/
-/build/
 *.log
 .DS_Store
 .phpunit.result.cache
