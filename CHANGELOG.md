@@ -1,10 +1,15 @@
 # Changelog
 
+## 1.1.1 - 2026-08-22
+
+- Fully remove the GitHub self-updater (drop the init and the composer dependency); WordPress.org is now the sole update source.
+- Build the GitHub release zip identically to the WordPress.org distribution — same files, no self-updater, `composer.json` included.
+
 ## 1.1.0 - 2026-08-22
 
 - Prepare the plugin for the WordPress.org plugin directory: add a `.distignore` and WordPress.org deploy + asset-update GitHub Actions.
 - Pass Plugin Check: add a direct-file-access guard and rely on WordPress 6.8+ just-in-time translation loading (drop the manual `load_plugin_textdomain()` call).
-- Remove the GitHub self-updater entirely; WordPress.org is the update source, and the GitHub release zip mirrors the same build.
+- Exclude the GitHub self-updater from the WordPress.org build; GitHub-hosted installs kept the updater.
 - Link the readme to the [documentation site](https://kjeks.soderlind.no) and the Kjeks add-ons.
 
 ## 1.0.8 - 2026-08-22
