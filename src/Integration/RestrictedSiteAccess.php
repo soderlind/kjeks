@@ -41,6 +41,14 @@ final class RestrictedSiteAccess {
 			return (bool) $is_restricted;
 		}
 
-		return ScanKeyAuth::is_valid_raw_key() ? false : (bool) $is_restricted;
+		if ( ! ScanKeyAuth::is_valid_raw_key() ) {
+			return (bool) $is_restricted;
+		}
+
+		// Prevent a page cache/CDN from storing this unrestricted response and
+		// later serving it to a keyless (public) visitor.
+		nocache_headers();
+
+		return false;
 	}
 }

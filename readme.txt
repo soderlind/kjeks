@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.0.8 =
+* Harden the Restricted Site Access bypass: send no-cache headers on a keyed request so an unrestricted response can never be cached and served to the public, and accept the key only from the X-Kjeks-Key header (no query-string fallback) so it can't leak via logs, Referer, or history.
 
 = 1.0.7 =
 * Restricted Site Access compatibility: a request carrying a valid scanner key bypasses the login/IP restriction, so the discovery scanner can reach the scan-config and import endpoints and load restricted front-end pages. Requests without a valid key stay restricted.

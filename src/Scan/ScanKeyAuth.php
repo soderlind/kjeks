@@ -98,28 +98,19 @@ final class ScanKeyAuth {
 	}
 
 	/**
-	 * Reads the presented key straight from superglobals.
+	 * Reads the presented key straight from the request header.
 	 *
 	 * Used before the REST request object exists (e.g. from `parse_request`).
+	 * Header-only by design: unlike the REST routes, the raw path never accepts
+	 * the key in the query string, so it can't leak into logs, Referer, or the
+	 * browser history and grant site-wide access.
 	 */
 	public static function presented_key_raw(): string {
 		// Shared-secret authentication; nonce verification is not applicable.
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$header = isset( $_SERVER['HTTP_X_KJEKS_KEY'] )
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return isset( $_SERVER['HTTP_X_KJEKS_KEY'] )
 			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_KJEKS_KEY'] ) )
 			: '';
-		if ( '' !== $header ) {
-			// phpcs:enable WordPress.Security.NonceVerification.Recommended
-			return $header;
-		}
-
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$query = isset( $_GET[ self::QUERY_ARG ] )
-			? sanitize_text_field( wp_unslash( $_GET[ self::QUERY_ARG ] ) )
-			: '';
-		// phpcs:enable WordPress.Security.NonceVerification.Recommended
-
-		return $query;
 	}
 
 	/**
