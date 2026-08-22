@@ -36,19 +36,6 @@ if ( is_readable( $kjeks_autoload ) ) {
 	require $kjeks_autoload;
 }
 
-// Self-updates from GitHub releases. Private repos need a KJEKS_GITHUB_TOKEN constant.
-if ( class_exists( \Soderlind\WordPress\GitHubUpdater::class ) ) {
-	\Soderlind\WordPress\GitHubUpdater::init(
-		github_url:   'https://github.com/soderlind/kjeks',
-		plugin_file:  __FILE__,
-		plugin_slug:  'kjeks',
-		name_regex:   '/kjeks\.zip/',
-		branch:       'main',
-		check_period: 6,
-		auth_token:   defined( 'KJEKS_GITHUB_TOKEN' ) ? KJEKS_GITHUB_TOKEN : '',
-	);
-}
-
 register_activation_hook( __FILE__, array( Lifecycle\Activation::class, 'activate' ) );
 register_deactivation_hook( __FILE__, array( Lifecycle\Activation::class, 'deactivate' ) );
 

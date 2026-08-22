@@ -37,7 +37,7 @@ categories default to disabled. Add more via the `kjeks_categories` filter.
 2. In WordPress, go to **Plugins → Add New → Upload Plugin** and upload the zip.
 3. Activate the plugin. On multisite, **Network Activate** it and configure network defaults under **Network Admin → Cookie Consent**; on a single site, open **Cookie Consent** from the admin menu.
 
-The plugin updates itself automatically via GitHub releases using [plugin-update-checker](https://github.com/YahnisElsts/plugin-update-checker).
+Updates are delivered through WordPress.org. (The GitHub release `kjeks.zip` is a mirror of the same build for manual installs.)
 
 ## Usage
 

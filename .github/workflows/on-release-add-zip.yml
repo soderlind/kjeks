@@ -30,13 +30,6 @@ jobs:
       - name: Install production dependencies
         run: composer install --no-dev --optimize-autoloader
 
-      # Keep this zip identical to the WordPress.org distribution: strip the
-      # GitHub self-updater (wp.org disallows external updaters and serves
-      # updates for both channels). kjeks.php guards it with class_exists(), so
-      # its absence disables it cleanly.
-      - name: Remove the GitHub self-updater
-        run: composer remove soderlind/wordpress-github-updater --update-no-dev --optimize-autoloader --no-interaction
-
       # Stage under the slug applying the same .distignore exclusions the wp.org
       # deploy uses, so both artifacts contain exactly the same files.
       - name: Stage plugin honoring .distignore

@@ -4,7 +4,7 @@
 
 - Prepare the plugin for the WordPress.org plugin directory: add a `.distignore` and WordPress.org deploy + asset-update GitHub Actions.
 - Pass Plugin Check: add a direct-file-access guard and rely on WordPress 6.8+ just-in-time translation loading (drop the manual `load_plugin_textdomain()` call).
-- Exclude the GitHub self-updater from the WordPress.org build — WordPress.org serves updates; GitHub-hosted installs keep the updater.
+- Remove the GitHub self-updater entirely; WordPress.org is the update source, and the GitHub release zip mirrors the same build.
 - Link the readme to the [documentation site](https://kjeks.soderlind.no) and the Kjeks add-ons.
 
 ## 1.0.8 - 2026-08-22
