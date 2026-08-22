@@ -23,13 +23,16 @@ Kjeks assists with consent management. It does not, and cannot, guarantee legal 
 
 Full documentation, guides, and the developer handbook: [kjeks.soderlind.no](https://kjeks.soderlind.no)
 
-= Add-ons =
+= Free add-ons =
 
 Optional companion plugins extend Kjeks:
 
 * **Kjeks Google** — Google Tag Manager and GA4 using Consent Mode v2, with default-denied signals and a consent-gated container. [Docs](https://kjeks.soderlind.no/docs/kjeks-google/) · [Code](https://github.com/soderlind/kjeks-google)
 * **Kjeks AI Reviewer** — AI-assisted, advisory classification suggestions for unreviewed cookies, using the WordPress core AI client. [Docs](https://kjeks.soderlind.no/docs/kjeks-ai-reviewer/) · [Code](https://github.com/soderlind/kjeks-ai-reviewer)
-* **Kjeks Scanner** — a standalone Playwright discovery scanner that detects trackers under every consent state and imports them back into the inventory. [Docs](https://kjeks.soderlind.no/docs/kjeks-scanner/) · [Code](https://github.com/soderlind/kjeks-scanner)
+
+= Discovery scanner =
+
+**Kjeks Scanner** is a standalone Node + Playwright command-line tool (not a WordPress plugin) that crawls your pages under every consent state, detects the trackers that actually fire, and imports them into the inventory. [Docs](https://kjeks.soderlind.no/docs/kjeks-scanner/) · [Code](https://github.com/soderlind/kjeks-scanner)
 
 == Installation ==
 
