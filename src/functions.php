@@ -14,6 +14,8 @@ use Soderlind\Kjeks\Blocking\EmbedGate;
 use Soderlind\Kjeks\Blocking\IntegrationRegistry;
 use Soderlind\Kjeks\Consent\ConsentState;
 
+defined( 'ABSPATH' ) || exit;
+
 if ( ! function_exists( 'kjeks_register_integration' ) ) {
 	/**
 	 * Registers an integration against a consent category.

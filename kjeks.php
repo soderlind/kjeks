@@ -55,7 +55,7 @@ register_deactivation_hook( __FILE__, array( Lifecycle\Activation::class, 'deact
 add_action(
 	'plugins_loaded',
 	static function (): void {
-		load_plugin_textdomain( 'kjeks', false, dirname( KJEKS_BASENAME ) . '/languages' );
+		// Translations load just-in-time on WordPress 6.8+ (bundled languages/ and wp.org).
 		Plugin::instance()->boot();
 	}
 );
