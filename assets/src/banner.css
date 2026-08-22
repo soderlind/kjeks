@@ -14,7 +14,7 @@
 	color: #1f2937;
 	border: 1px solid #e5e7eb;
 	border-radius: 0.5rem 0.5rem 0 0;
-	box-shadow: 0 -2px 12px rgba( 0, 0, 0, 0.12 );
+	box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
 	font-size: 0.95rem;
 	line-height: 1.5;
 }
@@ -50,7 +50,7 @@
 }
 
 .kjeks-btn--primary {
-	background: var( --kjeks-accent, #1e40af );
+	background: var(--kjeks-accent, #1e40af);
 	color: #fff;
 }
 
@@ -75,7 +75,7 @@
 	align-items: center;
 	justify-content: center;
 	padding: 1rem;
-	background: rgba( 0, 0, 0, 0.4 );
+	background: rgba(0, 0, 0, 0.4);
 	overflow: auto;
 }
 
@@ -146,7 +146,7 @@
 
 .kjeks-tab[aria-selected="true"] {
 	color: #1f2937;
-	border-bottom-color: var( --kjeks-accent, #1e40af );
+	border-bottom-color: var(--kjeks-accent, #1e40af);
 }
 
 .kjeks-tab:focus-visible {
@@ -183,6 +183,8 @@
 	margin-top: 1rem;
 }
 
+/* Base trigger; the shared :focus-visible rule above intentionally wins. */
+/* stylelint-disable-next-line no-descending-specificity */
 .kjeks-trigger {
 	position: fixed;
 	inset-block-end: 1rem;
@@ -194,7 +196,7 @@
 	color: #1f2937;
 	border: 1px solid #d1d5db;
 	border-radius: 999px;
-	box-shadow: 0 1px 6px rgba( 0, 0, 0, 0.15 );
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
 	cursor: pointer;
 }
 
@@ -218,6 +220,7 @@
 }
 
 @media ( prefers-reduced-motion: reduce ) {
+
 	.kjeks-banner,
 	.kjeks-dialog {
 		transition: none;
