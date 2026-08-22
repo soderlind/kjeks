@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PLUGIN_ZIP: kjeks.zip
+      SLUG: kjeks
     permissions:
       contents: write
     steps:
@@ -26,35 +27,37 @@ jobs:
           npm install
           npm run build
 
-      - name: Build plugin
+      - name: Install production dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      # Stage under the slug applying the same .distignore exclusions the wp.org
+      # deploy uses, so both artifacts contain exactly the same files.
+      - name: Stage plugin honoring .distignore
         run: |
-          composer install --no-dev --optimize-autoloader
+          mkdir -p "dist/${SLUG}"
+          grep -vE '^[[:space:]]*(#|$)' .distignore > /tmp/distignore.txt
+          rsync -a --exclude='.git' --exclude='dist' --exclude-from=/tmp/distignore.txt ./ "dist/${SLUG}/"
 
-      - name: Archive Release
-        uses: thedoctor0/zip-release@b57d897cb5d60cb78b51a507f63fa184cfe35554 #0.7.6
-        with:
-          type: 'zip'
-          filename: ${{ env.PLUGIN_ZIP }}
-          exclusions: >-
-            *.git* /*.github/* /*.vscode/* /*node_modules/* /*tests/* /*docs/*
-            composer.json composer.lock package.json package-lock.json
-            phpunit.xml phpunit.xml.dist phpcs.xml vitest.config.js i18n-map.json
-            .editorconfig .eslintignore .phpunit.result.cache .eslintrc.js .gitignore .gitattributes
-            *.log CHANGELOG.md README.md
-            !readme.txt !src/* !vendor/*
+      - name: Create zip
+        run: cd dist && zip -qr "../${PLUGIN_ZIP}" "${SLUG}"
 
-      - name: Verify Archive Contents
+      - name: Verify archive matches the wp.org distribution
         run: |
-          echo "Listing $PLUGIN_ZIP entries:"
-          unzip -l "$PLUGIN_ZIP" || { echo "Failed to list zip contents"; exit 1; }
-          echo "Total files: $(unzip -l "$PLUGIN_ZIP" | awk 'END{print $2}')"
-
-          if unzip -l "$PLUGIN_ZIP" | grep -q "vendor/yahnis-elsts/plugin-update-checker"; then
-            echo "Plugin Update Checker is included"
-          else
-            echo "ERROR: Plugin Update Checker is missing from the release"
-            exit 1
+          echo "Entries: $(unzip -l "$PLUGIN_ZIP" | awk 'END{print $2}')"
+          fail=0
+          # Must NOT ship the self-updater.
+          if unzip -l "$PLUGIN_ZIP" | grep -q "plugin-update-checker"; then
+            echo "ERROR: self-updater present in the zip"; fail=1
           fi
+          # Must ship the built entrypoint, autoloader, composer.json, readme.
+          for f in "${SLUG}/build/network.js" "${SLUG}/vendor/autoload.php" "${SLUG}/composer.json" "${SLUG}/readme.txt"; do
+            unzip -l "$PLUGIN_ZIP" | grep -q " ${f}$" || { echo "ERROR: missing ${f}"; fail=1; }
+          done
+          # Must NOT ship dev cruft.
+          for f in "${SLUG}/tests/" "${SLUG}/examples/" "${SLUG}/phpcs.xml.dist" "${SLUG}/assets/src/" "${SLUG}/.markdownlint.json"; do
+            unzip -l "$PLUGIN_ZIP" | grep -q "${f}" && { echo "ERROR: should not ship ${f}"; fail=1; }
+          done
+          exit $fail
 
       - name: Release
         uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda #v2

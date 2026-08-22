@@ -22,18 +22,11 @@ jobs:
 
       - name: Build assets
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: Install production dependencies
         run: composer install --no-dev --optimize-autoloader
-
-      # WordPress.org serves updates itself and disallows external self-update
-      # mechanisms. Drop the GitHub updater (and its bundled
-      # plugin-update-checker) from the shipped build. kjeks.php guards the
-      # updater with class_exists(), so its absence disables it cleanly.
-      - name: Remove the GitHub self-updater from the wp.org build
-        run: composer remove soderlind/wordpress-github-updater --update-no-dev --optimize-autoloader --no-interaction
 
       # Ships the working directory minus everything in .distignore.
       - name: WordPress.org plugin deploy
