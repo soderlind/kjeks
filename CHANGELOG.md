@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 - 2026-08-22
+
+- Prepare the plugin for the WordPress.org plugin directory: add a `.distignore` and WordPress.org deploy + asset-update GitHub Actions.
+- Pass Plugin Check: add a direct-file-access guard and rely on WordPress 6.8+ just-in-time translation loading (drop the manual `load_plugin_textdomain()` call).
+- Exclude the GitHub self-updater from the WordPress.org build — WordPress.org serves updates; GitHub-hosted installs keep the updater.
+- Link the readme to the [documentation site](https://kjeks.soderlind.no) and the Kjeks add-ons.
+
 ## 1.0.8 - 2026-08-22
 
 - Harden the Restricted Site Access bypass: send no-cache headers on a keyed request so an unrestricted response can never be cached and served to the public, and accept the key only from the `X-Kjeks-Key` header (no query-string fallback) so it can't leak via logs, Referer, or history.

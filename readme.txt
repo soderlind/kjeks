@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.0.8
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,16 @@ Kjeks assists with cookie and tracker consent management on WordPress Multisite.
 * A developer API to register integrations against consent categories.
 
 Kjeks assists with consent management. It does not, and cannot, guarantee legal compliance. Discovery is observational and cannot prove the absence of tracking. Consider technologies beyond cookies.
+
+Full documentation, guides, and the developer handbook: [kjeks.soderlind.no](https://kjeks.soderlind.no)
+
+= Add-ons =
+
+Optional companion plugins extend Kjeks:
+
+* **Kjeks Google** — Google Tag Manager and GA4 using Consent Mode v2, with default-denied signals and a consent-gated container. [Docs](https://kjeks.soderlind.no/docs/kjeks-google/) · [Code](https://github.com/soderlind/kjeks-google)
+* **Kjeks AI Reviewer** — AI-assisted, advisory classification suggestions for unreviewed cookies, using the WordPress core AI client. [Docs](https://kjeks.soderlind.no/docs/kjeks-ai-reviewer/) · [Code](https://github.com/soderlind/kjeks-ai-reviewer)
+* **Kjeks Scanner** — a standalone Playwright discovery scanner that detects trackers under every consent state and imports them back into the inventory. [Docs](https://kjeks.soderlind.no/docs/kjeks-scanner/) · [Code](https://github.com/soderlind/kjeks-scanner)
 
 == Installation ==
 
@@ -43,6 +53,12 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.1.0 =
+* Prepare the plugin for the WordPress.org plugin directory: add a `.distignore` and WordPress.org deploy + asset-update GitHub Actions.
+* Pass Plugin Check: add a direct-file-access guard and rely on WordPress 6.8+ just-in-time translation loading (drop the manual `load_plugin_textdomain()` call).
+* Exclude the GitHub self-updater from the WordPress.org build — WordPress.org serves updates; GitHub-hosted installs keep the updater.
+* Link the readme to the [documentation site](https://kjeks.soderlind.no) and the Kjeks add-ons.
 
 = 1.0.8 =
 * Harden the Restricted Site Access bypass: send no-cache headers on a keyed request so an unrestricted response can never be cached and served to the public, and accept the key only from the X-Kjeks-Key header (no query-string fallback) so it can't leak via logs, Referer, or history.

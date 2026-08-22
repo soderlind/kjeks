@@ -1,0 +1,39 @@
+# Files and directories excluded from the WordPress.org build.
+# The 10up deploy action ships everything except these.
+
+# Version control / CI / editor
+/.git
+/.github
+/.gitignore
+/.gitattributes
+/.editorconfig
+/.distignore
+
+# Dev tooling config
+/.markdownlint.json
+/phpcs.xml.dist
+/phpstan.neon
+/phpunit.xml.dist
+/webpack.config.js
+/composer.lock
+/package.json
+/package-lock.json
+/i18n-map.json
+
+# Note: composer.json ships so the bundled PSR-4 vendor/ autoloader has its
+# matching manifest (kept in sync by the composer steps in the deploy workflow).
+
+# Sources compiled into build/
+/assets/src
+
+# Dev-only content
+/tests
+/examples
+/docs
+/bin
+/node_modules
+
+# Repo docs (WordPress.org uses readme.txt)
+/CONTEXT.md
+/CHANGELOG.md
+/README.md

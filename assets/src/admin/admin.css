@@ -3,6 +3,7 @@
  */
 
 .kjeks-network__summary {
+	margin: 0.5rem 0 1rem;
 	font-size: 0.95rem;
 	color: #50575e;
 }
@@ -35,6 +36,8 @@
 
 .kjeks-network__table td,
 .kjeks-network__table th {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
 	vertical-align: middle;
 }
 
@@ -120,20 +123,11 @@
 	margin: 1.5rem 0 0.75rem;
 }
 
-.kjeks-network__summary {
-	margin: 0.5rem 0 1rem;
-}
-
 /* Keep in-table controls tight and aligned (they must not inherit the spacing
    added above). */
+/* stylelint-disable-next-line no-descending-specificity */
 .kjeks-network__table .components-base-control {
 	margin-bottom: 0;
-}
-
-.kjeks-network__table td,
-.kjeks-network__table th {
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
 }
 
 .kjeks-network__table thead th {
@@ -166,13 +160,14 @@
 	font-size: 0.75rem;
 	line-height: 1.4;
 	border-radius: 999px;
-	background: rgba( 0, 0, 0, 0.12 );
+	background: rgba(0, 0, 0, 0.12);
 }
 
 .kjeks-network__filters .is-primary .kjeks-network__count {
-	background: rgba( 255, 255, 255, 0.25 );
+	background: rgba(255, 255, 255, 0.25);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .kjeks-network__bulk .components-base-control {
 	margin-bottom: 0;
 }
