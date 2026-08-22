@@ -8,15 +8,14 @@ Stable tag: 1.1.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Cookie consent management for WordPress Multisite: per-site tracker inventories, prior blocking, and an accessible consent banner.
+Cookie consent for WordPress single-site and Multisite: tracker inventory, prior blocking of non-essential tech, and an accessible consent banner.
 
 == Description ==
 
-Kjeks assists with cookie and tracker consent management on WordPress Multisite. It provides:
+Kjeks assists with cookie and tracker consent management on WordPress — single-site or Multisite. It provides:
 
-* Network-wide tracker definitions with per-site assignments and overrides.
-* Per-site tracker inventories, reviewed and classified by administrators.
-* Prior blocking of non-essential scripts, inline snippets, pixels, and embeds.
+* A central place to review and classify every tracker once — site-wide on a single install, or network-wide on Multisite (with per-site inventories).
+* Prior blocking of non-essential scripts, inline snippets, pixels, and embeds until the visitor consents.
 * An accessible, translatable consent banner with equally prominent Accept all / Reject all / Customize.
 * A developer API to register integrations against consent categories.
 
@@ -34,11 +33,9 @@ Optional companion plugins extend Kjeks:
 
 == Installation ==
 
-1. Place the plugin in `wp-content/plugins/kjeks`.
-2. Run `composer install --no-dev` and `npm ci && npm run build` in the plugin directory.
-3. Network Activate the plugin from **Network Admin → Plugins**.
-4. Configure network defaults under **Network Admin → Cookie Consent**.
-5. Review each site's inventory under **Settings → Cookie Consent**.
+1. Install Kjeks from **Plugins → Add New**, or upload the plugin zip via **Plugins → Add New → Upload Plugin**.
+2. On a single site, activate the plugin and open **Cookie Consent** from the admin menu. On Multisite, **Network Activate** it and configure defaults under **Network Admin → Cookie Consent**.
+3. Set the banner heading, body text, privacy-policy link, and accent colour, then review your tracker inventory.
 
 == Frequently Asked Questions ==
 
@@ -49,7 +46,7 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * A choice is already stored. Consent lasts about six months (the kjeks_consent cookie and localStorage); returning visitors see the "Cookie settings" trigger instead. Clear site data or use a private window to see the banner again.
 * The browser sends Global Privacy Control (GPC). Brave sends GPC by default (also DuckDuckGo, Firefox's "Tell websites not to sell or share my data", and some extensions). Kjeks honours GPC by default, so it auto-applies reject-non-essential and shows only the trigger. Opt out with the kjeks_honor_gpc filter.
 * A browser or extension hides cookie notices, such as Brave Shields' "block cookie consent notices" or uBlock Origin's cookie-notice lists. Kjeks cannot override that.
-* The network default banner is disabled, so only the trigger shows.
+* The default banner is turned off (under Cookie Consent, or Network Admin → Cookie Consent on Multisite), so only the trigger shows.
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
