@@ -39,6 +39,7 @@ function App() {
 	const [ removed, setRemoved ] = useState( () => new Set() );
 	const [ bulkCategory, setBulkCategory ] = useState( 'analytics' );
 	const [ add, setAdd ] = useState( { name: '', provider: '', category: 'analytics' } );
+	const [ scanKeyBusy, setScanKeyBusy ] = useState( false );
 
 	useEffect( () => {
 		apiFetch( { url: settings.restUrl } )
@@ -172,6 +173,35 @@ function App() {
 				setNotice( { type: 'error', text: __( 'Save failed.', 'kjeks' ) } );
 				setSaving( false );
 			} );
+	};
+
+	// Generates or clears the scanner key immediately, preserving other unsaved edits.
+	const runScanKeyAction = ( action ) => {
+		setScanKeyBusy( true );
+		apiFetch( {
+			url: settings.restUrl,
+			method: 'POST',
+			data: { scanKeyAction: action },
+		} )
+			.then( ( data ) => {
+				setConfig( ( prev ) => ( { ...prev, scanKey: data.scanKey || '' } ) );
+				setNotice( {
+					type: 'success',
+					text: 'clear' === action ? __( 'Scanner key cleared.', 'kjeks' ) : __( 'Scanner key generated.', 'kjeks' ),
+				} );
+				setScanKeyBusy( false );
+			} )
+			.catch( () => {
+				setNotice( { type: 'error', text: __( 'Scanner key update failed.', 'kjeks' ) } );
+				setScanKeyBusy( false );
+			} );
+	};
+
+	const copyScanKey = () => {
+		if ( config.scanKey && navigator.clipboard ) {
+			navigator.clipboard.writeText( config.scanKey );
+			setNotice( { type: 'success', text: __( 'Key copied to clipboard.', 'kjeks' ) } );
+		}
 	};
 
 	const filterButton = ( value, label ) =>
@@ -335,6 +365,47 @@ function App() {
 				h(
 					Panel,
 					{},
+					h(
+						PanelBody,
+						{ title: __( 'Scanner key', 'kjeks' ), initialOpen: true },
+						h(
+							'p',
+							{ className: 'kjeks-network__hint' },
+							__( 'Authenticates the discovery scanner (CI) against the scan-config and import endpoints via the X-Kjeks-Key header — useful when a proxy strips the Authorization header. Store it as the KJEKS_SCAN_KEY secret in your scan workflow.', 'kjeks' )
+						),
+						config.scanKey
+							? h(
+								'div',
+								{ className: 'kjeks-scan-key' },
+								h( TextControl, {
+									label: __( 'Current key', 'kjeks' ),
+									value: config.scanKey,
+									readOnly: true,
+									onChange: () => {},
+									__nextHasNoMarginBottom: true,
+								} ),
+								h(
+									'div',
+									{ className: 'kjeks-scan-key__actions' },
+									h( Button, { variant: 'secondary', onClick: copyScanKey }, __( 'Copy', 'kjeks' ) ),
+									h(
+										Button,
+										{ variant: 'secondary', isBusy: scanKeyBusy, disabled: scanKeyBusy, onClick: () => runScanKeyAction( 'generate' ) },
+										__( 'Regenerate', 'kjeks' )
+									),
+									h(
+										Button,
+										{ variant: 'tertiary', isDestructive: true, disabled: scanKeyBusy, onClick: () => runScanKeyAction( 'clear' ) },
+										__( 'Clear', 'kjeks' )
+									)
+								)
+							)
+							: h(
+								Button,
+								{ variant: 'secondary', isBusy: scanKeyBusy, disabled: scanKeyBusy, onClick: () => runScanKeyAction( 'generate' ) },
+								__( 'Generate scanner key', 'kjeks' )
+							)
+					),
 					h(
 						PanelBody,
 						{ title: __( 'Advanced', 'kjeks' ), initialOpen: true },
@@ -524,6 +595,7 @@ function normalize( data ) {
 		deleteOnUninstall: !! data.deleteOnUninstall,
 		bannerDefaultVisible: data.bannerDefaultVisible !== false,
 		privacyPageDeclaration: !! data.privacyPageDeclaration,
+		scanKey: data.scanKey || '',
 	};
 }
 

@@ -14,6 +14,7 @@ use Soderlind\Kjeks\Inventory\InventoryResolver;
 use Soderlind\Kjeks\Inventory\NetworkStore;
 use Soderlind\Kjeks\Inventory\Tracker;
 use Soderlind\Kjeks\Inventory\TrackerRegistry;
+use Soderlind\Kjeks\Scan\ScanKeyAuth;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -100,6 +101,7 @@ final class NetworkConfigController {
 				'deleteOnUninstall'      => $network->delete_on_uninstall(),
 				'bannerDefaultVisible'   => $network->banner_default_visible(),
 				'privacyPageDeclaration' => $network->privacy_page_declaration(),
+				'scanKey'                => ScanKeyAuth::stored_key(),
 				'reviewedCount'          => $reviewed,
 				'pendingCount'           => $pending,
 			)
@@ -172,6 +174,13 @@ final class NetworkConfigController {
 
 		if ( null !== $request->get_param( 'privacyPageDeclaration' ) ) {
 			$network->set_privacy_page_declaration( (bool) $request->get_param( 'privacyPageDeclaration' ) );
+		}
+
+		$scan_key_action = $request->get_param( 'scanKeyAction' );
+		if ( 'generate' === $scan_key_action ) {
+			ScanKeyAuth::generate();
+		} elseif ( 'clear' === $scan_key_action ) {
+			ScanKeyAuth::clear();
 		}
 
 		InventoryResolver::flush_cache();

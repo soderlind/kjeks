@@ -182,3 +182,14 @@
 .kjeks-admin > .components-button.is-primary {
 	margin-top: 1.25rem;
 }
+
+.kjeks-scan-key__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 0.25rem;
+}
+
+.kjeks-scan-key .components-text-control__input {
+	font-family: monospace;
+}

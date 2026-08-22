@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.0.6 =
+* Manage the scanner key from Network Admin → Cookie Consent → Settings: view, copy, regenerate, or clear it — no WP-CLI required.
 
 = 1.0.5 =
 * Add a shared scanner key for the scan-config and import REST endpoints: send it in the X-Kjeks-Key header (or scan_key query argument) so CI authenticates even behind proxies that strip the Authorization header. Manage it with `wp kjeks scan-key`. Application-password / capability auth still works as a fallback.
