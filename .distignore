@@ -24,7 +24,7 @@
 # matching manifest (kept in sync by the composer steps in the deploy workflow).
 
 # Sources compiled into build/
-/assets/src
+/assets
 
 # Dev-only content
 /tests
