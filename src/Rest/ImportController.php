@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Soderlind\Kjeks\Rest;
 
 use Soderlind\Kjeks\Scan\ScanImporter;
+use Soderlind\Kjeks\Scan\ScanKeyAuth;
 use Soderlind\Kjeks\Scan\ScanValidator;
 use WP_Error;
 use WP_REST_Request;
@@ -19,10 +20,10 @@ use WP_REST_Server;
 /**
  * Accepts scan payloads from CI (for example, a scheduled GitHub Action).
  *
- * Authentication is the standard WordPress REST stack — an application
- * password is the intended CI credential. The caller must hold
- * `manage_network` (super admin). Imported observations remain unreviewed
- * until an administrator approves them.
+ * Authentication accepts either the shared scanner key (see {@see ScanKeyAuth},
+ * sent in the `X-Kjeks-Key` header or `scan_key` query argument) or the standard
+ * WordPress REST stack with a `manage_network` capability. Imported
+ * observations remain unreviewed until an administrator approves them.
  */
 final class ImportController {
 
@@ -54,7 +55,11 @@ final class ImportController {
 		);
 	}
 
-	public function can_import(): bool {
+	public function can_import( WP_REST_Request $request ): bool {
+		if ( ScanKeyAuth::is_authorized( $request ) ) {
+			return true;
+		}
+
 		return is_multisite()
 			? current_user_can( 'manage_network' )
 			: current_user_can( 'manage_options' );

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Soderlind\Kjeks\Rest;
 
 use Soderlind\Kjeks\Scan\ScanConfig;
+use Soderlind\Kjeks\Scan\ScanKeyAuth;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -18,9 +19,10 @@ use WP_REST_Server;
  * Serves the scanner site list so CI (for example, a GitHub Action) can fetch
  * it dynamically instead of committing a config file.
  *
- * Authentication is the standard WordPress REST stack — an application password
- * is the intended CI credential — and the caller must hold `manage_network`.
- * The response enumerates every public subsite, so the endpoint is never open.
+ * Authentication accepts either the shared scanner key (see {@see ScanKeyAuth},
+ * sent in the `X-Kjeks-Key` header or `scan_key` query argument) or the standard
+ * WordPress REST stack with a `manage_network` capability. The response
+ * enumerates every public subsite, so the endpoint is never open.
  */
 final class ScanConfigController {
 
@@ -60,7 +62,11 @@ final class ScanConfigController {
 		);
 	}
 
-	public function can_read(): bool {
+	public function can_read( WP_REST_Request $request ): bool {
+		if ( ScanKeyAuth::is_authorized( $request ) ) {
+			return true;
+		}
+
 		return is_multisite()
 			? current_user_can( 'manage_network' )
 			: current_user_can( 'manage_options' );

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5 - 2026-08-22
+
+- Add a shared scanner key for the `scan-config` and `import` REST endpoints: send it in the `X-Kjeks-Key` header (or `scan_key` query argument) so CI authenticates even behind proxies that strip the `Authorization` header. Manage it with `wp kjeks scan-key`. Application-password / capability auth still works as a fallback.
+
 ## 1.0.4 - 2026-08-21
 
 - Track the compiled `build/` assets in version control so Composer source installs (e.g. `~1.0.3` from a VCS/registry) ship the admin and banner scripts, fixing a 404 on `build/network.js` after activation.

@@ -60,6 +60,7 @@ final class Plugin {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			\WP_CLI::add_command( 'kjeks import', array( Command::class, 'import' ) );
 			\WP_CLI::add_command( 'kjeks scan-config', array( Command::class, 'scan_config' ) );
+			\WP_CLI::add_command( 'kjeks scan-key', array( Command::class, 'scan_key' ) );
 		}
 
 		add_action(

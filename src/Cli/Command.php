@@ -11,6 +11,7 @@ namespace Soderlind\Kjeks\Cli;
 
 use Soderlind\Kjeks\Scan\ScanConfig;
 use Soderlind\Kjeks\Scan\ScanImporter;
+use Soderlind\Kjeks\Scan\ScanKeyAuth;
 use Soderlind\Kjeks\Scan\ScanValidator;
 use WP_CLI;
 
@@ -162,5 +163,54 @@ final class Command {
 		}
 
 		WP_CLI::line( $json );
+	}
+
+	/**
+	 * Manages the shared scanner authentication key.
+	 *
+	 * The scanner presents this key in the `X-Kjeks-Key` header (or `scan_key`
+	 * query argument) to authenticate against the scan-config and import
+	 * endpoints without a WordPress application password — useful when a proxy
+	 * strips the Authorization header. Store the generated value as the
+	 * `KJEKS_SCAN_KEY` secret in CI.
+	 *
+	 * ## OPTIONS
+	 *
+	 * [--generate]
+	 * : Generate and store a new key, replacing any existing one, then print it.
+	 *
+	 * [--clear]
+	 * : Remove the stored key, disabling key-based scanner auth.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp kjeks scan-key                 # print the current key
+	 *     wp kjeks scan-key --generate      # rotate the key and print it
+	 *     wp kjeks scan-key --clear
+	 *
+	 * @param array<int, string>    $args       Positional arguments.
+	 * @param array<string, string> $assoc_args Associative arguments.
+	 */
+	public function scan_key( array $args, array $assoc_args ): void {
+		if ( isset( $assoc_args['clear'] ) ) {
+			ScanKeyAuth::clear();
+			WP_CLI::success( 'Scanner key cleared. Key-based scanner auth is now disabled.' );
+			return;
+		}
+
+		if ( isset( $assoc_args['generate'] ) ) {
+			$key = ScanKeyAuth::generate();
+			WP_CLI::line( $key );
+			WP_CLI::success( 'Generated a new scanner key. Store it as the KJEKS_SCAN_KEY secret in CI.' );
+			return;
+		}
+
+		$key = ScanKeyAuth::stored_key();
+		if ( '' === $key ) {
+			WP_CLI::warning( 'No scanner key set. Run "wp kjeks scan-key --generate" to create one.' );
+			return;
+		}
+
+		WP_CLI::line( $key );
 	}
 }
