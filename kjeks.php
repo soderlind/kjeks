@@ -3,7 +3,7 @@
  * Plugin Name:       Kjeks
  * Plugin URI:        https://github.com/soderlind/kjeks
  * Description:       Cookie consent management for WordPress (single site or Multisite): per-site tracker inventories, prior blocking of non-essential technologies, and an accessible consent banner. Assists with consent management; does not claim automatic legal compliance.
- * Version:           1.0.6
+ * Version:           1.0.7
  * Requires at least: 6.8
  * Requires PHP:      8.3
  * Author:            Per Søderlind

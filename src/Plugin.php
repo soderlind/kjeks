@@ -13,6 +13,7 @@ use Soderlind\Kjeks\Admin\NetworkAdmin;
 use Soderlind\Kjeks\Blocking\ScriptGate;
 use Soderlind\Kjeks\Cli\Command;
 use Soderlind\Kjeks\Frontend\Banner;
+use Soderlind\Kjeks\Integration\RestrictedSiteAccess;
 use Soderlind\Kjeks\Inventory\NetworkStore;
 use Soderlind\Kjeks\Lifecycle\SiteInitializer;
 use Soderlind\Kjeks\Privacy\PolicyContent;
@@ -50,6 +51,7 @@ final class Plugin {
 		( new NetworkConfigController() )->hooks();
 		( new ScriptGate() )->hooks();
 		( new Banner() )->hooks();
+		( new RestrictedSiteAccess() )->hooks();
 		( new PrivacyPageDeclaration( new NetworkStore() ) )->hooks();
 
 		if ( is_admin() ) {

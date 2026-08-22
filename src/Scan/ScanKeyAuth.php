@@ -96,4 +96,46 @@ final class ScanKeyAuth {
 
 		return hash_equals( $stored, $presented );
 	}
+
+	/**
+	 * Reads the presented key straight from superglobals.
+	 *
+	 * Used before the REST request object exists (e.g. from `parse_request`).
+	 */
+	public static function presented_key_raw(): string {
+		// Shared-secret authentication; nonce verification is not applicable.
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$header = isset( $_SERVER['HTTP_X_KJEKS_KEY'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_KJEKS_KEY'] ) )
+			: '';
+		if ( '' !== $header ) {
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
+			return $header;
+		}
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$query = isset( $_GET[ self::QUERY_ARG ] )
+			? sanitize_text_field( wp_unslash( $_GET[ self::QUERY_ARG ] ) )
+			: '';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+		return $query;
+	}
+
+	/**
+	 * True when the raw request presents a key matching the stored one.
+	 */
+	public static function is_valid_raw_key(): bool {
+		$stored = self::stored_key();
+		if ( '' === $stored ) {
+			return false;
+		}
+
+		$presented = self::presented_key_raw();
+		if ( '' === $presented ) {
+			return false;
+		}
+
+		return hash_equals( $stored, $presented );
+	}
 }

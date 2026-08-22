@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7 - 2026-08-22
+
+- Restricted Site Access compatibility: a request carrying a valid scanner key bypasses the login/IP restriction, so the discovery scanner can reach the `scan-config` and `import` endpoints and load restricted front-end pages. Requests without a valid key stay restricted.
+
 ## 1.0.6 - 2026-08-22
 
 - Manage the scanner key from Network Admin → Cookie Consent → Settings: view, copy, regenerate, or clear it — no WP-CLI required.
