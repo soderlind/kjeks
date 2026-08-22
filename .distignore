@@ -15,11 +15,13 @@
 /phpstan.neon
 /phpunit.xml.dist
 /webpack.config.js
-/composer.json
 /composer.lock
 /package.json
 /package-lock.json
 /i18n-map.json
+
+# Note: composer.json ships so the bundled PSR-4 vendor/ autoloader has its
+# matching manifest (kept in sync by the composer steps in the deploy workflow).
 
 # Sources compiled into build/
 /assets/src
