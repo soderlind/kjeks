@@ -118,7 +118,9 @@ final class Command {
 	 * : Max auto-selected paths per site. Default: 10. Ignored when --paths is set.
 	 *
 	 * [--output=<file>]
-	 * : Write to this file instead of STDOUT.
+	 * : Write to a file inside the uploads `kjeks/` directory. Only a file name is
+	 *   honoured; any path components are stripped. Use shell redirection for
+	 *   arbitrary destinations.
 	 *
 	 * [--include=<ids>]
 	 * : Comma-separated blog ids to include. Default: all public, non-archived,
@@ -127,7 +129,7 @@ final class Command {
 	 * ## EXAMPLES
 	 *
 	 *     wp kjeks scan-config > scanner/config.json
-	 *     wp kjeks scan-config --paths=/,/about,/contact --output=scanner/config.json
+	 *     wp kjeks scan-config --paths=/,/about,/contact --output=config.json
 	 *     wp kjeks scan-config --cap=15 --include=1,3
 	 *
 	 * @param array<int, string>    $args       Positional arguments.
@@ -153,9 +155,13 @@ final class Command {
 		$json = (string) wp_json_encode( $config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
 
 		if ( isset( $assoc_args['output'] ) ) {
-			$file = (string) $assoc_args['output'];
-			// Writing a CLI-requested local file.
-			if ( false === file_put_contents( $file, $json . "\n" ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+			$file = $this->resolve_output_path( (string) $assoc_args['output'] );
+
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			WP_Filesystem();
+			global $wp_filesystem;
+
+			if ( ! $wp_filesystem->put_contents( $file, $json . "\n", FS_CHMOD_FILE ) ) {
 				WP_CLI::error( "Could not write to {$file}" );
 			}
 			WP_CLI::success( sprintf( 'Wrote %d site(s) to %s', count( $config['sites'] ), $file ) );
@@ -163,6 +169,31 @@ final class Command {
 		}
 
 		WP_CLI::line( $json );
+	}
+
+	/**
+	 * Resolves a CLI --output value to a safe path inside the uploads kjeks/ dir.
+	 *
+	 * Only the sanitized file name is honoured; directory components (including
+	 * traversal sequences) are discarded so writes cannot escape the directory.
+	 */
+	private function resolve_output_path( string $output ): string {
+		$uploads = wp_upload_dir();
+		if ( ! empty( $uploads['error'] ) ) {
+			WP_CLI::error( (string) $uploads['error'] );
+		}
+
+		$dir = trailingslashit( $uploads['basedir'] ) . 'kjeks';
+		if ( ! wp_mkdir_p( $dir ) ) {
+			WP_CLI::error( "Could not create directory: {$dir}" );
+		}
+
+		$name = sanitize_file_name( basename( $output ) );
+		if ( '' === $name ) {
+			$name = 'scan-config.json';
+		}
+
+		return trailingslashit( $dir ) . $name;
 	}
 
 	/**

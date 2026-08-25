@@ -97,12 +97,13 @@ final class ScriptGate {
 	}
 
 	private function print_inert_inline( string $category, string $id, string $code ): void {
+		// esc_html() prevents a </script> breakout in the served markup; banner.js
+		// reads textContent, which decodes the entities back to the original snippet.
 		printf(
-			'<script type="text/plain" data-kjeks-category="%1$s" data-kjeks-integration="%2$s">%3$s</script>' . "\n", // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+			'<script type="text/plain" data-kjeks-category="%1$s" data-kjeks-integration="%2$s">%3$s</script>' . "\n", // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- Inert type="text/plain" placeholder, activated client-side after consent; not an enqueueable script.
 			esc_attr( $category ),
 			esc_attr( $id ),
-			// Inline snippet is developer-provided and executed only after consent.
-			$code // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			esc_html( $code )
 		);
 	}
 
