@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.2 - 2026-08-25
+
+- Confine `wp kjeks scan-config --output` to the uploads `kjeks/` directory and write via `WP_Filesystem`, preventing writes to arbitrary locations.
+- Escape inline gated-script output to prevent a `</script>` breakout in the served markup.
+- Ship only the `.pot` template in the distributed zip; compiled translations now come from translate.wordpress.org.
+- Correct the readme `Contributors` username to the WordPress.org plugin owner.
+- Documentation: cover single-site and Multisite, and clarify that the scanner is a standalone tool.
+
 ## 1.1.1 - 2026-08-22
 
 - Fully remove the GitHub self-updater (drop the init and the composer dependency); WordPress.org is now the sole update source.

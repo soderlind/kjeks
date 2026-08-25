@@ -1,10 +1,10 @@
 === Kjeks ===
-Contributors: soderlind
+Contributors: PerS
 Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,13 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.1.2 =
+* Confine `wp kjeks scan-config --output` to the uploads `kjeks/` directory and write via `WP_Filesystem`, preventing writes to arbitrary locations.
+* Escape inline gated-script output to prevent a `</script>` breakout in the served markup.
+* Ship only the `.pot` template in the distributed zip; compiled translations now come from translate.wordpress.org.
+* Correct the readme Contributors username to the WordPress.org plugin owner.
+* Documentation: cover single-site and Multisite, and clarify that the scanner is a standalone tool.
 
 = 1.1.1 =
 * Fully remove the GitHub self-updater (drop the init and the composer dependency); WordPress.org is now the sole update source.

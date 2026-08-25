@@ -37,3 +37,10 @@
 /CONTEXT.md
 /CHANGELOG.md
 /README.md
+
+# Compiled translations are generated and delivered by translate.wordpress.org
+# once the plugin is hosted. Ship only the .pot template.
+/languages/*.po
+/languages/*.mo
+/languages/*.l10n.php
+/languages/*.json
