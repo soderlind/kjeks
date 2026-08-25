@@ -9,6 +9,9 @@
 /.editorconfig
 /.distignore
 
+# Plugin Directory marketing assets — deployed to the SVN assets/ dir, not trunk.
+/.wordpress-org
+
 # Dev tooling config
 /.markdownlint.json
 /phpcs.xml.dist
