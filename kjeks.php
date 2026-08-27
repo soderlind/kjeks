@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KJEKS_VERSION', '1.0.3' );
+define( 'KJEKS_VERSION', '1.1.2' );
 define( 'KJEKS_FILE', __FILE__ );
 define( 'KJEKS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'KJEKS_URL', plugin_dir_url( __FILE__ ) );

@@ -49,7 +49,7 @@ final class Command {
 		}
 
 		// Reading a local CLI-supplied file, not a remote resource.
-		$decoded = json_decode( (string) file_get_contents( $file ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$decoded = json_decode( (string) file_get_contents( $file ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local CLI-supplied file path already validated with is_readable(); not a remote resource, WP_Filesystem not warranted for a read.
 		if ( ! is_array( $decoded ) ) {
 			WP_CLI::error( 'File is not valid JSON.' );
 		}
