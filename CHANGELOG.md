@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3 - 2026-08-27
+
+- Correct the internal version used for asset cache busting and document the safety rationale for WordPress.org review exceptions.
+
 ## 1.1.2 - 2026-08-25
 
 - Confine `wp kjeks scan-config --output` to the uploads `kjeks/` directory and write via `WP_Filesystem`, preventing writes to arbitrary locations.

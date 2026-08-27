@@ -106,8 +106,7 @@ final class ScanKeyAuth {
 	 * browser history and grant site-wide access.
 	 */
 	public static function presented_key_raw(): string {
-		// Shared-secret authentication; nonce verification is not applicable.
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Shared-secret header auth for machine scanner requests; nonces are not applicable and the value is sanitized below.
 		return isset( $_SERVER['HTTP_X_KJEKS_KEY'] )
 			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_KJEKS_KEY'] ) )
 			: '';

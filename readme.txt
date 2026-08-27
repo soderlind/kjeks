@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,9 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.1.3 =
+* Correct the internal version used for asset cache busting and document the safety rationale for WordPress.org review exceptions.
 
 = 1.1.2 =
 * Confine `wp kjeks scan-config --output` to the uploads `kjeks/` directory and write via `WP_Filesystem`, preventing writes to arbitrary locations.

@@ -51,7 +51,7 @@ final class ScriptGate {
 		$replaced = preg_replace(
 			'/<script\s/i',
 			sprintf(
-				'<script type="text/plain" data-kjeks-category="%s" data-kjeks-src="%s" ', // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+				'<script type="text/plain" data-kjeks-category="%s" data-kjeks-src="%s" ', // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- Inert type="text/plain" placeholder, activated client-side after consent; not an enqueueable script.
 				esc_attr( $category ),
 				esc_url( $src )
 			),
@@ -87,12 +87,11 @@ final class ScriptGate {
 		}
 
 		printf(
-			'<script type="text/plain" data-kjeks-category="%1$s" data-kjeks-integration="%2$s" data-kjeks-src="%3$s"%4$s></script>' . "\n", // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+			'<script type="text/plain" data-kjeks-category="%1$s" data-kjeks-integration="%2$s" data-kjeks-src="%3$s"%4$s></script>' . "\n", // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- Inert type="text/plain" placeholder, activated client-side after consent; not an enqueueable script.
 			esc_attr( $category ),
 			esc_attr( $id ),
 			esc_url( $src ),
-			// Attributes are individually escaped above.
-			$attr_html // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$attr_html // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from data-attr-* pairs each escaped with esc_attr()/sanitize_key() in the loop above.
 		);
 	}
 
