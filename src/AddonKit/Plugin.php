@@ -17,6 +17,8 @@ namespace Soderlind\Kjeks\AddonKit;
  *
  * Public, versioned API.
  *
+ * @phpstan-consistent-constructor
+ *
  * @since 1.2.0
  */
 abstract class Plugin {

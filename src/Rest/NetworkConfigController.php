@@ -95,7 +95,7 @@ final class NetworkConfigController {
 					array_keys( Categories::all() ),
 					array_values( Categories::all() )
 				),
-				'trackers'               => array_values( $rows ),
+				'trackers'               => $rows,
 				'siteNames'              => $site_name,
 				'content'                => $network->content(),
 				'deleteOnUninstall'      => $network->delete_on_uninstall(),

@@ -86,17 +86,19 @@ abstract class SettingsPage {
 		 *
 		 * @param array<string, mixed> $config Resolved config.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- option_key() is an add-on's kjeks-prefixed option name by convention (e.g. "kjeks_embeds").
 		return (array) apply_filters( $this->option_key() . '_config', $config );
 	}
 
 	public function hooks(): void {
 		if ( is_multisite() ) {
-			add_action( 'network_admin_menu', array( $this, 'menu' ) );
+			// Priority 11: register after the core parent menu (priority 10) so the parent hookname resolves.
+			add_action( 'network_admin_menu', array( $this, 'menu' ), 11 );
 			add_action( 'admin_post_' . $this->action(), array( $this, 'save' ) );
 			return;
 		}
 
-		add_action( 'admin_menu', array( $this, 'menu' ) );
+		add_action( 'admin_menu', array( $this, 'menu' ), 11 );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 	}
 

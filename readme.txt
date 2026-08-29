@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,11 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.1.4 =
+* Add the `Soderlind\Kjeks\AddonKit` base classes (`Categories`, `Options`, `SettingsPage`, `Plugin`) so add-ons can share the consent-category picker, network/site option storage, and settings-screen scaffolding.
+* Mount add-on settings screens as submenus of the core "Cookie Consent" menu, registered after the parent so the pages resolve correctly on both single-site and Multisite.
+* Load the public API file with `return` instead of `exit` when accessed outside WordPress, so Composer-based tooling (PHPCS/PHPStan) analyses the plugin instead of exiting during autoload.
 
 = 1.1.3 =
 * Correct the internal version used for asset cache busting and document the safety rationale for WordPress.org review exceptions.
