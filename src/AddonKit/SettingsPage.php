@@ -9,15 +9,17 @@ declare(strict_types=1);
 
 namespace Soderlind\Kjeks\AddonKit;
 
+use Soderlind\Kjeks\Admin\NetworkAdmin;
+
 /**
  * Base for an add-on's single settings screen.
  *
- * Handles the Multisite/single-site split for free: on Multisite the screen
- * lives under Network Admin -> Settings and the option is stored network-wide;
- * on single site it lives under Settings and is stored per site. Sub-classes
- * declare the option key, menu slug, page title, defaults, normalisation, and
- * the form fields; everything else (menus, nonces, saving, resolution) is
- * provided here.
+ * Handles the Multisite/single-site split for free: on Multisite the option is
+ * stored network-wide, on single site it is stored per site. The screen mounts
+ * as a sub-item of the core Kjeks "Cookie Consent" menu in both cases.
+ * Sub-classes declare the option key, menu slug, titles, defaults,
+ * normalisation, and the form fields; everything else (menus, nonces, saving,
+ * resolution) is provided here.
  *
  * Public, versioned API.
  *
@@ -30,6 +32,20 @@ abstract class SettingsPage {
 	abstract protected function menu_slug(): string;
 
 	abstract protected function page_title(): string;
+
+	/**
+	 * Short label for the menu entry (e.g. "Embeds"). Defaults to the page title.
+	 */
+	protected function menu_title(): string {
+		return $this->page_title();
+	}
+
+	/**
+	 * Slug of the parent menu the screen mounts under.
+	 */
+	protected function parent_slug(): string {
+		return NetworkAdmin::SLUG;
+	}
 
 	/**
 	 * Default, normalised configuration.
@@ -87,9 +103,9 @@ abstract class SettingsPage {
 	public function menu(): void {
 		if ( is_multisite() ) {
 			add_submenu_page(
-				'settings.php',
+				$this->parent_slug(),
 				$this->page_title(),
-				$this->page_title(),
+				$this->menu_title(),
 				'manage_network_options',
 				$this->menu_slug(),
 				array( $this, 'render_network_page' )
@@ -97,9 +113,10 @@ abstract class SettingsPage {
 			return;
 		}
 
-		add_options_page(
+		add_submenu_page(
+			$this->parent_slug(),
 			$this->page_title(),
-			$this->page_title(),
+			$this->menu_title(),
 			'manage_options',
 			$this->menu_slug(),
 			array( $this, 'render_site_page' )
@@ -170,7 +187,7 @@ abstract class SettingsPage {
 
 		Options::write( $this->option_key(), $values );
 
-		wp_safe_redirect( add_query_arg( 'updated', '1', network_admin_url( 'settings.php?page=' . $this->menu_slug() ) ) );
+		wp_safe_redirect( add_query_arg( 'updated', '1', network_admin_url( 'admin.php?page=' . $this->menu_slug() ) ) );
 		exit;
 	}
 
