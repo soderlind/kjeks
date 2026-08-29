@@ -122,6 +122,9 @@ Example adapters live in [`examples/`](../examples): generic script, generic
 pixel, YouTube/Vimeo embeds, and Plausible (a cookieless, **no-consent-needed**
 reference that loads unconditionally).
 
+To build a distributable add-on with its own admin screen on the shared
+`AddonKit` base classes, see [How to add a Kjeks add-on](how-to-add-an-add-on.md).
+
 ## Reviewing discoveries
 
 Trackers are never auto-classified as necessary. Discovered cookies are

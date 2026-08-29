@@ -46,7 +46,7 @@
 	"scripts": {
 		"lint": "phpcs",
 		"lint:fix": "phpcbf",
-		"analyze": "phpstan analyse",
+		"analyze": "phpstan analyse --memory-limit=1G",
 		"test": "pest"
 	},
 	"config": {

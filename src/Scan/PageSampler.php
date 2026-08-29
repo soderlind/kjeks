@@ -115,6 +115,8 @@ final class PageSampler {
 	}
 
 	/**
+	 * @param array<int, string> $urls
+	 *
 	 * @return array<int, string>
 	 */
 	private function finalize( string $home, array $urls ): array {
@@ -189,7 +191,7 @@ final class PageSampler {
 			}
 			$candidates[] = array(
 				'url'     => $url,
-				'content' => isset( $post->post_content ) ? (string) $post->post_content : '',
+				'content' => $post->post_content,
 			);
 		}
 

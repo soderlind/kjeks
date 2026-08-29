@@ -14,7 +14,11 @@ use Soderlind\Kjeks\Blocking\EmbedGate;
 use Soderlind\Kjeks\Blocking\IntegrationRegistry;
 use Soderlind\Kjeks\Consent\ConsentState;
 
-defined( 'ABSPATH' ) || exit;
+// Loaded via Composer `files` autoload; `return` (not `exit`) so CLI tooling
+// booting the autoloader outside WordPress isn't killed before it runs.
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
+}
 
 if ( ! function_exists( 'kjeks_register_integration' ) ) {
 	/**
