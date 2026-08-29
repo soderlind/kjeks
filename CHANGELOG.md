@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add the `Soderlind\Kjeks\AddonKit` base classes (`Categories`, `Options`, `SettingsPage`, `Plugin`) so add-ons can share the consent-category picker, network/site option storage, and settings-screen scaffolding instead of re-implementing them.
+
 ## 1.1.3 - 2026-08-27
 
 - Correct the internal version used for asset cache busting and document the safety rationale for WordPress.org review exceptions.
