@@ -56,7 +56,7 @@ jobs:
           for f in "${SLUG}/build/network.js" "${SLUG}/vendor/autoload.php" "${SLUG}/composer.json" "${SLUG}/readme.txt"; do
             unzip -l "$PLUGIN_ZIP" | grep -q " ${f}$" || { echo "ERROR: missing ${f}"; fail=1; }
           done
-          for f in "${SLUG}/tests/" "${SLUG}/examples/" "${SLUG}/phpcs.xml.dist" "${SLUG}/assets/src/" "${SLUG}/.markdownlint.json"; do
+          for f in "${SLUG}/tests/" "${SLUG}/e2e/" "${SLUG}/examples/" "${SLUG}/phpcs.xml.dist" "${SLUG}/assets/src/" "${SLUG}/.markdownlint.json"; do
             unzip -l "$PLUGIN_ZIP" | grep -q "${f}" && { echo "ERROR: should not ship ${f}"; fail=1; }
           done
           exit $fail

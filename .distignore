@@ -31,6 +31,7 @@
 
 # Dev-only content
 /tests
+/e2e
 /examples
 /docs
 /bin
