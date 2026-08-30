@@ -48,6 +48,32 @@ final class NetworkStore {
 	}
 
 	/**
+	 * All network settings flags as a plain array (for portable export).
+	 *
+	 * @return array<string, bool>
+	 */
+	public function settings(): array {
+		return array(
+			'delete_on_uninstall'      => $this->delete_on_uninstall(),
+			'banner_default_visible'   => $this->banner_default_visible(),
+			'privacy_page_declaration' => $this->privacy_page_declaration(),
+		);
+	}
+
+	/**
+	 * Replaces the network settings flags (used when applying a config bundle).
+	 *
+	 * @param array<string, mixed> $settings Flag values.
+	 */
+	public function save_settings( array $settings ): void {
+		$this->set_delete_on_uninstall( ! empty( $settings['delete_on_uninstall'] ) );
+		$this->set_banner_default_visible(
+			array_key_exists( 'banner_default_visible', $settings ) ? (bool) $settings['banner_default_visible'] : true
+		);
+		$this->set_privacy_page_declaration( ! empty( $settings['privacy_page_declaration'] ) );
+	}
+
+	/**
 	 * Whether uninstall should delete all Kjeks data (network opt-in, default off).
 	 */
 	public function delete_on_uninstall(): bool {

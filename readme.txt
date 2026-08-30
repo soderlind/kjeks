@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,11 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.1.5 =
+* Add a portable Config bundle (export / apply): migrate an install's authored settings — banner content, network settings, and each add-on's options via the `kjeks_config_sections` filter — to another install. Available as `wp kjeks settings export|apply` and an Import / Export screen under Cookie Consent.
+* Ship the tracker registry as a normalized authored slice (manual + reviewed only, keyed by identity); applying merges by identity so local review work is preserved. Applying a bundle bumps the policy version to re-prompt visitors.
+* Add a Playwright acceptance-test suite covering the core banner, gating, and add-ons (dev-only; not shipped in the plugin zip).
 
 = 1.1.4 =
 * Add the `Soderlind\Kjeks\AddonKit` base classes (`Categories`, `Options`, `SettingsPage`, `Plugin`) so add-ons can share the consent-category picker, network/site option storage, and settings-screen scaffolding.
