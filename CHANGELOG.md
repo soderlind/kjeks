@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.5 - 2026-08-31
+
+- Add a portable **Config bundle** (export / apply): migrate an install's authored settings — banner content, network settings, and each add-on's options via the `kjeks_config_sections` filter — to another install. Available as `wp kjeks settings export|apply` and an Import / Export screen under Cookie Consent.
+- Ship the tracker registry as a normalized authored slice (manual + reviewed only, keyed by identity); applying merges by identity so local review work is preserved (ADR 0007). Applying a bundle bumps the policy version to re-prompt visitors.
+- Add a Playwright acceptance-test suite covering the core banner, gating, and add-ons (dev-only; not shipped in the plugin zip).
+
 ## 1.1.4 - 2026-08-29
 
 - Add the `Soderlind\Kjeks\AddonKit` base classes (`Categories`, `Options`, `SettingsPage`, `Plugin`) so add-ons can share the consent-category picker, network/site option storage, and settings-screen scaffolding.

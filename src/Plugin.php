@@ -9,9 +9,11 @@ declare(strict_types=1);
 
 namespace Soderlind\Kjeks;
 
+use Soderlind\Kjeks\Admin\ConfigTransferPage;
 use Soderlind\Kjeks\Admin\NetworkAdmin;
 use Soderlind\Kjeks\Blocking\ScriptGate;
 use Soderlind\Kjeks\Cli\Command;
+use Soderlind\Kjeks\Cli\SettingsCommand;
 use Soderlind\Kjeks\Frontend\Banner;
 use Soderlind\Kjeks\Integration\RestrictedSiteAccess;
 use Soderlind\Kjeks\Inventory\NetworkStore;
@@ -56,6 +58,7 @@ final class Plugin {
 
 		if ( is_admin() ) {
 			( new NetworkAdmin() )->hooks();
+			( new ConfigTransferPage() )->hooks();
 			( new PolicyContent() )->hooks();
 		}
 
@@ -63,6 +66,7 @@ final class Plugin {
 			\WP_CLI::add_command( 'kjeks import', array( Command::class, 'import' ) );
 			\WP_CLI::add_command( 'kjeks scan-config', array( Command::class, 'scan_config' ) );
 			\WP_CLI::add_command( 'kjeks scan-key', array( Command::class, 'scan_key' ) );
+			\WP_CLI::add_command( 'kjeks settings', SettingsCommand::class );
 		}
 
 		add_action(

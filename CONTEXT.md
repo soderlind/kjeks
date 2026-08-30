@@ -43,3 +43,7 @@ _Avoid_: Config hash, revision
 **Consent record**:
 The visitor's stored choice: category selections + timestamp + policy version + site identifier. Stored client-side only (cookie + `localStorage` mirror); never as identifiable server-side records.
 _Avoid_: Consent log, audit record
+
+**Config bundle**:
+A portable file of an install's _authored_ settings, for migrating or seeding another install. Carries banner content, category mappings, and each add-on's registered options; excludes derived scan Observations, secrets (`kjeks_scan_key`), and Consent records. Verbs: **export** (produce one) and **apply** (write it to a target).
+_Avoid_: Backup, snapshot, import (import = scan Observations only)
