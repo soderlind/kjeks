@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 - 2026-08-31
+
+- Unify the network settings into a tabbed "Cookie Consent" screen: core Cookies and Banner plus each add-on (AI Reviewer, Embeds, Google, Scripting, Social) render as tabs on one screen; Settings and Import / Export move to submenus.
+- Add the `AddonKit\AbstractFormTab` and `AddonKit\AbstractSettingsTab` base classes so add-ons register a settings tab (server-rendered form or React mount) on the core screen.
+- Give the server-rendered add-on tabs a shared card-based look that matches the React tabs: an intro card (tab title plus lead description) sits above a form card, both styled by one shell stylesheet with consistent spacing, `form-table` rows, and select widths.
+
 ## 1.1.5 - 2026-08-31
 
 - Add a portable **Config bundle** (export / apply): migrate an install's authored settings — banner content, network settings, and each add-on's options via the `kjeks_config_sections` filter — to another install. Available as `wp kjeks settings export|apply` and an Import / Export screen under Cookie Consent.

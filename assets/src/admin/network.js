@@ -7,7 +7,6 @@
 import './admin.css';
 import { render, useState, useEffect, useMemo, createElement as h } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { applyFilters } from '@wordpress/hooks';
 import { __, sprintf, _n } from '@wordpress/i18n';
 import {
 	Panel,
@@ -21,7 +20,6 @@ import {
 	Button,
 	Notice,
 	Spinner,
-	TabPanel,
 	Dropdown,
 } from '@wordpress/components';
 
@@ -221,24 +219,26 @@ function App() {
 		__( 'Save changes', 'kjeks' )
 	);
 
+	const view = settings.view || 'cookies';
+
 	return h(
 		'div',
 		{ className: 'kjeks-network' },
-		h( 'h1', {}, settings.isMultisite === false ? __( 'Cookie Consent review', 'kjeks' ) : __( 'Cookie Consent — network review', 'kjeks' ) ),
-		h(
-			'p',
-			{ className: 'kjeks-network__summary' },
-			sprintf(
-				/* translators: 1: reviewed count, 2: pending count. */
-				__( '%1$d reviewed · %2$d pending', 'kjeks' ),
-				config.trackers.filter( ( t ) => t.reviewed && ! removed.has( t.id ) ).length,
-				config.trackers.filter( ( t ) => ! t.reviewed && ! removed.has( t.id ) ).length
-			)
-		),
+		'cookies' === view &&
+			h(
+				'p',
+				{ className: 'kjeks-network__summary' },
+				sprintf(
+					/* translators: 1: reviewed count, 2: pending count. */
+					__( '%1$d reviewed · %2$d pending', 'kjeks' ),
+					config.trackers.filter( ( t ) => t.reviewed && ! removed.has( t.id ) ).length,
+					config.trackers.filter( ( t ) => ! t.reviewed && ! removed.has( t.id ) ).length
+				)
+			),
 		notice &&
 			h( Notice, { status: notice.type, onRemove: () => setNotice( null ) }, notice.text ),
 
-		renderTabs( {
+		renderView( {
 			cookies: h(
 				'div',
 				{ className: 'kjeks-network__cookies' },
@@ -451,30 +451,14 @@ function App() {
 }
 
 /**
- * Renders the network admin as tabs: the built-in Cookies, Banner, and Settings
- * bodies plus any tabs add-ons register via the `kjeks.networkAdminTabs` filter.
+ * Selects the body for the active view. The active view is chosen server-side by
+ * the PHP tab shell and passed in via `kjeksNetwork.view` ('cookies' by default).
  *
- * `bodies` maps a built-in tab name to its ReactNode. Each extra tab is
- * `{ name, title, render: () => ReactNode }`.
+ * `bodies` maps a view name ('cookies' | 'banner' | 'settings') to its ReactNode.
  */
-function renderTabs( bodies ) {
-	const extraTabs = applyFilters( 'kjeks.networkAdminTabs', [] );
-	const tabs = [
-		{ name: 'cookies', title: __( 'Cookies', 'kjeks' ) },
-		{ name: 'banner', title: __( 'Banner', 'kjeks' ) },
-		{ name: 'settings', title: __( 'Settings', 'kjeks' ) },
-		...extraTabs.map( ( t ) => ( { name: t.name, title: t.title } ) ),
-	];
-	return h(
-		TabPanel,
-		{ className: 'kjeks-network__tabs', tabs },
-		( tab ) => {
-			if ( bodies[ tab.name ] ) {
-				return bodies[ tab.name ];
-			}
-			return ( ( extraTabs.find( ( t ) => t.name === tab.name ) || {} ).render || ( () => null ) )();
-		}
-	);
+function renderView( bodies ) {
+	const active = settings.view || 'cookies';
+	return bodies[ active ] || bodies.cookies;
 }
 
 function TrackerTable( { rows, categoryOptions, selected, siteNames, onToggleSelect, onSelectAll, onChange, onRemove } ) {

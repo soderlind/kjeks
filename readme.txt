@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.1.5
+Stable tag: 1.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,11 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.2.0 =
+* Unify the network settings into a tabbed "Cookie Consent" screen: core Cookies and Banner plus each add-on (AI Reviewer, Embeds, Google, Scripting, Social) render as tabs on one screen; Settings and Import / Export move to submenus.
+* Add the `AddonKit\AbstractFormTab` and `AddonKit\AbstractSettingsTab` base classes so add-ons register a settings tab (server-rendered form or React mount) on the core screen.
+* Give the server-rendered add-on tabs a shared card-based look that matches the React tabs: an intro card above a form card, styled by one shell stylesheet.
 
 = 1.1.5 =
 * Add a portable Config bundle (export / apply): migrate an install's authored settings — banner content, network settings, and each add-on's options via the `kjeks_config_sections` filter — to another install. Available as `wp kjeks settings export|apply` and an Import / Export screen under Cookie Consent.
