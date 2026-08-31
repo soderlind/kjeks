@@ -308,7 +308,7 @@ CSS;
 	 * Active tab slug from the query string.
 	 */
 	private function active_tab(): string {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only tab selector for display; sanitized, no state change.
 		return isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'cookies';
 	}
 
@@ -316,7 +316,7 @@ CSS;
 	 * Active subtab slug from the query string.
 	 */
 	private function active_subtab(): string {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only subtab selector for display; sanitized, no state change.
 		return isset( $_GET['subtab'] ) ? sanitize_key( wp_unslash( $_GET['subtab'] ) ) : '';
 	}
 

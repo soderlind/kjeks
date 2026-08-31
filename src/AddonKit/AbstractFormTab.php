@@ -228,7 +228,7 @@ abstract class AbstractFormTab {
 	 * Show a "settings saved" notice after a redirect.
 	 */
 	protected function maybe_updated_notice(): void {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only success flag after a redirect; no state change, nonce not applicable.
 		if ( empty( $_GET['updated'] ) ) {
 			return;
 		}
