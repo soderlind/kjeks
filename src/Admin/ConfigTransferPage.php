@@ -56,7 +56,7 @@ final class ConfigTransferPage {
 
 		$action_url = is_multisite() ? network_admin_url( 'admin-post.php' ) : admin_url( 'admin-post.php' );
 		// Notice only, no state change; nonce not required for a read-only banner.
-		$notice = isset( $_GET['kjeks_notice'] ) ? sanitize_key( wp_unslash( $_GET['kjeks_notice'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$notice = isset( $_GET['kjeks_notice'] ) ? sanitize_key( wp_unslash( $_GET['kjeks_notice'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only notice flag after a redirect; sanitized, no state change, nonce not applicable.
 
 		echo '<div class="wrap">';
 		echo '<h1>' . esc_html__( 'Import / Export', 'kjeks' ) . '</h1>';
