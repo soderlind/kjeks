@@ -4,7 +4,7 @@ Tags: cookies, consent, gdpr, privacy, multisite
 Requires at least: 6.8
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,10 @@ Usually expected behaviour, not a bug. Kjeks skips the banner when:
 * The banner script or storage (cookies/localStorage) is blocked.
 
 == Changelog ==
+
+= 1.2.1 =
+* Enqueue external consent-gated `src` scripts via `wp_enqueue_script()` (rewritten inert through `script_loader_tag`) instead of printing raw `<script>` tags in the footer, addressing a WordPress.org plugin review note.
+* Correct the internal `KJEKS_VERSION` constant so asset cache busting matches the plugin version after updates.
 
 = 1.2.0 =
 * Unify the network settings into a tabbed "Cookie Consent" screen: core Cookies and Banner plus each add-on (AI Reviewer, Embeds, Google, Scripting, Social) render as tabs on one screen; Settings and Import / Export move to submenus.
